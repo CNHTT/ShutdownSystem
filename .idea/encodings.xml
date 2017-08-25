@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="GBK">
+    <file url="file://$PROJECT_DIR$/flib/libs/DecodeWlt.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/libs/idcardapi.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/libs/litepal-1.3.2-src.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/libs/microlog4android-1.0.0.jar" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/android_serialport_api/BarCodeAPI.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/AntennaPortConfiguration.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/BarCodeReader.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/ByteUtil.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/InventoryEvent.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/InventoryTagInfo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/LockParms.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/LoopBuf.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/MacErrorEvent.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/MacErrorInfo.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/MemoryBank.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/MemoryPermission.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/OnInventoryEventListener.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/OnMacErrorEventListener.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/PasswordPermission.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/PasswordResult.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/PasswordType.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/RadioCtrl.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/ReadParms.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/ReadResult.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/Session.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/SingulationAlgorithm.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/SingulationAlgorithmParms.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/SingulationCriteria.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/SingulationCriteriaStatus.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/TagOperResult.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/WriteParms.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/antennaPortState.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/backscatterError.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/commonFun.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/ctrlOperateResult.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/macAccessError.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/matchType.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/radioBusyException.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/radioFailException.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/hiklife/rfidapi/tagMemoryOpResult.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/AlertAnimateUtil.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/AppManager.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/ConstUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/Constant.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/ContextUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/CrashUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/DataUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/DialogFactory.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/EncodeUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/EncryptUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/FileUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/PermissionHelper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/PermissionsUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/PhotoUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/RegexUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/SPUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/StatusBarUtil.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/SystemBarTintManager.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/TimeUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/ToastUtils.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flib/src/main/java/com/szfp/utils/Utils.java" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>
