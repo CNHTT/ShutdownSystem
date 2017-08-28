@@ -3,4 +3,18 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="google_red">#EA4335</color>
+    <color name="google_yellow">#FBBC05</color>
+    <color name="google_blue">#4285F4</color>
+    <color name="google_green">#34A853</color>
+    <color name="colorSeekBarDefault">#c3c3c3</color>
+    <color name="baby_blue">#89CFF0</color>
+    <color name="blue">#3F51B5</color>
+    <color name="dark_blue_03">#000333</color>
+    <color name="f0">#f0f0f0</color>
+    <color name="e">#EEEEEE</color>
+    <color name="c">#CCCCCC</color>
+    <color name="_8c">#8c8c8c</color>
+    <color name="a5">#A5A5A5</color>
 </resources>

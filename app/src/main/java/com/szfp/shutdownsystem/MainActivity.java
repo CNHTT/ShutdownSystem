@@ -1,17 +1,18 @@
 package com.szfp.shutdownsystem;
 
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.szfp.asynctask.AsyncM1Card;
+import com.szfp.utils.StatusBarUtil;
 import com.szfp.utils.ToastUtils;
 
 import android_serialport_api.M1CardAPI;
-import android_serialport_api.SerialPortManager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MainActivity extends BaseAty {
 
@@ -21,12 +22,18 @@ public class MainActivity extends BaseAty {
     Button button;
 
 
-    private static  final String[]  cardType ={"S50","S70"};
-    private static  final String[]  pwdType ={"KEYA","KEYB"};
-    private static  final int[]     keyType = {M1CardAPI.KEY_A,M1CardAPI.KEY_B};
-    private static  int             NUM =1;
-    private static  int             mKeyType =M1CardAPI.KEY_A;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.listView)
+    ListView listView;
     private AsyncM1Card reader;
+
+    private static final String[] cardType = {"S50", "S70"};
+    private static final String[] pwdType = {"KEYA", "KEYB"};
+    private static final int[] keyType = {M1CardAPI.KEY_A, M1CardAPI.KEY_B};
+    private static int NUM = 1;
+    private static int mKeyType = M1CardAPI.KEY_A;
+
 
 
     @Override
@@ -34,8 +41,12 @@ public class MainActivity extends BaseAty {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        
-        initData();
+        setSupportActionBar(toolbar);
+        StatusBarUtil.setColor(this,getResources().getColor(R.color.titlebg),45);
+
+
+
+//        initData();
     }
 
     private void initData() {
@@ -64,20 +75,19 @@ public class MainActivity extends BaseAty {
     }
 
 
-
-    @OnClick(R.id.button)
-    public void onClick() {
-        boolean isExit = false;
-        if (!SerialPortManager.getInstance().isOpen()
-                && !SerialPortManager.getInstance().openSerialPort()) {
-            ToastUtils.error(getResources().getString(R.string.open_serial_fail));
-            isExit = true;
-        }
-        if (isExit) {
-            return;
-        }
-        showText.setText("");
-        showProgressDialog(R.string.getcard_wait);
-        reader.readCardNum();
-    }
+//    @OnClick(R.id.button)
+//    public void onClick() {
+//        boolean isExit = false;
+//        if (!SerialPortManager.getInstance().isOpen()
+//                && !SerialPortManager.getInstance().openSerialPort()) {
+//            ToastUtils.error(getResources().getString(R.string.open_serial_fail));
+//            isExit = true;
+//        }
+//        if (isExit) {
+//            return;
+//        }
+//        showText.setText("");
+//        showProgressDialog(R.string.getcard_wait);
+//        reader.readCardNum();
+//    }
 }

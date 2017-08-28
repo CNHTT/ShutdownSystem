@@ -522,5 +522,11 @@
     <color name="bgColor_alert_button_press">#EAEAEA</color>
     <!--actionsheet模式的取消按钮背景颜色-->
     <color name="bgColor_actionsheet_cancel_nor">#ffffff</color>
-
+    <color name="deep_gray">#afaeae</color>
+    <color name="deep_gray_2">#636262</color>
+    <color name="light_black">#fd383838</color>
+    <color name="f6">#f6f6f6</color>
+    <color name="_6">#666666</color>
+    <color name="_9">#999999</color>
+    <color name="gray1">#e7e4e4</color>
 </resources>
