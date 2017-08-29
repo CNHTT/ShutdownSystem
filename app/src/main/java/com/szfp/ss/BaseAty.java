@@ -1,4 +1,4 @@
-package com.szfp.shutdownsystem;
+package com.szfp.ss;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -12,7 +12,7 @@ import android.view.WindowManager;
 
 import android_serialport_api.SerialPortManager;
 
-import static com.szfp.shutdownsystem.App.logger;
+import static com.szfp.ss.App.logger;
 
 /**
  * author：ct on 2017/8/25 16:39

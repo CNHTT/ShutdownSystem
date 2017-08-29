@@ -1,4 +1,4 @@
-package com.szfp.shutdownsystem;
+package com.szfp.ss;
 
 import android.animation.ObjectAnimator;
 import android.content.Intent;

@@ -16,5 +16,17 @@
     </string>
     <string name="login">Login</string>
 
+    <string-array name="main">
+        <item>Vehicles entering</item>
+        <item>Out of the vehicle</item>
+        <item>Issuing new Member Cards </item>
+        <item>The temporary card</item>
+        <item>Entry of Vehicle Information</item>
+        <item>Permissions/Operation card</item>
+        <item>Statistical Control</item>
+        <item>Query Log</item>
+        <item>System Settings</item>
+    </string-array>
+
 
 </resources>

@@ -1,32 +1,39 @@
-package com.szfp.shutdownsystem;
+package com.szfp.ss;
 
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.AdapterView;
 
 import com.szfp.asynctask.AsyncM1Card;
+import com.szfp.ss.adapter.MainPagerAdapter;
+import com.szfp.ss.domain.MainImginfo;
 import com.szfp.utils.StatusBarUtil;
 import com.szfp.utils.ToastUtils;
+
+import java.util.ArrayList;
 
 import android_serialport_api.M1CardAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends BaseAty {
-
-    @BindView(R.id.showText)
-    TextView showText;
-    @BindView(R.id.button)
-    Button button;
+public class MainActivity extends BaseAty implements AdapterView.OnItemClickListener {
 
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.listView)
-    ListView listView;
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
     private AsyncM1Card reader;
+
+
+    NfcAdapter nfcAdapter;
+
+    private String[] arrays;
+    private int[] ids;
+    private ArrayList<MainImginfo> mData;
 
     private static final String[] cardType = {"S50", "S70"};
     private static final String[] pwdType = {"KEYA", "KEYB"};
@@ -35,33 +42,52 @@ public class MainActivity extends BaseAty {
     private static int mKeyType = M1CardAPI.KEY_A;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        StatusBarUtil.setColor(this,getResources().getColor(R.color.titlebg),45);
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.titlebg), 45);
 
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+        if (nfcAdapter == null) {
+            ToastUtils.showToast("设备不支持NFC！");
+        }
 
-
-//        initData();
+        initData();
     }
 
     private void initData() {
+        arrays = getResources().getStringArray(R.array.main);
+        ids = new int[]{R.layout.winphone_page, R.id.wp_main_page_content,
+                R.layout.winphone_item, R.id.wp_item_iv, R.id.wp_item_rl, R.id.wp_item_tv};
+        int[] imgs = {
+                R.mipmap.circle_credit_card,R.mipmap.circle_credit_card,R.mipmap.circle_credit_card,
+                R.mipmap.circle_credit_card,R.mipmap.circle_credit_card,R.mipmap.circle_credit_card,
+                R.mipmap.circle_credit_card,R.mipmap.circle_credit_card,R.mipmap.circle_credit_card};
+
+        mData = new ArrayList<>();
+
+        for (int i = 0; i <imgs.length ; i++) {
+            mData.add(new MainImginfo(i,arrays[i],imgs[i]));
+        }
+
+        viewPager.setAdapter(new MainPagerAdapter(this,mData,ids,this));
+
+
         reader = new AsyncM1Card(app.getHandlerThread().getLooper());
         //读取卡号
         reader.setOnReadCardNumListener(new AsyncM1Card.OnReadCardNumListener() {
             @Override
             public void onReadCardNumSuccess(String num) {
-                showText.setText(num);
+                ToastUtils.showToast(num);
                 cancleProgressDialog();
             }
 
             @Override
             public void onReadCardNumFail(int confirmationCode) {
-                showText.setText("");
+                ToastUtils.showToast("");
                 cancleProgressDialog();
                 if (confirmationCode == M1CardAPI.Result.FIND_FAIL) {
                     ToastUtils.error(getString(R.string.no_card_with_data));
@@ -74,20 +100,8 @@ public class MainActivity extends BaseAty {
         });
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-//    @OnClick(R.id.button)
-//    public void onClick() {
-//        boolean isExit = false;
-//        if (!SerialPortManager.getInstance().isOpen()
-//                && !SerialPortManager.getInstance().openSerialPort()) {
-//            ToastUtils.error(getResources().getString(R.string.open_serial_fail));
-//            isExit = true;
-//        }
-//        if (isExit) {
-//            return;
-//        }
-//        showText.setText("");
-//        showProgressDialog(R.string.getcard_wait);
-//        reader.readCardNum();
-//    }
+    }
 }

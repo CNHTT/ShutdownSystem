@@ -1,4 +1,4 @@
-package com.szfp.shutdownsystem;
+package com.szfp.ss;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 
-import static com.szfp.shutdownsystem.App.logger;
+import static com.szfp.ss.App.logger;
 
 public class WelcomeAty extends AppCompatActivity {
 
