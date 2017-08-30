@@ -75,7 +75,7 @@ public class MainPagerAdapter  extends PagerAdapter{
         View view = this.activity.getLayoutInflater().inflate(this.ids[0],null);
         GridView gridView = (GridView) view.findViewById(this.ids[1]);
         gridView.setNumColumns(1);
-        gridView.setVerticalSpacing(5);
+        gridView.setVerticalSpacing(20);
         gridView.setHorizontalSpacing(5);
         gridView.setAdapter(new BaseAdapter() {
             public int getCount() {

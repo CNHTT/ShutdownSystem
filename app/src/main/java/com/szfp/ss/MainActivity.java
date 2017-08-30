@@ -1,14 +1,17 @@
 package com.szfp.ss;
 
+import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import com.szfp.asynctask.AsyncM1Card;
 import com.szfp.ss.adapter.MainPagerAdapter;
+import com.szfp.ss.domain.KEY;
 import com.szfp.ss.domain.MainImginfo;
 import com.szfp.utils.StatusBarUtil;
 import com.szfp.utils.ToastUtils;
@@ -18,6 +21,15 @@ import java.util.ArrayList;
 import android_serialport_api.M1CardAPI;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.szfp.ss.domain.PagerItem.ENTER;
+import static com.szfp.ss.domain.PagerItem.ENTRY_INFO;
+import static com.szfp.ss.domain.PagerItem.OUT_OF;
+import static com.szfp.ss.domain.PagerItem.P0;
+import static com.szfp.ss.domain.PagerItem.QL;
+import static com.szfp.ss.domain.PagerItem.SC;
+import static com.szfp.ss.domain.PagerItem.SS;
+import static com.szfp.ss.domain.PagerItem.TEMPORARY;
 
 public class MainActivity extends BaseAty implements AdapterView.OnItemClickListener {
 
@@ -102,6 +114,40 @@ public class MainActivity extends BaseAty implements AdapterView.OnItemClickList
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        String  temp = ((TextView)view.findViewById(R.id.wp_item_tv)).getText().toString();
+
+        startTrans(temp);
+    }
+
+    private void startTrans(String temp) {
+
+        Bundle bundle = new Bundle();
+        bundle.putString(KEY.START_KEY,temp);
+        Intent i = new Intent();
+        switch (temp){
+            case ENTER:     //车辆驶入
+                break;
+            case OUT_OF:    //车辆离开
+                break;
+            case TEMPORARY: //临时卡
+                break;
+            case ENTRY_INFO://发卡
+                i.setClass(this,AddUserAty.class);
+                break;
+            case P0:        //权限、管理
+                break;
+            case SC:        //统计管理
+                break;
+            case QL:        //查询
+                break;
+            case SS:        //系统设置
+                i.setClass(this, SettingAty.class);
+                break;
+            default:        //Other
+                break;
+        }
+        i.putExtras(bundle);
+        startActivity(i);
 
     }
 }
