@@ -6,5 +6,6 @@ package com.szfp.ss.domain;
  */
 
 public class KEY {
+    public static final String CACHE_DATA_SIZE =  "cache_data_size" ;
     public static String START_KEY ="start_trans_key";
 }

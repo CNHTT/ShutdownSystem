@@ -60,7 +60,7 @@ public class MainActivity extends BaseAty implements AdapterView.OnItemClickList
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.titlebg), 45);
+        StatusBarUtil.setTranslucent(this);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if (nfcAdapter == null) {

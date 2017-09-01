@@ -12,7 +12,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@android:color/transparent"
+        android:background="@color/transparent_a"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
@@ -60,10 +60,6 @@
                 android:paddingTop="@dimen/item_menu_top_magin"
                 android:text="@string/ds" />
 
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="0.5dp"
-                android:background="@color/c" />
 
 
 
@@ -73,6 +69,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="0.5dp"
+                        android:background="@color/c" />
                     <android.support.v7.widget.SwitchCompat
                         android:id="@+id/sw_manual_upload"
                         android:layout_width="match_parent"
@@ -111,14 +111,31 @@
                     </LinearLayout>
 
 
-                    <View
-                        android:layout_width="wrap_content"
-                        android:layout_height="0.5dp"
-                        android:background="@color/c" />
                 </LinearLayout>
 
 
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.5dp"
+                android:background="@color/c" />
 
+            <TextView
+                android:id="@+id/bt_parking_fee_setting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tv_bg_selector"
+                android:gravity="left"
+                android:paddingBottom="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/item_menu_top_magin"
+                android:text="@string/pfs"
+                android:textColor="@color/share_text"
+                android:textSize="13sp"
+                android:textStyle="normal" />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0.5dp"
+                android:background="@color/c" />
         </LinearLayout>
 
 

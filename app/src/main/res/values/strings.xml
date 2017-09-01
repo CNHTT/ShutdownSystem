@@ -109,5 +109,14 @@
     <string name="ds">Data Sync</string>
     <string name="mu">Manual Upload</string>
     <string name="cd">Cache Data</string>
+    <string name="hint">HINT</string>
+    <string name="pfs">Parking Fee Settings</string>
+    <string name="day">Day</string>
+    <string name="day_intro">Set up the cost of parking every day</string>
+    <string name="hour">Hour</string>
+    <string name="hour_intro">Set the cost of parking per hour</string>
+    <string name="month">Month</string>
+    <string name="other">Other</string>
+    <string name="month_intro">Set a monthly parking fee</string>
 
 </resources>

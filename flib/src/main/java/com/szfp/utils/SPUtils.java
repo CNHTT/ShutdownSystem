@@ -84,7 +84,7 @@ public class SPUtils {
     public static int getInt(Context context, String key) {
         SharedPreferences sp = context.getSharedPreferences(key, Context.MODE_PRIVATE);
         int value;
-        value = sp.getInt(key, -1);
+        value = sp.getInt(key, 0);
         return value;
     }
 

@@ -1,5 +1,6 @@
 package com.szfp.ss;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
@@ -11,7 +12,12 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.szfp.shutdownsystem.ParkingFeeSettingsAty;
+import com.szfp.ss.domain.KEY;
+import com.szfp.utils.AndroidBug5497Workaround;
 import com.szfp.utils.ContextUtils;
+import com.szfp.utils.SPUtils;
+import com.szfp.utils.StatusBarUtil;
 import com.szfp.view.BaseDialog;
 import com.szfp.view.SSeekBar;
 
@@ -35,27 +41,19 @@ public class SettingAty extends BaseAty implements CompoundButton.OnCheckedChang
     ScrollView scrollView;
     @BindView(R.id.tv_cache_data_size)
     TextView tvCacheDataSize;
+    @BindView(R.id.bt_parking_fee_setting)
+    TextView btParkingFeeSetting;
     private TextView tvTitle;
     private SSeekBar sbDataSize;
     private TextView tvSure;
     private TextView tvCancel;
 
 
+    private int cacheDataSize = 0;
+
+
     private TranslateAnimation mShowAction;
     private TranslateAnimation mHiddenAction;
-    private View.OnClickListener OnClickListener=new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.tv_sure:
-                    if (dialog!=null)  dialog.cancel();
-                    break;
-                case R.id.tv_cancel:
-                    if (dialog!=null)  dialog.cancel();
-                    break;
-            }
-        }
-    };
 
 
     @Override
@@ -67,7 +65,10 @@ public class SettingAty extends BaseAty implements CompoundButton.OnCheckedChang
 
         toolbar.setTitle("Setting");
         setSupportActionBar(toolbar);
+        StatusBarUtil.setTransparent(this);
 
+        if (isFullScreen(this))
+            AndroidBug5497Workaround.assistActivity(this);
         initEvent();
 
     }
@@ -84,6 +85,11 @@ public class SettingAty extends BaseAty implements CompoundButton.OnCheckedChang
                 Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
                 -1.0f);
         mHiddenAction.setDuration(500);
+
+
+        cacheDataSize = SPUtils.getInt(mContext, KEY.CACHE_DATA_SIZE);
+        tvCacheDataSize.setText(cacheDataSize + "");
+
     }
 
 
@@ -124,34 +130,35 @@ public class SettingAty extends BaseAty implements CompoundButton.OnCheckedChang
 
     }
 
-    @OnClick({R.id.bt_parameterDownload, R.id.ll_cache_data_size,R.id.tv_sure, R.id.tv_cancel})
+    @OnClick({R.id.bt_parameterDownload, R.id.ll_cache_data_size, R.id.bt_parking_fee_setting})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_parameterDownload:
+                //下载参数
+
+
                 break;
             case R.id.ll_cache_data_size:
                 showDataSizeDialog();
                 break;
-            case R.id.tv_sure:
-                if (dialog!=null)  dialog.cancel();
-                break;
-            case R.id.tv_cancel:
-                if (dialog!=null)  dialog.cancel();
+            case R.id.bt_parking_fee_setting:
+                startActivity(new Intent(this, ParkingFeeSettingsAty.class));
                 break;
         }
     }
 
 
-
     private BaseDialog dialog;
+
     private void showDataSizeDialog() {
         View view = ContextUtils.inflate(this, R.layout.dialog_data_size);
         tvTitle = (TextView) view.findViewById(R.id.tv_title);
         sbDataSize = (SSeekBar) view.findViewById(R.id.sb_data_size);
-        tvSure     = (TextView) view.findViewById(R.id.tv_sure);
-        tvCancel   = (TextView) view.findViewById(R.id.tv_cancel);
+        tvSure = (TextView) view.findViewById(R.id.tv_sure);
+        tvCancel = (TextView) view.findViewById(R.id.tv_cancel);
         tvCancel.setOnClickListener(OnClickListener);
         tvSure.setOnClickListener(OnClickListener);
+        sbDataSize.setValue( SPUtils.getInt(mContext, KEY.CACHE_DATA_SIZE));
 
         dialog = new BaseDialog(mContext, R.style.AlertDialogStyle);
         dialog.setContentView(view);
@@ -159,12 +166,28 @@ public class SettingAty extends BaseAty implements CompoundButton.OnCheckedChang
         sbDataSize.setOnRangeChangedListener(new SSeekBar.OnRangeChangedListener() {
             @Override
             public void onRangeChanged(SSeekBar view, float min, float max, boolean isFromUser) {
-                if (isFromUser){
-                    view.setProgressDescription((int)min+" ");
+                if (isFromUser) {
+                    view.setProgressDescription((int) min + " ");
+                    cacheDataSize = (int) min;
                 }
             }
         });
 
     }
 
+    private View.OnClickListener OnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.tv_sure:
+                    tvCacheDataSize.setText(cacheDataSize + "");
+                    SPUtils.putInt(mContext, KEY.CACHE_DATA_SIZE, cacheDataSize);
+                    if (dialog != null) dialog.cancel();
+                    break;
+                case R.id.tv_cancel:
+                    if (dialog != null) dialog.cancel();
+                    break;
+            }
+        }
+    };
 }
