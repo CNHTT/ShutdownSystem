@@ -7,7 +7,10 @@ import android.view.View;
 
 import com.szfp.ss.BaseAty;
 import com.szfp.ss.R;
+import com.szfp.ss.domain.KEY;
 import com.szfp.utils.AndroidBug5497Workaround;
+import com.szfp.utils.DataUtils;
+import com.szfp.utils.SPUtils;
 import com.szfp.utils.StatusBarUtil;
 import com.szfp.utils.ToastUtils;
 import com.szfp.view.DialogEditSureCancel;
@@ -15,6 +18,8 @@ import com.szfp.view.DialogEditSureCancel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.szfp.utils.DataUtils.isNullString;
 
 public class ParkingFeeSettingsAty extends BaseAty {
 
@@ -32,6 +37,8 @@ public class ParkingFeeSettingsAty extends BaseAty {
     private String hourFee;
     private String dayFee;
     private String monthFee;
+
+    private String inputStr;
 
     private int feeType;
 
@@ -74,22 +81,29 @@ public class ParkingFeeSettingsAty extends BaseAty {
 
     private DialogEditSureCancel dialog;
     private void showFeeEdit(int i) {
+        feeType = i;
         if (dialog == null)
             dialog = new DialogEditSureCancel(mContext);
 
         switch (i){
             case 1:
-
+                dialog. getTvTitle().setText("HOUR INPUT");
+                hourFee = SPUtils.getString(mContext, KEY.HOUR_FEE);
+                if (!isNullString(hourFee))dialog.getEditText().setText(DataUtils.format2Decimals(hourFee));
                 break;
             case 2:
-
+                dialog. getTvTitle().setText("DAY INPUT");
+                dayFee = SPUtils.getString(mContext, KEY.DAY_FEE);
+                if (!isNullString(hourFee))dialog.getEditText().setText(DataUtils.format2Decimals(hourFee));
                 break;
             case 3:
+
+                dialog. getTvTitle().setText("MONTH INPUT");
+                monthFee = SPUtils.getString(mContext, KEY.MONTH_FEE);
+                if (!isNullString(hourFee))dialog.getEditText().setText(DataUtils.format2Decimals(hourFee));
                 break;
             default:
         }
-
-        dialog.getEditText().setText("0");
         dialog.getTvSure().setOnClickListener(OnClickListener);
         dialog.getTvCancel().setOnClickListener(OnClickListener);
         dialog.show();
@@ -99,8 +113,24 @@ public class ParkingFeeSettingsAty extends BaseAty {
     private View.OnClickListener OnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+
+
             switch (v.getId()){
                 case R. id .tv_sure:
+                    inputStr = dialog.getEditText().getText().toString();
+                    switch (feeType){
+                        case  1:
+                            SPUtils.putString(mContext,KEY.HOUR_FEE,inputStr);
+                            break;
+                        case  2:
+                            SPUtils.putString(mContext,KEY.DAY_FEE,inputStr);
+                            break;
+                        case  3:
+                            SPUtils.putString(mContext,KEY.MONTH_FEE,inputStr);
+                            break;
+                    }
+
+
 
                     if (dialog != null) dialog.cancel();
                     break;
