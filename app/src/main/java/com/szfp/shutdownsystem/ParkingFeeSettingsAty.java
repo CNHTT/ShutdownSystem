@@ -89,18 +89,25 @@ public class ParkingFeeSettingsAty extends BaseAty {
             case 1:
                 dialog. getTvTitle().setText("HOUR INPUT");
                 hourFee = SPUtils.getString(mContext, KEY.HOUR_FEE);
-                if (!isNullString(hourFee))dialog.getEditText().setText(DataUtils.format2Decimals(hourFee));
+                if (!isNullString(hourFee))
+                    dialog.getEditText().setText(DataUtils.format2Decimals(hourFee));
+                else
+                    dialog.getEditText().setHint(DataUtils.format2Decimals("0"));
                 break;
             case 2:
                 dialog. getTvTitle().setText("DAY INPUT");
                 dayFee = SPUtils.getString(mContext, KEY.DAY_FEE);
                 if (!isNullString(hourFee))dialog.getEditText().setText(DataUtils.format2Decimals(hourFee));
+                else
+                    dialog.getEditText().setHint(DataUtils.format2Decimals("0"));
                 break;
             case 3:
 
                 dialog. getTvTitle().setText("MONTH INPUT");
                 monthFee = SPUtils.getString(mContext, KEY.MONTH_FEE);
                 if (!isNullString(hourFee))dialog.getEditText().setText(DataUtils.format2Decimals(hourFee));
+                else
+                    dialog.getEditText().setHint(DataUtils.format2Decimals("0"));
                 break;
             default:
         }
