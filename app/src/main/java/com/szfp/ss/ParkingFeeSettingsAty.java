@@ -1,19 +1,17 @@
-package com.szfp.shutdownsystem;
+package com.szfp.ss;
 
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.szfp.ss.BaseAty;
-import com.szfp.ss.R;
 import com.szfp.ss.domain.KEY;
 import com.szfp.utils.AndroidBug5497Workaround;
 import com.szfp.utils.DataUtils;
 import com.szfp.utils.SPUtils;
 import com.szfp.utils.StatusBarUtil;
 import com.szfp.utils.ToastUtils;
-import com.szfp.view.DialogEditSureCancel;
+import com.szfp.view.dialog.DialogEditSureCancel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,6 +55,15 @@ public class ParkingFeeSettingsAty extends BaseAty {
             AndroidBug5497Workaround.assistActivity(this);
     }
 
+    @Override
+    protected void showConnecting() {
+
+    }
+
+    @Override
+    protected void showConnectedDeviceName(String mConnectedDeviceName) {
+
+    }
 
 
     @OnClick({R.id.cd_hour, R.id.cd_day, R.id.cd_month, R.id.cd_other})

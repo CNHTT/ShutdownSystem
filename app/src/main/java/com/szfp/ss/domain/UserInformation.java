@@ -3,6 +3,7 @@ package com.szfp.ss.domain;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Index;
 
 import java.io.Serializable;
 
@@ -19,14 +20,25 @@ public class UserInformation  implements Serializable{
     private String firstName;
     private String licensePlateNumber;
     private String telephoneNumber;
-    @Generated(hash = 1322418318)
+
+
+    @Index(unique = true)
+    private String cardId;
+    private long createTime;
+    private String UUID;
+
+    @Generated(hash = 1841548281)
     public UserInformation(long id, String lastName, String firstName,
-            String licensePlateNumber, String telephoneNumber) {
+            String licensePlateNumber, String telephoneNumber, String cardId,
+            long createTime, String UUID) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
         this.licensePlateNumber = licensePlateNumber;
         this.telephoneNumber = telephoneNumber;
+        this.cardId = cardId;
+        this.createTime = createTime;
+        this.UUID = UUID;
     }
     @Generated(hash = 1920987651)
     public UserInformation() {
@@ -60,6 +72,24 @@ public class UserInformation  implements Serializable{
     }
     public void setTelephoneNumber(String telephoneNumber) {
         this.telephoneNumber = telephoneNumber;
+    }
+    public String getCardId() {
+        return this.cardId;
+    }
+    public void setCardId(String cardId) {
+        this.cardId = cardId;
+    }
+    public long getCreateTime() {
+        return this.createTime;
+    }
+    public void setCreateTime(long createTime) {
+        this.createTime = createTime;
+    }
+    public String getUUID() {
+        return this.UUID;
+    }
+    public void setUUID(String UUID) {
+        this.UUID = UUID;
     }
     
 }

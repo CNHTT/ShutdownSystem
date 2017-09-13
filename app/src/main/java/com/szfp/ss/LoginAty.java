@@ -80,6 +80,16 @@ public class LoginAty extends BaseAty {
 
     }
 
+    @Override
+    protected void showConnecting() {
+
+    }
+
+    @Override
+    protected void showConnectedDeviceName(String mConnectedDeviceName) {
+
+    }
+
     private void initEvent() {
         etMobile.addTextChangedListener(new TextWatcher() {
             @Override

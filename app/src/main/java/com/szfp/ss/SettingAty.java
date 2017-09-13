@@ -12,13 +12,12 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.szfp.shutdownsystem.ParkingFeeSettingsAty;
 import com.szfp.ss.domain.KEY;
 import com.szfp.utils.AndroidBug5497Workaround;
 import com.szfp.utils.ContextUtils;
 import com.szfp.utils.SPUtils;
 import com.szfp.utils.StatusBarUtil;
-import com.szfp.view.BaseDialog;
+import com.szfp.view.dialog.BaseDialog;
 import com.szfp.view.SSeekBar;
 
 import butterknife.BindView;
@@ -96,6 +95,16 @@ public class SettingAty extends BaseAty implements CompoundButton.OnCheckedChang
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+    }
+
+    @Override
+    protected void showConnecting() {
+
+    }
+
+    @Override
+    protected void showConnectedDeviceName(String mConnectedDeviceName) {
 
     }
 

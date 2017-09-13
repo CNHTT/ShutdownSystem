@@ -38,13 +38,16 @@
         android:theme="@style/AppBaseTheme">
         <activity
             android:name=".MainActivity"
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection"
             android:label="Shutdown System Tools" />
         <activity
             android:name=".LoginAty"
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection"
             android:label="@string/title_activity_login_aty"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name=".WelcomeAty"
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection"
             android:windowSoftInputMode="stateHidden|stateUnchanged">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,13 +57,34 @@
         </activity>
         <activity
             android:name=".AddUserAty"
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
-        <activity android:name=".AddUserCardAty" />
-        <activity android:name=".SettingAty" />
+        <activity
+            android:name=".AddUserCardAty"
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection" />
+        <activity
+            android:name=".SettingAty"
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection" />
         <activity
             android:name=".SettingsActivity"
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection"
             android:label="@string/title_activity_settings" />
-        <activity android:name="com.szfp.shutdownsystem.ParkingFeeSettingsAty"></activity>
+        <activity
+            android:name=".ParkingFeeSettingsAty"
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection" />
+        <activity
+            android:name=".LuRuKaActivity"
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection" />
+        <activity
+            android:name=".RechargedActivity"
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection" />
+        <activity
+            android:name=".RechargeAty"
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection" />
+        <activity
+            android:name=".PurchaseTimeActivity"
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection" />
+        <activity android:name=".DeviceListActivity"></activity>
     </application>
 
 </manifest>

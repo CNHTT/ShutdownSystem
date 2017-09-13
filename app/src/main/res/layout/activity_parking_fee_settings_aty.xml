@@ -6,7 +6,7 @@
     android:background="@mipmap/bg"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context="com.szfp.shutdownsystem.ParkingFeeSettingsAty">
+    tools:context=".ParkingFeeSettingsAty">
     <!--<View-->
         <!--android:id="@+id/toolbar_shadow"-->
         <!--android:layout_width="match_parent"-->

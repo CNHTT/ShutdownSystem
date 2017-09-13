@@ -1,4 +1,4 @@
-package com.szfp.view;
+package com.szfp.view.dialog;
 
 import android.app.Activity;
 import android.content.Context;

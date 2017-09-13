@@ -14,4 +14,5 @@ public class PagerItem {
     public   static  final String SC = "Statistical Control";
     public   static  final String QL = "Query Log";
     public   static  final String SS = "System Settings";
+    public   static  final String RECHARGE = "RECHARGE";
 }

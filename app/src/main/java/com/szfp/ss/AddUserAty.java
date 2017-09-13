@@ -1,13 +1,18 @@
 package com.szfp.ss;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ScrollView;
 
+import com.szfp.ss.domain.KEY;
 import com.szfp.ss.domain.PagerItem;
 import com.szfp.ss.domain.UserInformation;
+import com.szfp.utils.KeyboardUtils;
 import com.szfp.utils.Slidr;
 import com.szfp.utils.StatusBarUtil;
 
@@ -17,7 +22,7 @@ import butterknife.OnClick;
 
 import static com.szfp.utils.DataUtils.isNullString;
 
-public class AddUserAty extends BaseAty {
+public class AddUserAty extends BaseNoAty implements View.OnKeyListener {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -53,6 +58,15 @@ public class AddUserAty extends BaseAty {
         if (getSupportActionBar() != null)
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        initView();
+
+    }
+
+    private void initView() {
+        etFirstName.setOnKeyListener(this);
+        etLastName.setOnKeyListener(this);
+        etLicensePlateNumber.setOnKeyListener(this);
+        etTelephoneNumber.setOnKeyListener(this);
     }
 
     @OnClick(R.id.bt_next)
@@ -88,5 +102,23 @@ public class AddUserAty extends BaseAty {
         userInfo.setTelephoneNumber(telephoneNumber);
 
 
+        Intent intent = new Intent();
+        intent.setClass(AddUserAty.this,LuRuKaActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(KEY.INFO,userInfo);
+        intent.putExtras(bundle);
+        startActivity(intent);
+
+    }
+
+    @Override
+    public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+        switch (keyCode) {
+            case 66:
+                KeyboardUtils.hideSoftInput(this);
+                break;
+        }
+        return false;
     }
 }

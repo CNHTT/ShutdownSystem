@@ -29,6 +29,9 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
         public final static Property FirstName = new Property(2, String.class, "firstName", false, "FIRST_NAME");
         public final static Property LicensePlateNumber = new Property(3, String.class, "licensePlateNumber", false, "LICENSE_PLATE_NUMBER");
         public final static Property TelephoneNumber = new Property(4, String.class, "telephoneNumber", false, "TELEPHONE_NUMBER");
+        public final static Property CardId = new Property(5, String.class, "cardId", false, "CARD_ID");
+        public final static Property CreateTime = new Property(6, long.class, "createTime", false, "CREATE_TIME");
+        public final static Property UUID = new Property(7, String.class, "UUID", false, "UUID");
     }
 
 
@@ -48,7 +51,13 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
                 "\"LAST_NAME\" TEXT," + // 1: lastName
                 "\"FIRST_NAME\" TEXT," + // 2: firstName
                 "\"LICENSE_PLATE_NUMBER\" TEXT," + // 3: licensePlateNumber
-                "\"TELEPHONE_NUMBER\" TEXT);"); // 4: telephoneNumber
+                "\"TELEPHONE_NUMBER\" TEXT," + // 4: telephoneNumber
+                "\"CARD_ID\" TEXT," + // 5: cardId
+                "\"CREATE_TIME\" INTEGER NOT NULL ," + // 6: createTime
+                "\"UUID\" TEXT);"); // 7: UUID
+        // Add Indexes
+        db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_USER_INFORMATION_CARD_ID ON USER_INFORMATION" +
+                " (\"CARD_ID\" ASC);");
     }
 
     /** Drops the underlying database table. */
@@ -81,6 +90,17 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
         if (telephoneNumber != null) {
             stmt.bindString(5, telephoneNumber);
         }
+ 
+        String cardId = entity.getCardId();
+        if (cardId != null) {
+            stmt.bindString(6, cardId);
+        }
+        stmt.bindLong(7, entity.getCreateTime());
+ 
+        String UUID = entity.getUUID();
+        if (UUID != null) {
+            stmt.bindString(8, UUID);
+        }
     }
 
     @Override
@@ -107,6 +127,17 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
         if (telephoneNumber != null) {
             stmt.bindString(5, telephoneNumber);
         }
+ 
+        String cardId = entity.getCardId();
+        if (cardId != null) {
+            stmt.bindString(6, cardId);
+        }
+        stmt.bindLong(7, entity.getCreateTime());
+ 
+        String UUID = entity.getUUID();
+        if (UUID != null) {
+            stmt.bindString(8, UUID);
+        }
     }
 
     @Override
@@ -121,7 +152,10 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // lastName
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // firstName
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // licensePlateNumber
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // telephoneNumber
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // telephoneNumber
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // cardId
+            cursor.getLong(offset + 6), // createTime
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // UUID
         );
         return entity;
     }
@@ -133,6 +167,9 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
         entity.setFirstName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setLicensePlateNumber(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setTelephoneNumber(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setCardId(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setCreateTime(cursor.getLong(offset + 6));
+        entity.setUUID(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
      }
     
     @Override

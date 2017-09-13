@@ -452,6 +452,9 @@
     <string name="card_clear">Clear</string>
     <string name="card_is_transaction_processing">Is transaction processing</string>
     <string name="input_please">Please enter the</string>
+    <string name="message">MESSAGE</string>
+    <string name="announcement">ANNOUNCEMENT</string>
+    <string name="affirm">AFFIRM</string>
 
 
     <string-array name="markArray">

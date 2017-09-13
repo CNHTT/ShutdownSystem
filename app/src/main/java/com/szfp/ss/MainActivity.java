@@ -31,7 +31,7 @@ import static com.szfp.ss.domain.PagerItem.SC;
 import static com.szfp.ss.domain.PagerItem.SS;
 import static com.szfp.ss.domain.PagerItem.TEMPORARY;
 
-public class MainActivity extends BaseAty implements AdapterView.OnItemClickListener {
+public class MainActivity extends BaseNoAty implements AdapterView.OnItemClickListener {
 
 
     @BindView(R.id.toolbar)
@@ -130,6 +130,7 @@ public class MainActivity extends BaseAty implements AdapterView.OnItemClickList
             case OUT_OF:    //车辆离开
                 break;
             case TEMPORARY: //临时卡
+                i.setClass(this,RechargedActivity.class);
                 break;
             case ENTRY_INFO://发卡
                 i.setClass(this,AddUserAty.class);
