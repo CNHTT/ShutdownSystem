@@ -131,4 +131,5 @@
     <string name="title_other_devices">Other Available Devices</string>
     <string name="button_scan">Scan for devices</string>
     <string name="export_str">Export to PDF format</string>
+    <string name="conn_print">Connect the printer</string>
 </resources>

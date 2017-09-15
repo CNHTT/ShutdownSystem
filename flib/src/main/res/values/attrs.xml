@@ -6,7 +6,14 @@
         <attr name="loadingText" format="string"/>
         <attr name="loadingTextAppearance" format="reference"/>
     </declare-styleable>
-
+    <declare-styleable name="NiceSpinner">
+        <attr name="arrowTint" format="color" />
+        <attr name="hideArrow" format="boolean" />
+        <attr name="arrowDrawable" format="reference|color"/>
+        <attr name="dropDownListPaddingBottom" format="dimension"/>
+        <attr name="backgroundSelector" format="integer"/>
+        <attr name="textTint" format="color"/>
+    </declare-styleable>
     <declare-styleable name="RxRoundProgress">
         <attr name="roundColor" format="color"/>
         <attr name="roundProgressColor" format="color"/>

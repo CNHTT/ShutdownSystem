@@ -1,7 +1,11 @@
 package com.szfp.ss.utils;
 
+import com.szfp.ss.domain.RechargeRecordBean;
 import com.szfp.ss.domain.UserInformation;
 import com.szfp.ss.greendao.UserInformationDao;
+import com.szfp.ss.inter.OnRechargeRecordListener;
+import com.szfp.utils.DataUtils;
+import com.szfp.utils.TimeUtils;
 
 /**
  * author：ct on 2017/9/12 10:47
@@ -59,5 +63,32 @@ public class DbHelper {
             return null;
         }
         return userInFo;
+    }
+
+
+    public static void insertRechargeRecordBean(UserInformation userInformation, String amount, OnRechargeRecordListener listener) {
+        RechargeRecordBean recordBean = new RechargeRecordBean();
+        recordBean.setUUID(TimeUtils.getUUID());
+        recordBean.setUserId(userInformation.getId());
+        recordBean.setFirstName(userInformation.getFirstName());
+        recordBean.setLastName(userInformation.getLastName());
+        recordBean.setRechargeAmount(DataUtils.getAmountValue(amount));
+        recordBean.setTradeType("1");
+        recordBean.setCreateTime(TimeUtils.getCurTimeMills());
+        recordBean.setCreateDayTime(TimeUtils.getCrateDayTime());
+
+        userInformation.setBalance(userInformation.getBalance()+Double.valueOf(amount));
+        try {
+
+            GreenDaoManager.getInstance().getSession().getUserInformationDao().update(userInformation);
+            GreenDaoManager.getInstance().getSession().getRechargeRecordBeanDao().insert(recordBean);
+            listener.success(userInformation,recordBean);
+
+        }catch (Exception e){
+            listener.error("Top-up failure");
+        }
+
+
+
     }
 }

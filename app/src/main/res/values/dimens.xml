@@ -39,6 +39,8 @@
     <dimen name="text_font_30">38sp</dimen>
     <dimen name="text_font_55">55sp</dimen>
     <dimen name="text_font_70">70sp</dimen>
+    <dimen name="length_10">10dp</dimen>
     <dimen name="length_100">100dp</dimen>
     <dimen name="length_200">200dp</dimen>
+    <dimen name="length_20">20dp</dimen>
 </resources>

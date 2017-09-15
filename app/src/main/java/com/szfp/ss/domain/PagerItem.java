@@ -15,4 +15,9 @@ public class PagerItem {
     public   static  final String QL = "Query Log";
     public   static  final String SS = "System Settings";
     public   static  final String RECHARGE = "RECHARGE";
+
+    public   static  final String DAY ="DAY";
+    public   static   final String HOUR = "HOUR";
+    public   static  final  String MONTH = "MONTH";
+
 }

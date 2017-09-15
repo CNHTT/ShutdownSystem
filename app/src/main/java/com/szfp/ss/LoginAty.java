@@ -63,6 +63,10 @@ public class LoginAty extends BaseAty {
     private int height = 0;
 
 
+    @Override
+    protected void showDisconnecting() {
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

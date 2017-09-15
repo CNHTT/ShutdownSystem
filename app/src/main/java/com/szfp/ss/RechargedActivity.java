@@ -9,7 +9,9 @@ import com.szfp.ss.domain.KEY;
 import com.szfp.ss.domain.PagerItem;
 import com.szfp.ss.domain.UserInformation;
 import com.szfp.utils.DataUtils;
+import com.szfp.utils.SPUtils;
 import com.szfp.utils.StatusBarUtil;
+import com.szfp.utils.ToastUtils;
 import com.szfp.view.button.SelectButton;
 
 import butterknife.BindView;
@@ -59,8 +61,20 @@ public class RechargedActivity extends BaseNoAty {
                 startActivity(in);
                 break;
             case R.id.purchase_time: //购买时长
-                in.setClass(this,PurchaseTimeActivity.class);
-                startActivity(in);
+                if (DataUtils.isNullString(SPUtils.getString(mContext,KEY.HOUR_FEE))||
+                        DataUtils.isNullString(SPUtils.getString(mContext,KEY.DAY_FEE))||
+                        DataUtils.isNullString(SPUtils.getString(mContext,KEY.MONTH_FEE))){
+
+                    ToastUtils.error("Please set the fee or download the updated data");
+
+                    in.setClass(this,SettingAty.class);
+                    startActivity(in);
+
+                }else {
+                    in.setClass(this,PurchaseTimeActivity.class);
+                    startActivity(in);
+                }
+
                 break;
         }
     }

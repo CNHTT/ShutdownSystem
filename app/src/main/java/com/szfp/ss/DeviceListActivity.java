@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -18,26 +17,26 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.szfp.utils.BluetoothService;
+import com.szfp.utils.ToastUtils;
+
 import java.util.Set;
 
-public class DeviceListActivity extends AppCompatActivity {
-    // Debugging
-    private static final String TAG = "DeviceListActivity";
-    private static final boolean D = true;
-
+public class DeviceListActivity extends BaseNoAty {
     // Return Intent extra
     public static String EXTRA_DEVICE_ADDRESS = "device_address";
 
     // Member fields
-    private BluetoothAdapter mBtAdapter;
+    BluetoothService mService = null;
     private ArrayAdapter<String> mPairedDevicesArrayAdapter;
     private ArrayAdapter<String> mNewDevicesArrayAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Setup the window
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
-        setContentView(R.layout.activity_device_list);
+        setContentView(R.layout.activity_device_list);   //显示列表界面
 
         // Set result CANCELED incase the user backs out
         setResult(Activity.RESULT_CANCELED);
@@ -74,11 +73,10 @@ public class DeviceListActivity extends AppCompatActivity {
         filter = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
         this.registerReceiver(mReceiver, filter);
 
-        // Get the local Bluetooth adapter
-        mBtAdapter = BluetoothAdapter.getDefaultAdapter();
+        mService = new BluetoothService(this, null);
 
         // Get a set of currently paired devices
-        Set<BluetoothDevice> pairedDevices = mBtAdapter.getBondedDevices();
+        Set<BluetoothDevice> pairedDevices = mService.getPairedDev();
 
         // If there are paired devices, add each one to the ArrayAdapter
         if (pairedDevices.size() > 0) {
@@ -92,17 +90,13 @@ public class DeviceListActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        // Make sure we're not doing discovery anymore
-        if (mBtAdapter != null) {
-            mBtAdapter.cancelDiscovery();
+        if (mService != null) {
+            mService.cancelDiscovery();
         }
-
-        // Unregister broadcast listeners
+        mService = null;
         this.unregisterReceiver(mReceiver);
     }
 
@@ -110,7 +104,6 @@ public class DeviceListActivity extends AppCompatActivity {
      * Start device discover with the BluetoothAdapter
      */
     private void doDiscovery() {
-        if (D) Log.d(TAG, "doDiscovery()");
 
         // Indicate scanning in the title
         setProgressBarIndeterminateVisibility(true);
@@ -120,28 +113,34 @@ public class DeviceListActivity extends AppCompatActivity {
         findViewById(R.id.title_new_devices).setVisibility(View.VISIBLE);
 
         // If we're already discovering, stop it
-        if (mBtAdapter.isDiscovering()) {
-            mBtAdapter.cancelDiscovery();
+        if (mService.isDiscovering()) {
+            mService.cancelDiscovery();
         }
 
         // Request discover from BluetoothAdapter
-        mBtAdapter.startDiscovery();
+        mService.startDiscovery();
     }
 
-
     // The on-click listener for all devices in the ListViews
-    private AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {
+    private AdapterView.OnItemClickListener mDeviceClickListener = new AdapterView.OnItemClickListener() {   //点击列表项，连接设备
         public void onItemClick(AdapterView<?> av, View v, int arg2, long arg3) {
             // Cancel discovery because it's costly and we're about to connect
-            mBtAdapter.cancelDiscovery();
+            mService.cancelDiscovery();
 
             // Get the device MAC address, which is the last 17 chars in the View
             String info = ((TextView) v).getText().toString();
+            if (info.equals("No devices found")||info.equals("No devices have been paired"))
+            {
+                ToastUtils.error(info);
+                return;
+            }
+
             String address = info.substring(info.length() - 17);
 
             // Create the result Intent and include the MAC address
             Intent intent = new Intent();
             intent.putExtra(EXTRA_DEVICE_ADDRESS, address);
+            Log.d("连接地址", address);
 
             // Set result and finish this Activity
             setResult(Activity.RESULT_OK, intent);
@@ -175,6 +174,4 @@ public class DeviceListActivity extends AppCompatActivity {
             }
         }
     };
-
-
 }

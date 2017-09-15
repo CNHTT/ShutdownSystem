@@ -41,6 +41,11 @@ public class ParkingFeeSettingsAty extends BaseAty {
     private int feeType;
 
     @Override
+    protected void showDisconnecting() {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parking_fee_settings_aty);
@@ -104,7 +109,7 @@ public class ParkingFeeSettingsAty extends BaseAty {
             case 2:
                 dialog. getTvTitle().setText("DAY INPUT");
                 dayFee = SPUtils.getString(mContext, KEY.DAY_FEE);
-                if (!isNullString(hourFee))dialog.getEditText().setText(DataUtils.format2Decimals(hourFee));
+                if (!isNullString(dayFee))dialog.getEditText().setText(DataUtils.format2Decimals(dayFee));
                 else
                     dialog.getEditText().setHint(DataUtils.format2Decimals("0"));
                 break;
@@ -112,7 +117,7 @@ public class ParkingFeeSettingsAty extends BaseAty {
 
                 dialog. getTvTitle().setText("MONTH INPUT");
                 monthFee = SPUtils.getString(mContext, KEY.MONTH_FEE);
-                if (!isNullString(hourFee))dialog.getEditText().setText(DataUtils.format2Decimals(hourFee));
+                if (!isNullString(monthFee))dialog.getEditText().setText(DataUtils.format2Decimals(monthFee));
                 else
                     dialog.getEditText().setHint(DataUtils.format2Decimals("0"));
                 break;

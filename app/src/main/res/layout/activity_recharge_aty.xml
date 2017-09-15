@@ -1,9 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@mipmap/bg"
     tools:context="com.szfp.ss.RechargeAty">
 
-</android.support.constraint.ConstraintLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/transparent_a"
+        android:elevation="@dimen/activity_horizontal_margin"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_font_8"
+        android:text="Please enter the amount you want to recharge" />
+
+
+    <EditText
+        android:id="@+id/et_recharge_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="0.00"
+        android:ems="14"
+        android:layout_margin="5dp"
+        android:padding="10dp"
+        android:inputType="number"
+        android:textSize="@dimen/text_font_12"
+        android:background="@drawable/shape_round_gray_bored"/>
+
+    <com.szfp.view.button.SelectButton
+        android:id="@+id/bt_comm_print"
+        android:padding="@dimen/length_10"
+        android:textSize="@dimen/text_font_12"
+        android:layout_margin="@dimen/length_10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/conn_print"
+        app:normalBackgroundColor="@color/login_normal"
+        app:normalTextColor="@color/white"
+        app:pressedBackgroundColor="@color/login_pass"
+        app:pressedTextColor="@color/white" />
+    <RelativeLayout
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingBottom="@dimen/length_100">
+        <include
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            layout="@layout/frag_button" />
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

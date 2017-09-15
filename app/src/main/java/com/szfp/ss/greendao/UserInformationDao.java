@@ -24,14 +24,16 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, long.class, "id", true, "_id");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property LastName = new Property(1, String.class, "lastName", false, "LAST_NAME");
         public final static Property FirstName = new Property(2, String.class, "firstName", false, "FIRST_NAME");
         public final static Property LicensePlateNumber = new Property(3, String.class, "licensePlateNumber", false, "LICENSE_PLATE_NUMBER");
         public final static Property TelephoneNumber = new Property(4, String.class, "telephoneNumber", false, "TELEPHONE_NUMBER");
         public final static Property CardId = new Property(5, String.class, "cardId", false, "CARD_ID");
         public final static Property CreateTime = new Property(6, long.class, "createTime", false, "CREATE_TIME");
-        public final static Property UUID = new Property(7, String.class, "UUID", false, "UUID");
+        public final static Property CreateDayTime = new Property(7, long.class, "createDayTime", false, "CREATE_DAY_TIME");
+        public final static Property UUID = new Property(8, String.class, "UUID", false, "UUID");
+        public final static Property Balance = new Property(9, double.class, "balance", false, "BALANCE");
     }
 
 
@@ -47,14 +49,16 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"USER_INFORMATION\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"LAST_NAME\" TEXT," + // 1: lastName
                 "\"FIRST_NAME\" TEXT," + // 2: firstName
                 "\"LICENSE_PLATE_NUMBER\" TEXT," + // 3: licensePlateNumber
                 "\"TELEPHONE_NUMBER\" TEXT," + // 4: telephoneNumber
                 "\"CARD_ID\" TEXT," + // 5: cardId
                 "\"CREATE_TIME\" INTEGER NOT NULL ," + // 6: createTime
-                "\"UUID\" TEXT);"); // 7: UUID
+                "\"CREATE_DAY_TIME\" INTEGER NOT NULL ," + // 7: createDayTime
+                "\"UUID\" TEXT," + // 8: UUID
+                "\"BALANCE\" REAL NOT NULL );"); // 9: balance
         // Add Indexes
         db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_USER_INFORMATION_CARD_ID ON USER_INFORMATION" +
                 " (\"CARD_ID\" ASC);");
@@ -69,7 +73,11 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
     @Override
     protected final void bindValues(DatabaseStatement stmt, UserInformation entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
  
         String lastName = entity.getLastName();
         if (lastName != null) {
@@ -96,17 +104,23 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
             stmt.bindString(6, cardId);
         }
         stmt.bindLong(7, entity.getCreateTime());
+        stmt.bindLong(8, entity.getCreateDayTime());
  
         String UUID = entity.getUUID();
         if (UUID != null) {
-            stmt.bindString(8, UUID);
+            stmt.bindString(9, UUID);
         }
+        stmt.bindDouble(10, entity.getBalance());
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, UserInformation entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
  
         String lastName = entity.getLastName();
         if (lastName != null) {
@@ -133,43 +147,49 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
             stmt.bindString(6, cardId);
         }
         stmt.bindLong(7, entity.getCreateTime());
+        stmt.bindLong(8, entity.getCreateDayTime());
  
         String UUID = entity.getUUID();
         if (UUID != null) {
-            stmt.bindString(8, UUID);
+            stmt.bindString(9, UUID);
         }
+        stmt.bindDouble(10, entity.getBalance());
     }
 
     @Override
     public Long readKey(Cursor cursor, int offset) {
-        return cursor.getLong(offset + 0);
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public UserInformation readEntity(Cursor cursor, int offset) {
         UserInformation entity = new UserInformation( //
-            cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // lastName
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // firstName
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // licensePlateNumber
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // telephoneNumber
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // cardId
             cursor.getLong(offset + 6), // createTime
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7) // UUID
+            cursor.getLong(offset + 7), // createDayTime
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // UUID
+            cursor.getDouble(offset + 9) // balance
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, UserInformation entity, int offset) {
-        entity.setId(cursor.getLong(offset + 0));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setLastName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setFirstName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setLicensePlateNumber(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setTelephoneNumber(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setCardId(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setCreateTime(cursor.getLong(offset + 6));
-        entity.setUUID(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setCreateDayTime(cursor.getLong(offset + 7));
+        entity.setUUID(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setBalance(cursor.getDouble(offset + 9));
      }
     
     @Override
@@ -189,7 +209,7 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
 
     @Override
     public boolean hasKey(UserInformation entity) {
-        throw new UnsupportedOperationException("Unsupported for entities with a non-null key");
+        return entity.getId() != null;
     }
 
     @Override

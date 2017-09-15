@@ -192,6 +192,17 @@ public class TimeUtils {
     public static final SimpleDateFormat DEFAULT_YMD = new SimpleDateFormat("yyyy-MM-dd");
 
 
+    public static long getCrateDayTime(){
+        Date date = new Date();
+        String dateStr = DEFAULT_YMD.format(date);
+        try {
+            return DEFAULT_YMD.parse(dateStr).getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     /**
      * 将时间戳转为时间字符串
      * <p>格式为yyyy-MM-dd HH:mm:ss</p>

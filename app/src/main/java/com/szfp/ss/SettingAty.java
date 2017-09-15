@@ -56,6 +56,11 @@ public class SettingAty extends BaseAty implements CompoundButton.OnCheckedChang
 
 
     @Override
+    protected void showDisconnecting() {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_aty);

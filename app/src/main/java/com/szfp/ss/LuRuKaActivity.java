@@ -88,6 +88,11 @@ public class LuRuKaActivity extends BaseAty {
     private DialogSureCancel dialogSureCancel=null;
 
     @Override
+    protected void showDisconnecting() {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lu_ru_ka);
@@ -150,7 +155,7 @@ public class LuRuKaActivity extends BaseAty {
             @Override
             public void onReadCardNumSuccess(String num) {
                 playBeepSoundAndVibrate();
-                cardId = num.replace("0x", "").replace(",", "");
+                cardId = num.replace("0x", "").replace(",", "").replace("\n","");
                 if (DataUtils.isEmpty(DbHelper.selectCardIdForUserList(cardId)))
                 showView();
                 else {
@@ -191,6 +196,7 @@ public class LuRuKaActivity extends BaseAty {
         tvTn.setText(userInformation.getTelephoneNumber());
         userInformation.setCardId(cardId);
         userInformation.setCreateTime(new Date().getTime());
+        userInformation.setCreateDayTime(TimeUtils.getCrateDayTime());
         userInformation.setUUID(TimeUtils.getUUID());
     }
 

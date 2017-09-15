@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.RT_Printer.BluetoothPrinter.BLUETOOTH.BluetoothPrintDriver;
 import com.szfp.utils.AppManager;
+import com.szfp.utils.BluetoothService;
 import com.szfp.utils.ToastUtils;
 
 import android_serialport_api.SerialPortManager;
@@ -66,7 +67,9 @@ public abstract class BaseAty extends AppCompatActivity {
     // Local Bluetooth adapter
     protected BluetoothAdapter mBluetoothAdapter = null;
     // Member object for the chat services
-    private BluetoothPrintDriver mChatService = null;
+    protected BluetoothService mChatService = null;
+
+    protected BluetoothDevice con_dev = null;
 
 
     // The Handler that gets information back from the BluetoothChatService
@@ -77,10 +80,10 @@ public abstract class BaseAty extends AppCompatActivity {
                 case MESSAGE_STATE_CHANGE:
                     if(D) Log.i(TAG, "MESSAGE_STATE_CHANGE: " + msg.arg1);
                     switch (msg.arg1) {
-                        case BluetoothPrintDriver.STATE_CONNECTED:
+                        case BluetoothService.STATE_CONNECTED:   //已连接
                             showConnectedDeviceName(mConnectedDeviceName);
                             break;
-                        case BluetoothPrintDriver.STATE_CONNECTING:
+                        case BluetoothService.STATE_CONNECTING:  //正在连接
                             showConnecting();
                             break;
                         case BluetoothPrintDriver.STATE_LISTEN:
@@ -118,24 +121,28 @@ public abstract class BaseAty extends AppCompatActivity {
                 case MESSAGE_DEVICE_NAME:
                     // save the connected device's name
                     mConnectedDeviceName = msg.getData().getString(DEVICE_NAME);
-                    Toast.makeText(getApplicationContext(), "Connected to "
-                            + mConnectedDeviceName, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "CONN", Toast.LENGTH_SHORT).show();
                     break;
-                case MESSAGE_TOAST:
-                    Toast.makeText(getApplicationContext(), msg.getData().getString(TOAST),
+                case BluetoothService.MESSAGE_CONNECTION_LOST://蓝牙已断开连接
+                    showDisconnecting();
+                    break;
+                case BluetoothService.MESSAGE_UNABLE_CONNECT:     //无法连接设备
+                    showDisconnecting();
+                    Toast.makeText(getApplicationContext(), "Unable to connect device",
                             Toast.LENGTH_SHORT).show();
                     break;
             }
         }
     };
 
+    protected abstract void showDisconnecting();
 
 
     public void showDeviceList(){
-        if (BluetoothPrintDriver.IsNoConnection()){
+//        if (BluetoothPrintDriver.IsNoConnection()){
             Intent serverIntent = new Intent(this, DeviceListActivity.class);
             startActivityForResult(serverIntent, REQUEST_CONNECT_DEVICE);
-        }
+//        }
     };
 
 
@@ -201,7 +208,7 @@ public abstract class BaseAty extends AppCompatActivity {
     private void setupChat() {
         Log.d(TAG, "setupChat()");
         // Initialize the BluetoothChatService to perform bluetooth connections
-        mChatService = new BluetoothPrintDriver(this, mHandler);
+        mChatService = new BluetoothService(this, mHandler);
     }
 
     @SuppressLint("NewApi")
@@ -261,9 +268,9 @@ public abstract class BaseAty extends AppCompatActivity {
                     String address = data.getExtras()
                             .getString(DeviceListActivity.EXTRA_DEVICE_ADDRESS);
                     // Get the BLuetoothDevice object
-                    BluetoothDevice device = mBluetoothAdapter.getRemoteDevice(address);
+                   con_dev = mChatService.getDevByMac(address);
                     // Attempt to connect to the device
-                    mChatService.connect(device);
+                    mChatService.connect(con_dev);
                 }
                 break;
 
