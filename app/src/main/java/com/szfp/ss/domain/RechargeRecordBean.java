@@ -28,18 +28,20 @@ public class RechargeRecordBean implements Serializable {
 
 
     //2
-    private String  twoCashAmount  ="0.00";
-    private String  twoCardAmount  ="0.00";
-    private String  twoBuyType;
+    private String  twoCashAmount  ="0";
+    private String  twoCardAmount  ="0";
+    private  int twoBuyType;
     private int     twoBuyNum;
+    private   String   twoBuyName;
     private long createTime;
     private long createDayTime;
     private String UUID;
-    @Generated(hash = 943909555)
+    @Generated(hash = 1832386123)
     public RechargeRecordBean(Long id, Long userId, String lastName,
             String firstName, String rechargeAmount, String tradeType,
-            String twoCashAmount, String twoCardAmount, String twoBuyType,
-            int twoBuyNum, long createTime, long createDayTime, String UUID) {
+            String twoCashAmount, String twoCardAmount, int twoBuyType,
+            int twoBuyNum, String twoBuyName, long createTime, long createDayTime,
+            String UUID) {
         this.id = id;
         this.userId = userId;
         this.lastName = lastName;
@@ -50,6 +52,7 @@ public class RechargeRecordBean implements Serializable {
         this.twoCardAmount = twoCardAmount;
         this.twoBuyType = twoBuyType;
         this.twoBuyNum = twoBuyNum;
+        this.twoBuyName = twoBuyName;
         this.createTime = createTime;
         this.createDayTime = createDayTime;
         this.UUID = UUID;
@@ -105,10 +108,10 @@ public class RechargeRecordBean implements Serializable {
     public void setTwoCardAmount(String twoCardAmount) {
         this.twoCardAmount = twoCardAmount;
     }
-    public String getTwoBuyType() {
+    public int getTwoBuyType() {
         return this.twoBuyType;
     }
-    public void setTwoBuyType(String twoBuyType) {
+    public void setTwoBuyType(int twoBuyType) {
         this.twoBuyType = twoBuyType;
     }
     public int getTwoBuyNum() {
@@ -116,6 +119,12 @@ public class RechargeRecordBean implements Serializable {
     }
     public void setTwoBuyNum(int twoBuyNum) {
         this.twoBuyNum = twoBuyNum;
+    }
+    public String getTwoBuyName() {
+        return this.twoBuyName;
+    }
+    public void setTwoBuyName(String twoBuyName) {
+        this.twoBuyName = twoBuyName;
     }
     public long getCreateTime() {
         return this.createTime;
@@ -135,5 +144,6 @@ public class RechargeRecordBean implements Serializable {
     public void setUUID(String UUID) {
         this.UUID = UUID;
     }
+   
 
 }

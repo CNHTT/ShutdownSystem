@@ -97,19 +97,20 @@ public class ParkingFeeSettingsAty extends BaseAty {
         if (dialog == null)
             dialog = new DialogEditSureCancel(mContext);
 
+        dialog.getEditText().setText("");
         switch (i){
             case 1:
                 dialog. getTvTitle().setText("HOUR INPUT");
                 hourFee = SPUtils.getString(mContext, KEY.HOUR_FEE);
                 if (!isNullString(hourFee))
-                    dialog.getEditText().setText(DataUtils.format2Decimals(hourFee));
+                    dialog.getEditText().setHint(DataUtils.format2Decimals(hourFee));
                 else
                     dialog.getEditText().setHint(DataUtils.format2Decimals("0"));
                 break;
             case 2:
                 dialog. getTvTitle().setText("DAY INPUT");
                 dayFee = SPUtils.getString(mContext, KEY.DAY_FEE);
-                if (!isNullString(dayFee))dialog.getEditText().setText(DataUtils.format2Decimals(dayFee));
+                if (!isNullString(dayFee))dialog.getEditText().setHint(DataUtils.format2Decimals(dayFee));
                 else
                     dialog.getEditText().setHint(DataUtils.format2Decimals("0"));
                 break;
@@ -117,7 +118,8 @@ public class ParkingFeeSettingsAty extends BaseAty {
 
                 dialog. getTvTitle().setText("MONTH INPUT");
                 monthFee = SPUtils.getString(mContext, KEY.MONTH_FEE);
-                if (!isNullString(monthFee))dialog.getEditText().setText(DataUtils.format2Decimals(monthFee));
+                if (!isNullString(monthFee))
+                    dialog.getEditText().setHint(DataUtils.format2Decimals(monthFee));
                 else
                     dialog.getEditText().setHint(DataUtils.format2Decimals("0"));
                 break;

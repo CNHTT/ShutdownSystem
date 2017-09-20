@@ -91,4 +91,59 @@ public class DbHelper {
 
 
     }
+
+    public static void insertPurchaseTime(UserInformation userInformation,
+                                          int num, int totalAmount,
+                                          int type, OnRechargeRecordListener listener) {
+        RechargeRecordBean recordBean = new RechargeRecordBean();
+        try {
+            recordBean.setTradeType("2");
+            recordBean.setUUID(TimeUtils.getUUID());
+            recordBean.setUserId(userInformation.getId());
+            recordBean.setFirstName(userInformation.getFirstName());
+            recordBean.setLastName(userInformation.getLastName());
+            recordBean.setCreateTime(TimeUtils.getCurTimeMills());
+            recordBean.setCreateDayTime(TimeUtils.getCrateDayTime());
+            //添加充值记录
+
+            double amount =Double.valueOf(totalAmount);
+
+            recordBean.setTwoBuyNum(num);
+            recordBean.setTwoBuyType(type);
+            switch (type){
+                case 0:
+                    recordBean.setTwoBuyName("DAY");
+                    break;
+                case 1:
+                    recordBean.setTwoBuyName("HOUR");
+                    break;
+                case 2:
+                    recordBean.setTwoBuyName("MONTH");
+                    break;
+            }
+            double balance =  userInformation.getBalance();
+            if (balance >=amount){ //余额大于卡内金额直接扣钱
+                recordBean.setTwoCardAmount(String.valueOf(amount));
+                userInformation.setBalance(userInformation.getBalance()-amount);
+                recordBean.setTwoCashAmount("0");
+            }else {//
+                double cashAmount = amount - balance;
+                recordBean.setTwoCashAmount(String.valueOf(cashAmount));
+                recordBean.setTwoCardAmount(String.valueOf(balance));
+                userInformation.setBalance(0);
+            }
+
+
+            listener.success(userInformation,recordBean);
+
+
+
+
+
+
+
+        }catch (Exception e){
+            listener.error("Top-up failure");
+        }
+    }
 }

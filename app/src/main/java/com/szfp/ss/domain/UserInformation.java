@@ -154,5 +154,7 @@ public class UserInformation  implements Serializable{
     }
 
 
-    
+    public String getPurchaseTimeStr() {
+        return "";
+    }
 }
