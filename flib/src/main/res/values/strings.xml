@@ -19,7 +19,7 @@
     <!-- sfz activity -->
     <string name="read_sfz">Reader</string>
     <string name="sequential_sfz">Continuous reader</string>
-    <string name="stop">Stop</string>
+    <string name="stop">STOP</string>
     <string name="clear_sfz">Clear</string>
     <string name="read_card_fail">Did not find a card</string>
     <string name="read_card_success">Successful reader</string>

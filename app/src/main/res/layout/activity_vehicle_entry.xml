@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg"
+    tools:context="com.szfp.ss.RechargedActivity"
+    android:orientation="vertical">
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/transparent_a"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        android:padding="@dimen/materialize_baseline_grid_x2">
+
+        <com.szfp.view.button.SelectButton
+            android:id="@+id/bt_ve_read"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text="@string/read"
+            android:textSize="@dimen/text_font_20"
+            android:layout_weight="1"
+            app:normalBackgroundColor="@color/login_normal"
+            app:normalTextColor="@color/white"
+            app:pressedBackgroundColor="@color/login_pass"
+            app:pressedTextColor="@color/white" />
+
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/materialize_baseline_grid_x2" />
+        <com.szfp.view.button.SelectButton
+            android:id="@+id/bt_comm_print"
+            android:textSize="@dimen/text_font_12"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/conn_print"
+            app:normalBackgroundColor="@color/login_normal"
+            app:normalTextColor="@color/white"
+            app:pressedBackgroundColor="@color/login_pass"
+            app:pressedTextColor="@color/white" />
+
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/length_10" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.szfp.view.button.SelectButton
+                android:id="@+id/bt_repeat"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/repeat_on"
+                android:textSize="@dimen/text_font_20"
+                app:normalBackgroundColor="@color/login_normal"
+                app:normalTextColor="@color/white"
+                app:pressedBackgroundColor="@color/login_pass"
+                app:pressedTextColor="@color/white"
+                android:layout_weight="1" />
+            <View
+                android:layout_width="10dp"
+                android:layout_height="@dimen/materialize_baseline_grid_x2" />
+            <com.szfp.view.button.SelectButton
+                android:id="@+id/bt_stop"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/stop"
+                android:textSize="@dimen/text_font_20"
+                app:normalBackgroundColor="@color/login_normal"
+                app:normalTextColor="@color/white"
+                app:pressedBackgroundColor="@color/login_pass"
+                app:pressedTextColor="@color/white"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

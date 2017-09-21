@@ -34,6 +34,7 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
         public final static Property CreateDayTime = new Property(7, long.class, "createDayTime", false, "CREATE_DAY_TIME");
         public final static Property UUID = new Property(8, String.class, "UUID", false, "UUID");
         public final static Property Balance = new Property(9, double.class, "balance", false, "BALANCE");
+        public final static Property ParkingTimeIsValidEnd = new Property(10, long.class, "parkingTimeIsValidEnd", false, "PARKING_TIME_IS_VALID_END");
     }
 
 
@@ -58,7 +59,8 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
                 "\"CREATE_TIME\" INTEGER NOT NULL ," + // 6: createTime
                 "\"CREATE_DAY_TIME\" INTEGER NOT NULL ," + // 7: createDayTime
                 "\"UUID\" TEXT," + // 8: UUID
-                "\"BALANCE\" REAL NOT NULL );"); // 9: balance
+                "\"BALANCE\" REAL NOT NULL ," + // 9: balance
+                "\"PARKING_TIME_IS_VALID_END\" INTEGER NOT NULL );"); // 10: parkingTimeIsValidEnd
         // Add Indexes
         db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_USER_INFORMATION_CARD_ID ON USER_INFORMATION" +
                 " (\"CARD_ID\" ASC);");
@@ -111,6 +113,7 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
             stmt.bindString(9, UUID);
         }
         stmt.bindDouble(10, entity.getBalance());
+        stmt.bindLong(11, entity.getParkingTimeIsValidEnd());
     }
 
     @Override
@@ -154,6 +157,7 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
             stmt.bindString(9, UUID);
         }
         stmt.bindDouble(10, entity.getBalance());
+        stmt.bindLong(11, entity.getParkingTimeIsValidEnd());
     }
 
     @Override
@@ -173,7 +177,8 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
             cursor.getLong(offset + 6), // createTime
             cursor.getLong(offset + 7), // createDayTime
             cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // UUID
-            cursor.getDouble(offset + 9) // balance
+            cursor.getDouble(offset + 9), // balance
+            cursor.getLong(offset + 10) // parkingTimeIsValidEnd
         );
         return entity;
     }
@@ -190,6 +195,7 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
         entity.setCreateDayTime(cursor.getLong(offset + 7));
         entity.setUUID(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
         entity.setBalance(cursor.getDouble(offset + 9));
+        entity.setParkingTimeIsValidEnd(cursor.getLong(offset + 10));
      }
     
     @Override

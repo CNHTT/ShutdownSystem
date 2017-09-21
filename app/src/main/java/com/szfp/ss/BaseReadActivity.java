@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
@@ -51,6 +52,7 @@ public abstract class BaseReadActivity extends BaseAty {
     protected String cardId;
     protected static final long VIBRATE_DURATION = 200L;
     protected UserInformation userInformation;
+    protected boolean isRepeat=true;
 
 
     @Override
@@ -121,7 +123,12 @@ public abstract class BaseReadActivity extends BaseAty {
             public void onReadCardNumFail(int comfirmationCode) {
                 logger.debug("Read the card failure");
 //                reader.readCardNum();
-                if (isReader)flowable.subscribe(subscriber);
+                if (isRepeat){
+                    if (isReader)flowable.subscribe(subscriber);
+                }else {
+                    dialog.cancel();
+                }
+
 
             }
         });
@@ -155,7 +162,7 @@ public abstract class BaseReadActivity extends BaseAty {
         }
         dialogSureCancel.show();
     }
-    private void showSlotCard() {
+    public void showSlotCard() {
         if (dialog == null){
             View view = ContextUtils.inflate(this,R.layout.dialog_slot_card);
             webView = (WebView) view.findViewById(R.id.card_pat_wv);
@@ -216,5 +223,18 @@ public abstract class BaseReadActivity extends BaseAty {
     protected void onDestroy() {
         super.onDestroy();
         isReader=false;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case  android.R.id.home:
+                onBackPressed();
+                // 处理返回逻辑
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -6,7 +6,7 @@ package com.szfp.ss.domain;
  */
 
 public class PagerItem {
-    public   static  final String ENTER = "Vehicles entering";
+    public   static  final String ENTER = "Vehicle Entry";
     public   static  final String OUT_OF = "Out of the vehicle";
     public   static  final String TEMPORARY = "The temporary card";
     public   static  final String ENTRY_INFO = "Entry of Vehicle Information";

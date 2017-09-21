@@ -214,6 +214,63 @@ public class TimeUtils {
         return milliseconds2String(milliseconds, DEFAULT_SDF);
     }
 
+    /***
+     * 日期月份减一个月
+     *
+     * @param datetime
+     *            日期(2014-11)
+     * @return 2014-10
+     */
+    public static String dateFormat(String datetime) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        Date date = null;
+        try {
+            date = sdf.parse(datetime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Calendar cl = Calendar.getInstance();
+        cl.setTime(date);
+        cl.add(Calendar.MONTH, -1);
+        date = cl.getTime();
+        return sdf.format(date);
+    }
+
+    public static String dateFormat(Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        return sdf.format(date);
+    }
+
+    /****
+     * 传入具体日期 ，返回具体日期减一个月。
+     *
+     * @param date
+     *            日期(2014-04-20)
+     * @return 2014-03-20
+     * @throws ParseException
+     */
+    public static String subMonth(String date) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date dt = sdf.parse(date);
+        Calendar rightNow = Calendar.getInstance();
+        rightNow.setTime(dt);
+
+        rightNow.add(Calendar.MONTH, -1);
+        Date dt1 = rightNow.getTime();
+        String reStr = sdf.format(dt1);
+
+        return reStr;
+    }
+
+    public static long subMonth(long mills,int month)
+    {
+        Calendar rightNow = Calendar.getInstance();
+        rightNow.setTimeInMillis(mills);
+        rightNow.add(Calendar.MONTH,month);
+      return   rightNow.getTimeInMillis();
+
+    }
+
     /**
      * 将时间戳转为时间字符串
      * <p>格式为用户自定义</p>

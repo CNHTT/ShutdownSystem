@@ -1,5 +1,8 @@
 package com.szfp.ss.domain;
 
+import com.szfp.utils.DataUtils;
+import com.szfp.utils.TimeUtils;
+
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
@@ -30,12 +33,12 @@ public class UserInformation  implements Serializable{
 
 
     private double balance;
+    private long parkingTimeIsValidEnd;
 
-
-    @Generated(hash = 1473684631)
-    public UserInformation(Long id, String lastName, String firstName,
-            String licensePlateNumber, String telephoneNumber, String cardId,
-            long createTime, long createDayTime, String UUID, double balance) {
+    @Generated(hash = 1438713959)
+    public UserInformation(Long id, String lastName, String firstName, String licensePlateNumber,
+            String telephoneNumber, String cardId, long createTime, long createDayTime, String UUID,
+            double balance, long parkingTimeIsValidEnd) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
@@ -46,6 +49,7 @@ public class UserInformation  implements Serializable{
         this.createDayTime = createDayTime;
         this.UUID = UUID;
         this.balance = balance;
+        this.parkingTimeIsValidEnd = parkingTimeIsValidEnd;
     }
 
 
@@ -154,7 +158,28 @@ public class UserInformation  implements Serializable{
     }
 
 
-    public String getPurchaseTimeStr() {
-        return "";
+    public String getPurchaseTimeStr(RechargeRecordBean recordBean) {
+        StringBuffer sb = new StringBuffer();
+        sb.append("Transaction ID:"+recordBean.getUUID()+"\n");
+        sb.append("Name:" +firstName+" "+lastName+"\n");
+        sb.append("Balance:"+ DataUtils.getAmountValue(balance-recordBean.getTwoAmount())+"\n");
+        sb.append("telephoneNumber:"+telephoneNumber+"\n");
+        sb.append("PayCardAmount:"+DataUtils.getAmountValue(recordBean.getTwoCardAmount())+"\n");
+        sb.append("* PayCashAmount:"+DataUtils.getAmountValue(recordBean.getTwoCashAmount())+"\n");
+        sb.append("BuyType:"+recordBean.getTwoBuyName()+"\n");
+        sb.append("BuyNum:" + recordBean.getTwoBuyNum()+"\n");
+        sb.append("ParkingTimeIsValidEnd"+ TimeUtils.milliseconds2String(parkingTimeIsValidEnd)+"\n");
+        sb.append("CreateTime:"+TimeUtils.milliseconds2String(recordBean.getCreateTime()));
+        return sb.toString();
+    }
+
+
+    public long getParkingTimeIsValidEnd() {
+        return this.parkingTimeIsValidEnd;
+    }
+
+
+    public void setParkingTimeIsValidEnd(long parkingTimeIsValidEnd) {
+        this.parkingTimeIsValidEnd = parkingTimeIsValidEnd;
     }
 }

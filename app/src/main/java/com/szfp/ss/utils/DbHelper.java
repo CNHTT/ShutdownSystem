@@ -50,7 +50,7 @@ public class DbHelper {
      * @return
      */
     public static UserInformation selectCardIdForUserList(String cardId) {
-        UserInformation userInFo = null;
+        UserInformation userInFo = new UserInformation();
 
         try {
             userInFo = GreenDaoManager.getInstance()
@@ -92,9 +92,11 @@ public class DbHelper {
 
     }
 
-    public static void insertPurchaseTime(UserInformation userInformation,
+    public static void insertPurchaseTime(String card,
                                           int num, int totalAmount,
                                           int type, OnRechargeRecordListener listener) {
+        UserInformation userInformation= new UserInformation();
+        userInformation = selectCardIdForUserList(card);
         RechargeRecordBean recordBean = new RechargeRecordBean();
         try {
             recordBean.setTradeType("2");
@@ -112,19 +114,36 @@ public class DbHelper {
             recordBean.setTwoBuyType(type);
             switch (type){
                 case 0:
+                    if (userInformation.getParkingTimeIsValidEnd() ==0||userInformation.getParkingTimeIsValidEnd()<TimeUtils.getCurTimeMills()){
+                        userInformation.setParkingTimeIsValidEnd(TimeUtils.getCurTimeMills()+num*60*60*1000L);
+                    }else {
+                        userInformation.setParkingTimeIsValidEnd(userInformation.getParkingTimeIsValidEnd()+num*60*60*1000L);
+                    }
                     recordBean.setTwoBuyName("DAY");
                     break;
                 case 1:
+
+                    if (userInformation.getParkingTimeIsValidEnd() ==0||userInformation.getParkingTimeIsValidEnd()< TimeUtils.getCurTimeMills()){
+                        userInformation.setParkingTimeIsValidEnd(TimeUtils.getCurTimeMills()+num*86400000L);
+                    }else {
+                        userInformation.setParkingTimeIsValidEnd(userInformation.getParkingTimeIsValidEnd()+num*86400000L);
+                    }
                     recordBean.setTwoBuyName("HOUR");
                     break;
                 case 2:
+
+                    if (userInformation.getParkingTimeIsValidEnd() ==0||userInformation.getParkingTimeIsValidEnd()<TimeUtils.getCurTimeMills()){
+                        userInformation.setParkingTimeIsValidEnd(TimeUtils.subMonth(TimeUtils.getCurTimeMills(),num));
+                    }else {
+                        userInformation.setParkingTimeIsValidEnd(TimeUtils.subMonth(userInformation.getParkingTimeIsValidEnd(),num));
+                    }
                     recordBean.setTwoBuyName("MONTH");
                     break;
             }
             double balance =  userInformation.getBalance();
             if (balance >=amount){ //余额大于卡内金额直接扣钱
                 recordBean.setTwoCardAmount(String.valueOf(amount));
-                userInformation.setBalance(userInformation.getBalance()-amount);
+                recordBean.setTwoAmount(amount);
                 recordBean.setTwoCashAmount("0");
             }else {//
                 double cashAmount = amount - balance;
@@ -136,14 +155,29 @@ public class DbHelper {
 
             listener.success(userInformation,recordBean);
 
-
-
-
-
-
-
         }catch (Exception e){
             listener.error("Top-up failure");
         }
+    }
+
+    public static void insertSure(UserInformation uInfo, RechargeRecordBean recordBean) {
+        double balance =  uInfo.getBalance();
+        double amount =  recordBean.getTwoAmount();
+        if (balance >=amount){ //余额大于卡内金额直接扣钱
+            uInfo.setBalance(balance-amount);
+            recordBean.setTwoCashAmount("0");
+        }else {//
+            double cashAmount = amount - balance;
+            recordBean.setTwoCashAmount(String.valueOf(cashAmount));
+            recordBean.setTwoCardAmount(String.valueOf(balance));
+            uInfo.setBalance(0);
+        }
+
+
+
+
+
+        GreenDaoManager.getInstance().getSession().getRechargeRecordBeanDao().insert(recordBean);
+        GreenDaoManager.getInstance().getSession().getUserInformationDao().update(uInfo);
     }
 }

@@ -17,7 +17,7 @@
     <string name="login">Login</string>
 
     <string-array name="main">
-        <item>Vehicles entering</item>
+        <item>Vehicle Entry</item>
         <item>Out of the vehicle</item>
         <item>The temporary card</item>
         <item>Entry of Vehicle Information</item>
@@ -131,5 +131,8 @@
     <string name="title_other_devices">Other Available Devices</string>
     <string name="button_scan">Scan for devices</string>
     <string name="export_str">Export to PDF format</string>
-    <string name="conn_print">Connect the printer</string>
+    <string name="conn_print">CONNECT THE PRINTER</string>
+    <string name="read">READ</string>
+    <string name="repeat_on">REPEAT ON</string>
+    <string name="repeat_off">REPEAT OFF</string>
 </resources>

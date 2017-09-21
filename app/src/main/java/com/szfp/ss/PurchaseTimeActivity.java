@@ -208,6 +208,7 @@ public class PurchaseTimeActivity extends BaseAty {
             @Override
             public void onReadCardNumSuccess(String cardNum) {
                 playBeepSoundAndVibrate();
+                userInformation = new UserInformation();
                 cardId = cardNum.replace("0x", "").replace(",", "").replace("\n","");
                 logger.debug("READER CARD ID "+cardId );
 
@@ -216,15 +217,14 @@ public class PurchaseTimeActivity extends BaseAty {
                 mCubeGrid.stop();
                 userInformation = DbHelper.selectCardIdForUserList(cardId);
 
+                //查询成功进行充值
                 if(DataUtils.isEmpty(userInformation)){
                     //用户信息为空 重新刷卡
                     showNoUser();
 
                 }else {
-                    //查询成功进行充值
-
-                    if (userInformation.getBalance()<totalAmount){
-                        if (dialogSureCancel==null){
+                    if (userInformation.getBalance() < totalAmount) {
+                        if (dialogSureCancel == null) {
                             dialogSureCancel = new DialogSureCancel(mContext);
                             dialogSureCancel.getTvContent().setText("Insufficient balance\n" +
                                     "Whether to continue");
@@ -242,42 +242,46 @@ public class PurchaseTimeActivity extends BaseAty {
                                     dialogSureCancel.cancel();
                                 }
                             });
-                        }else dialogSureCancel.getTvContent().setText("Insufficient balance\n" +
+                        } else dialogSureCancel.getTvContent().setText("Insufficient balance\n" +
                                 "Whether to continue");
                         dialogSureCancel.show();
 
-                    }else
-
-                    DbHelper.insertPurchaseTime(userInformation,num,totalAmount,type, new OnRechargeRecordListener() {
-                        @Override
-                        public void success(final UserInformation uInfo, final RechargeRecordBean recordBean) {
+                    } else{
+                        DbHelper.insertPurchaseTime(cardId, num, totalAmount, type, new OnRechargeRecordListener() {
+                            @Override
+                            public void success(final UserInformation uInfo, final RechargeRecordBean recordBean) {
 
                                 dialogSureCancel = new DialogSureCancel(mContext);
-                                dialogSureCancel.getTvContent().setText(uInfo.getPurchtimeStr());
+                                dialogSureCancel.getTvContent().setText(uInfo.getPurchaseTimeStr(recordBean));
                                 dialogSureCancel.setCancelable(false);
                                 dialogSureCancel.getTvSure().setOnClickListener(new View.OnClickListener() {
                                     @Override
-                                    public void onClick(View v) {
-                                        PrintUtils.printRechargeRecord(uInfo,recordBean);
+                                    public void onClick(View v) {//确定充值
+                                        PrintUtils.printRechargeRecord(uInfo, recordBean);
+
+                                        DbHelper.insertSure(uInfo,recordBean);
+                                        userInformation=null;
                                         dialogSureCancel.cancel();
                                     }
                                 });
                                 dialogSureCancel.getTvCancel().setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
+
+                                        userInformation=null;
                                         dialogSureCancel.cancel();
                                     }
                                 });
 
-                            dialogSureCancel.show();
-                            PrintUtils.printRechargeRecord(uInfo,recordBean);
-                        }
+                                dialogSureCancel.show();
+                            }
 
-                        @Override
-                        public void error(String str) {
-                            ToastUtils.error(str);
-                        }
-                    });
+                            @Override
+                            public void error(String str) {
+                                ToastUtils.error(str);
+                            }
+                        });
+                    }
 
 
                 }

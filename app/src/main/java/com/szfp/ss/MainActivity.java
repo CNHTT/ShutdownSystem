@@ -126,8 +126,10 @@ public class MainActivity extends BaseNoAty implements AdapterView.OnItemClickLi
         Intent i = new Intent();
         switch (temp){
             case ENTER:     //车辆驶入
+                i.setClass(this,VehicleEntryActivity.class);
                 break;
             case OUT_OF:    //车辆离开
+                i.setClass(this,ExitVehicleActivity.class);
                 break;
             case TEMPORARY: //临时卡
                 i.setClass(this,RechargedActivity.class);

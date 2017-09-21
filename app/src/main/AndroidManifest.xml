@@ -61,40 +61,49 @@
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name=".AddUserCardAty"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
-            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection" />
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name=".SettingAty"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
-            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection" />
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name=".SettingsActivity"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
             android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection"
-            android:label="@string/title_activity_settings" />
+            android:label="@string/title_activity_settings"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name=".ParkingFeeSettingsAty"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
-            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection" />
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name=".LuRuKaActivity"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
-            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection" />
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name=".RechargedActivity"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
-            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection" />
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name=".RechargeAty"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
-            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection" />
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity
             android:name=".PurchaseTimeActivity"
-            android:windowSoftInputMode="stateHidden|stateUnchanged"
-            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection" />
-        <activity android:name=".DeviceListActivity"
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity
+            android:name=".DeviceListActivity"
             android:label="@string/select_device"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection"
+            android:windowSoftInputMode="stateHidden|stateUnchanged" />
+        <activity android:name=".VehicleEntryActivity"
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"/>
+        <activity android:name=".ExitVehicleActivity"
+            android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection"
+            android:windowSoftInputMode="stateHidden|stateUnchanged"/>
     </application>
 
 </manifest>
