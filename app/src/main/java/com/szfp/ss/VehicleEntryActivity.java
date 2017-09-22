@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.szfp.ss.domain.ParkingRecordReportBean;
 import com.szfp.ss.domain.UserInformation;
 import com.szfp.utils.BluetoothService;
 import com.szfp.utils.StatusBarUtil;
@@ -71,8 +72,14 @@ public class VehicleEntryActivity extends BaseReadActivity {
         btCommPrint.setText("CONN");
     }
 
+    /**
+     *
+     * @param userInformation
+     */
     @Override
     protected void showUser(UserInformation userInformation) {
+        ParkingRecordReportBean reportBean = new ParkingRecordReportBean();
+
 
     }
 

@@ -250,14 +250,15 @@ public class PurchaseTimeActivity extends BaseAty {
                         DbHelper.insertPurchaseTime(cardId, num, totalAmount, type, new OnRechargeRecordListener() {
                             @Override
                             public void success(final UserInformation uInfo, final RechargeRecordBean recordBean) {
-
+                                final String str= uInfo.getPurchaseTimeStr(recordBean);
                                 dialogSureCancel = new DialogSureCancel(mContext);
-                                dialogSureCancel.getTvContent().setText(uInfo.getPurchaseTimeStr(recordBean));
+                                dialogSureCancel.getTvContent().setText(str);
                                 dialogSureCancel.setCancelable(false);
                                 dialogSureCancel.getTvSure().setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {//确定充值
-                                        PrintUtils.printRechargeRecord(uInfo, recordBean);
+
+                                        PrintUtils.printPurchaseTime(str);
 
                                         DbHelper.insertSure(uInfo,recordBean);
                                         userInformation=null;

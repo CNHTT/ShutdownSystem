@@ -23,6 +23,10 @@ public class RechargeRecordBean implements Serializable {
     private String lastName;
     private String firstName;
 
+    private String cardId;
+    private String cardNumber;
+
+
     private String rechargeAmount;//充值交易的金额
     private String tradeType ; //交易类型 1-充值 2-购买·····
 
@@ -37,16 +41,18 @@ public class RechargeRecordBean implements Serializable {
     private long createTime;
     private long createDayTime;
     private String UUID;
-    @Generated(hash = 1218791956)
+    @Generated(hash = 11861036)
     public RechargeRecordBean(Long id, Long userId, String lastName,
-            String firstName, String rechargeAmount, String tradeType,
-            String twoCashAmount, String twoCardAmount, double twoAmount,
-            int twoBuyType, int twoBuyNum, String twoBuyName, long createTime,
-            long createDayTime, String UUID) {
+            String firstName, String cardId, String cardNumber,
+            String rechargeAmount, String tradeType, String twoCashAmount,
+            String twoCardAmount, double twoAmount, int twoBuyType, int twoBuyNum,
+            String twoBuyName, long createTime, long createDayTime, String UUID) {
         this.id = id;
         this.userId = userId;
         this.lastName = lastName;
         this.firstName = firstName;
+        this.cardId = cardId;
+        this.cardNumber = cardNumber;
         this.rechargeAmount = rechargeAmount;
         this.tradeType = tradeType;
         this.twoCashAmount = twoCashAmount;
@@ -151,6 +157,18 @@ public class RechargeRecordBean implements Serializable {
     }
     public void setTwoAmount(double twoAmount) {
         this.twoAmount = twoAmount;
+    }
+    public String getCardId() {
+        return this.cardId;
+    }
+    public void setCardId(String cardId) {
+        this.cardId = cardId;
+    }
+    public String getCardNumber() {
+        return this.cardNumber;
+    }
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
    
 

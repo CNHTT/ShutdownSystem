@@ -22,6 +22,12 @@ import com.szfp.utils.Utils;
 
 public class App extends Application {
     private  String rootPath;
+    public static String companyName="SZFP TECHNOLOGY LIMITED";
+
+    public static String operator = "00001";
+
+    public static String terminalNumber="00001";
+
 
     public static  final Logger logger = LoggerFactory.getLogger();
 

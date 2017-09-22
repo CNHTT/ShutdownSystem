@@ -102,6 +102,7 @@ public class DbHelper {
             recordBean.setTradeType("2");
             recordBean.setUUID(TimeUtils.getUUID());
             recordBean.setUserId(userInformation.getId());
+            recordBean.setCardId(card);
             recordBean.setFirstName(userInformation.getFirstName());
             recordBean.setLastName(userInformation.getLastName());
             recordBean.setCreateTime(TimeUtils.getCurTimeMills());

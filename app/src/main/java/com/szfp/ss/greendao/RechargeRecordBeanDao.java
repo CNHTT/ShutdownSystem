@@ -28,17 +28,19 @@ public class RechargeRecordBeanDao extends AbstractDao<RechargeRecordBean, Long>
         public final static Property UserId = new Property(1, Long.class, "userId", false, "USER_ID");
         public final static Property LastName = new Property(2, String.class, "lastName", false, "LAST_NAME");
         public final static Property FirstName = new Property(3, String.class, "firstName", false, "FIRST_NAME");
-        public final static Property RechargeAmount = new Property(4, String.class, "rechargeAmount", false, "RECHARGE_AMOUNT");
-        public final static Property TradeType = new Property(5, String.class, "tradeType", false, "TRADE_TYPE");
-        public final static Property TwoCashAmount = new Property(6, String.class, "twoCashAmount", false, "TWO_CASH_AMOUNT");
-        public final static Property TwoCardAmount = new Property(7, String.class, "twoCardAmount", false, "TWO_CARD_AMOUNT");
-        public final static Property TwoAmount = new Property(8, double.class, "twoAmount", false, "TWO_AMOUNT");
-        public final static Property TwoBuyType = new Property(9, int.class, "twoBuyType", false, "TWO_BUY_TYPE");
-        public final static Property TwoBuyNum = new Property(10, int.class, "twoBuyNum", false, "TWO_BUY_NUM");
-        public final static Property TwoBuyName = new Property(11, String.class, "twoBuyName", false, "TWO_BUY_NAME");
-        public final static Property CreateTime = new Property(12, long.class, "createTime", false, "CREATE_TIME");
-        public final static Property CreateDayTime = new Property(13, long.class, "createDayTime", false, "CREATE_DAY_TIME");
-        public final static Property UUID = new Property(14, String.class, "UUID", false, "UUID");
+        public final static Property CardId = new Property(4, String.class, "cardId", false, "CARD_ID");
+        public final static Property CardNumber = new Property(5, String.class, "cardNumber", false, "CARD_NUMBER");
+        public final static Property RechargeAmount = new Property(6, String.class, "rechargeAmount", false, "RECHARGE_AMOUNT");
+        public final static Property TradeType = new Property(7, String.class, "tradeType", false, "TRADE_TYPE");
+        public final static Property TwoCashAmount = new Property(8, String.class, "twoCashAmount", false, "TWO_CASH_AMOUNT");
+        public final static Property TwoCardAmount = new Property(9, String.class, "twoCardAmount", false, "TWO_CARD_AMOUNT");
+        public final static Property TwoAmount = new Property(10, double.class, "twoAmount", false, "TWO_AMOUNT");
+        public final static Property TwoBuyType = new Property(11, int.class, "twoBuyType", false, "TWO_BUY_TYPE");
+        public final static Property TwoBuyNum = new Property(12, int.class, "twoBuyNum", false, "TWO_BUY_NUM");
+        public final static Property TwoBuyName = new Property(13, String.class, "twoBuyName", false, "TWO_BUY_NAME");
+        public final static Property CreateTime = new Property(14, long.class, "createTime", false, "CREATE_TIME");
+        public final static Property CreateDayTime = new Property(15, long.class, "createDayTime", false, "CREATE_DAY_TIME");
+        public final static Property UUID = new Property(16, String.class, "UUID", false, "UUID");
     }
 
 
@@ -58,17 +60,19 @@ public class RechargeRecordBeanDao extends AbstractDao<RechargeRecordBean, Long>
                 "\"USER_ID\" INTEGER," + // 1: userId
                 "\"LAST_NAME\" TEXT," + // 2: lastName
                 "\"FIRST_NAME\" TEXT," + // 3: firstName
-                "\"RECHARGE_AMOUNT\" TEXT," + // 4: rechargeAmount
-                "\"TRADE_TYPE\" TEXT," + // 5: tradeType
-                "\"TWO_CASH_AMOUNT\" TEXT," + // 6: twoCashAmount
-                "\"TWO_CARD_AMOUNT\" TEXT," + // 7: twoCardAmount
-                "\"TWO_AMOUNT\" REAL NOT NULL ," + // 8: twoAmount
-                "\"TWO_BUY_TYPE\" INTEGER NOT NULL ," + // 9: twoBuyType
-                "\"TWO_BUY_NUM\" INTEGER NOT NULL ," + // 10: twoBuyNum
-                "\"TWO_BUY_NAME\" TEXT," + // 11: twoBuyName
-                "\"CREATE_TIME\" INTEGER NOT NULL ," + // 12: createTime
-                "\"CREATE_DAY_TIME\" INTEGER NOT NULL ," + // 13: createDayTime
-                "\"UUID\" TEXT);"); // 14: UUID
+                "\"CARD_ID\" TEXT," + // 4: cardId
+                "\"CARD_NUMBER\" TEXT," + // 5: cardNumber
+                "\"RECHARGE_AMOUNT\" TEXT," + // 6: rechargeAmount
+                "\"TRADE_TYPE\" TEXT," + // 7: tradeType
+                "\"TWO_CASH_AMOUNT\" TEXT," + // 8: twoCashAmount
+                "\"TWO_CARD_AMOUNT\" TEXT," + // 9: twoCardAmount
+                "\"TWO_AMOUNT\" REAL NOT NULL ," + // 10: twoAmount
+                "\"TWO_BUY_TYPE\" INTEGER NOT NULL ," + // 11: twoBuyType
+                "\"TWO_BUY_NUM\" INTEGER NOT NULL ," + // 12: twoBuyNum
+                "\"TWO_BUY_NAME\" TEXT," + // 13: twoBuyName
+                "\"CREATE_TIME\" INTEGER NOT NULL ," + // 14: createTime
+                "\"CREATE_DAY_TIME\" INTEGER NOT NULL ," + // 15: createDayTime
+                "\"UUID\" TEXT);"); // 16: UUID
     }
 
     /** Drops the underlying database table. */
@@ -101,39 +105,49 @@ public class RechargeRecordBeanDao extends AbstractDao<RechargeRecordBean, Long>
             stmt.bindString(4, firstName);
         }
  
+        String cardId = entity.getCardId();
+        if (cardId != null) {
+            stmt.bindString(5, cardId);
+        }
+ 
+        String cardNumber = entity.getCardNumber();
+        if (cardNumber != null) {
+            stmt.bindString(6, cardNumber);
+        }
+ 
         String rechargeAmount = entity.getRechargeAmount();
         if (rechargeAmount != null) {
-            stmt.bindString(5, rechargeAmount);
+            stmt.bindString(7, rechargeAmount);
         }
  
         String tradeType = entity.getTradeType();
         if (tradeType != null) {
-            stmt.bindString(6, tradeType);
+            stmt.bindString(8, tradeType);
         }
  
         String twoCashAmount = entity.getTwoCashAmount();
         if (twoCashAmount != null) {
-            stmt.bindString(7, twoCashAmount);
+            stmt.bindString(9, twoCashAmount);
         }
  
         String twoCardAmount = entity.getTwoCardAmount();
         if (twoCardAmount != null) {
-            stmt.bindString(8, twoCardAmount);
+            stmt.bindString(10, twoCardAmount);
         }
-        stmt.bindDouble(9, entity.getTwoAmount());
-        stmt.bindLong(10, entity.getTwoBuyType());
-        stmt.bindLong(11, entity.getTwoBuyNum());
+        stmt.bindDouble(11, entity.getTwoAmount());
+        stmt.bindLong(12, entity.getTwoBuyType());
+        stmt.bindLong(13, entity.getTwoBuyNum());
  
         String twoBuyName = entity.getTwoBuyName();
         if (twoBuyName != null) {
-            stmt.bindString(12, twoBuyName);
+            stmt.bindString(14, twoBuyName);
         }
-        stmt.bindLong(13, entity.getCreateTime());
-        stmt.bindLong(14, entity.getCreateDayTime());
+        stmt.bindLong(15, entity.getCreateTime());
+        stmt.bindLong(16, entity.getCreateDayTime());
  
         String UUID = entity.getUUID();
         if (UUID != null) {
-            stmt.bindString(15, UUID);
+            stmt.bindString(17, UUID);
         }
     }
 
@@ -161,39 +175,49 @@ public class RechargeRecordBeanDao extends AbstractDao<RechargeRecordBean, Long>
             stmt.bindString(4, firstName);
         }
  
+        String cardId = entity.getCardId();
+        if (cardId != null) {
+            stmt.bindString(5, cardId);
+        }
+ 
+        String cardNumber = entity.getCardNumber();
+        if (cardNumber != null) {
+            stmt.bindString(6, cardNumber);
+        }
+ 
         String rechargeAmount = entity.getRechargeAmount();
         if (rechargeAmount != null) {
-            stmt.bindString(5, rechargeAmount);
+            stmt.bindString(7, rechargeAmount);
         }
  
         String tradeType = entity.getTradeType();
         if (tradeType != null) {
-            stmt.bindString(6, tradeType);
+            stmt.bindString(8, tradeType);
         }
  
         String twoCashAmount = entity.getTwoCashAmount();
         if (twoCashAmount != null) {
-            stmt.bindString(7, twoCashAmount);
+            stmt.bindString(9, twoCashAmount);
         }
  
         String twoCardAmount = entity.getTwoCardAmount();
         if (twoCardAmount != null) {
-            stmt.bindString(8, twoCardAmount);
+            stmt.bindString(10, twoCardAmount);
         }
-        stmt.bindDouble(9, entity.getTwoAmount());
-        stmt.bindLong(10, entity.getTwoBuyType());
-        stmt.bindLong(11, entity.getTwoBuyNum());
+        stmt.bindDouble(11, entity.getTwoAmount());
+        stmt.bindLong(12, entity.getTwoBuyType());
+        stmt.bindLong(13, entity.getTwoBuyNum());
  
         String twoBuyName = entity.getTwoBuyName();
         if (twoBuyName != null) {
-            stmt.bindString(12, twoBuyName);
+            stmt.bindString(14, twoBuyName);
         }
-        stmt.bindLong(13, entity.getCreateTime());
-        stmt.bindLong(14, entity.getCreateDayTime());
+        stmt.bindLong(15, entity.getCreateTime());
+        stmt.bindLong(16, entity.getCreateDayTime());
  
         String UUID = entity.getUUID();
         if (UUID != null) {
-            stmt.bindString(15, UUID);
+            stmt.bindString(17, UUID);
         }
     }
 
@@ -209,17 +233,19 @@ public class RechargeRecordBeanDao extends AbstractDao<RechargeRecordBean, Long>
             cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // userId
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // lastName
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // firstName
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // rechargeAmount
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // tradeType
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // twoCashAmount
-            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // twoCardAmount
-            cursor.getDouble(offset + 8), // twoAmount
-            cursor.getInt(offset + 9), // twoBuyType
-            cursor.getInt(offset + 10), // twoBuyNum
-            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // twoBuyName
-            cursor.getLong(offset + 12), // createTime
-            cursor.getLong(offset + 13), // createDayTime
-            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14) // UUID
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // cardId
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // cardNumber
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // rechargeAmount
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // tradeType
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // twoCashAmount
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // twoCardAmount
+            cursor.getDouble(offset + 10), // twoAmount
+            cursor.getInt(offset + 11), // twoBuyType
+            cursor.getInt(offset + 12), // twoBuyNum
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // twoBuyName
+            cursor.getLong(offset + 14), // createTime
+            cursor.getLong(offset + 15), // createDayTime
+            cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16) // UUID
         );
         return entity;
     }
@@ -230,17 +256,19 @@ public class RechargeRecordBeanDao extends AbstractDao<RechargeRecordBean, Long>
         entity.setUserId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
         entity.setLastName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setFirstName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setRechargeAmount(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setTradeType(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setTwoCashAmount(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setTwoCardAmount(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
-        entity.setTwoAmount(cursor.getDouble(offset + 8));
-        entity.setTwoBuyType(cursor.getInt(offset + 9));
-        entity.setTwoBuyNum(cursor.getInt(offset + 10));
-        entity.setTwoBuyName(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
-        entity.setCreateTime(cursor.getLong(offset + 12));
-        entity.setCreateDayTime(cursor.getLong(offset + 13));
-        entity.setUUID(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
+        entity.setCardId(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setCardNumber(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setRechargeAmount(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setTradeType(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setTwoCashAmount(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setTwoCardAmount(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setTwoAmount(cursor.getDouble(offset + 10));
+        entity.setTwoBuyType(cursor.getInt(offset + 11));
+        entity.setTwoBuyNum(cursor.getInt(offset + 12));
+        entity.setTwoBuyName(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
+        entity.setCreateTime(cursor.getLong(offset + 14));
+        entity.setCreateDayTime(cursor.getLong(offset + 15));
+        entity.setUUID(cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16));
      }
     
     @Override

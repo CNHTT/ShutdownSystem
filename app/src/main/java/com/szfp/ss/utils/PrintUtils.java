@@ -32,4 +32,22 @@ public class PrintUtils {
         BluetoothService.BT_Write(" "+"\r");
         BluetoothService.BT_Write(print_ticket_line+"\r");
     }
+
+    public static void printPurchaseTime(String str) {
+        BluetoothService.Begin();
+        BluetoothService.LF();
+        BluetoothService.SetAlignMode((byte) 1);
+        BluetoothService.SetLineSpacing((byte)40);
+        BluetoothService.SetFontEnlarge((byte) 0x01);
+        BluetoothService.BT_Write("Purchase Time");
+
+        BluetoothService.LF();
+        BluetoothService.SetAlignMode((byte)0);//左对齐
+        BluetoothService.SetFontEnlarge((byte)0x00);//默认宽度、默认高度
+        BluetoothService.BT_Write(str+"\r");
+        BluetoothService.BT_Write("SERVED BY: " +"ADMIN"+"\r");
+        BluetoothService.BT_Write(" "+"\r");
+        BluetoothService.BT_Write(" "+"\r");
+        BluetoothService.BT_Write(print_ticket_line+"\r");
+    }
 }
