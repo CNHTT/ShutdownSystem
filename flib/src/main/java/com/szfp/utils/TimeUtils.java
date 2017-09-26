@@ -683,6 +683,19 @@ public class TimeUtils {
         String video_time = sdf.format(milliseconds);
         return video_time;
     }
+    /**
+     * 停车时间 转换成 "mm:ss"
+     *
+     * @param milliseconds
+     * @return
+     */
+    public static String formatParkTime(long milliseconds) {
+        String format = "HH:mm:ss";
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+0"));
+        String video_time = sdf.format(milliseconds);
+        return video_time;
+    }
 
     /**
      * "mm:ss" 转换成 视频时间

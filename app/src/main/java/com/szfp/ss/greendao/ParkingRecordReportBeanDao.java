@@ -24,16 +24,35 @@ public class ParkingRecordReportBeanDao extends AbstractDao<ParkingRecordReportB
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property Id = new Property(0, long.class, "id", true, "_id");
-        public final static Property UserId = new Property(1, long.class, "userId", false, "USER_ID");
-        public final static Property LastName = new Property(2, String.class, "lastName", false, "LAST_NAME");
-        public final static Property FirstName = new Property(3, String.class, "firstName", false, "FIRST_NAME");
-        public final static Property PType = new Property(4, int.class, "pType", false, "P_TYPE");
-        public final static Property AdminId = new Property(5, long.class, "adminId", false, "ADMIN_ID");
-        public final static Property AdminNumber = new Property(6, String.class, "adminNumber", false, "ADMIN_NUMBER");
-        public final static Property EnterTime = new Property(7, long.class, "enterTime", false, "ENTER_TIME");
-        public final static Property CreateTime = new Property(8, long.class, "createTime", false, "CREATE_TIME");
-        public final static Property CreateDayTime = new Property(9, long.class, "createDayTime", false, "CREATE_DAY_TIME");
+        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
+        public final static Property SerialNumber = new Property(1, String.class, "serialNumber", false, "SERIAL_NUMBER");
+        public final static Property Type = new Property(2, int.class, "type", false, "TYPE");
+        public final static Property UUID = new Property(3, String.class, "UUID", false, "UUID");
+        public final static Property CardId = new Property(4, String.class, "cardId", false, "CARD_ID");
+        public final static Property CardNumber = new Property(5, String.class, "cardNumber", false, "CARD_NUMBER");
+        public final static Property LastName = new Property(6, String.class, "lastName", false, "LAST_NAME");
+        public final static Property FirstName = new Property(7, String.class, "firstName", false, "FIRST_NAME");
+        public final static Property LicensePlateNumber = new Property(8, String.class, "licensePlateNumber", false, "LICENSE_PLATE_NUMBER");
+        public final static Property PreTradeBalance = new Property(9, double.class, "preTradeBalance", false, "PRE_TRADE_BALANCE");
+        public final static Property PostTradeBalance = new Property(10, double.class, "postTradeBalance", false, "POST_TRADE_BALANCE");
+        public final static Property ParkingTimeIsValidEnd = new Property(11, long.class, "parkingTimeIsValidEnd", false, "PARKING_TIME_IS_VALID_END");
+        public final static Property PType = new Property(12, int.class, "pType", false, "P_TYPE");
+        public final static Property AdminId = new Property(13, long.class, "adminId", false, "ADMIN_ID");
+        public final static Property AdminNumber = new Property(14, String.class, "adminNumber", false, "ADMIN_NUMBER");
+        public final static Property TerminalNumber = new Property(15, String.class, "terminalNumber", false, "TERMINAL_NUMBER");
+        public final static Property ParkingNumber = new Property(16, String.class, "parkingNumber", false, "PARKING_NUMBER");
+        public final static Property EnterTime = new Property(17, long.class, "enterTime", false, "ENTER_TIME");
+        public final static Property CreateTime = new Property(18, long.class, "createTime", false, "CREATE_TIME");
+        public final static Property CreateDayTime = new Property(19, long.class, "createDayTime", false, "CREATE_DAY_TIME");
+        public final static Property ExitTime = new Property(20, long.class, "exitTime", false, "EXIT_TIME");
+        public final static Property ExitCreateTime = new Property(21, long.class, "exitCreateTime", false, "EXIT_CREATE_TIME");
+        public final static Property ExitCreateDayTime = new Property(22, long.class, "exitCreateDayTime", false, "EXIT_CREATE_DAY_TIME");
+        public final static Property DeductionMethod = new Property(23, int.class, "deductionMethod", false, "DEDUCTION_METHOD");
+        public final static Property ParkingAmount = new Property(24, double.class, "parkingAmount", false, "PARKING_AMOUNT");
+        public final static Property ParkingTime = new Property(25, long.class, "parkingTime", false, "PARKING_TIME");
+        public final static Property IntTime = new Property(26, int.class, "intTime", false, "INT_TIME");
+        public final static Property CardAmount = new Property(27, double.class, "cardAmount", false, "CARD_AMOUNT");
+        public final static Property CashAmount = new Property(28, double.class, "cashAmount", false, "CASH_AMOUNT");
     }
 
 
@@ -49,16 +68,35 @@ public class ParkingRecordReportBeanDao extends AbstractDao<ParkingRecordReportB
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"PARKING_RECORD_REPORT_BEAN\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL ," + // 0: id
-                "\"USER_ID\" INTEGER NOT NULL ," + // 1: userId
-                "\"LAST_NAME\" TEXT," + // 2: lastName
-                "\"FIRST_NAME\" TEXT," + // 3: firstName
-                "\"P_TYPE\" INTEGER NOT NULL ," + // 4: pType
-                "\"ADMIN_ID\" INTEGER NOT NULL ," + // 5: adminId
-                "\"ADMIN_NUMBER\" TEXT," + // 6: adminNumber
-                "\"ENTER_TIME\" INTEGER NOT NULL ," + // 7: enterTime
-                "\"CREATE_TIME\" INTEGER NOT NULL ," + // 8: createTime
-                "\"CREATE_DAY_TIME\" INTEGER NOT NULL );"); // 9: createDayTime
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
+                "\"SERIAL_NUMBER\" TEXT," + // 1: serialNumber
+                "\"TYPE\" INTEGER NOT NULL ," + // 2: type
+                "\"UUID\" TEXT," + // 3: UUID
+                "\"CARD_ID\" TEXT," + // 4: cardId
+                "\"CARD_NUMBER\" TEXT," + // 5: cardNumber
+                "\"LAST_NAME\" TEXT," + // 6: lastName
+                "\"FIRST_NAME\" TEXT," + // 7: firstName
+                "\"LICENSE_PLATE_NUMBER\" TEXT," + // 8: licensePlateNumber
+                "\"PRE_TRADE_BALANCE\" REAL NOT NULL ," + // 9: preTradeBalance
+                "\"POST_TRADE_BALANCE\" REAL NOT NULL ," + // 10: postTradeBalance
+                "\"PARKING_TIME_IS_VALID_END\" INTEGER NOT NULL ," + // 11: parkingTimeIsValidEnd
+                "\"P_TYPE\" INTEGER NOT NULL ," + // 12: pType
+                "\"ADMIN_ID\" INTEGER NOT NULL ," + // 13: adminId
+                "\"ADMIN_NUMBER\" TEXT," + // 14: adminNumber
+                "\"TERMINAL_NUMBER\" TEXT," + // 15: terminalNumber
+                "\"PARKING_NUMBER\" TEXT," + // 16: parkingNumber
+                "\"ENTER_TIME\" INTEGER NOT NULL ," + // 17: enterTime
+                "\"CREATE_TIME\" INTEGER NOT NULL ," + // 18: createTime
+                "\"CREATE_DAY_TIME\" INTEGER NOT NULL ," + // 19: createDayTime
+                "\"EXIT_TIME\" INTEGER NOT NULL ," + // 20: exitTime
+                "\"EXIT_CREATE_TIME\" INTEGER NOT NULL ," + // 21: exitCreateTime
+                "\"EXIT_CREATE_DAY_TIME\" INTEGER NOT NULL ," + // 22: exitCreateDayTime
+                "\"DEDUCTION_METHOD\" INTEGER NOT NULL ," + // 23: deductionMethod
+                "\"PARKING_AMOUNT\" REAL NOT NULL ," + // 24: parkingAmount
+                "\"PARKING_TIME\" INTEGER NOT NULL ," + // 25: parkingTime
+                "\"INT_TIME\" INTEGER NOT NULL ," + // 26: intTime
+                "\"CARD_AMOUNT\" REAL NOT NULL ," + // 27: cardAmount
+                "\"CASH_AMOUNT\" REAL NOT NULL );"); // 28: cashAmount
     }
 
     /** Drops the underlying database table. */
@@ -70,91 +108,231 @@ public class ParkingRecordReportBeanDao extends AbstractDao<ParkingRecordReportB
     @Override
     protected final void bindValues(DatabaseStatement stmt, ParkingRecordReportBean entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
-        stmt.bindLong(2, entity.getUserId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+ 
+        String serialNumber = entity.getSerialNumber();
+        if (serialNumber != null) {
+            stmt.bindString(2, serialNumber);
+        }
+        stmt.bindLong(3, entity.getType());
+ 
+        String UUID = entity.getUUID();
+        if (UUID != null) {
+            stmt.bindString(4, UUID);
+        }
+ 
+        String cardId = entity.getCardId();
+        if (cardId != null) {
+            stmt.bindString(5, cardId);
+        }
+ 
+        String cardNumber = entity.getCardNumber();
+        if (cardNumber != null) {
+            stmt.bindString(6, cardNumber);
+        }
  
         String lastName = entity.getLastName();
         if (lastName != null) {
-            stmt.bindString(3, lastName);
+            stmt.bindString(7, lastName);
         }
  
         String firstName = entity.getFirstName();
         if (firstName != null) {
-            stmt.bindString(4, firstName);
+            stmt.bindString(8, firstName);
         }
-        stmt.bindLong(5, entity.getPType());
-        stmt.bindLong(6, entity.getAdminId());
+ 
+        String licensePlateNumber = entity.getLicensePlateNumber();
+        if (licensePlateNumber != null) {
+            stmt.bindString(9, licensePlateNumber);
+        }
+        stmt.bindDouble(10, entity.getPreTradeBalance());
+        stmt.bindDouble(11, entity.getPostTradeBalance());
+        stmt.bindLong(12, entity.getParkingTimeIsValidEnd());
+        stmt.bindLong(13, entity.getPType());
+        stmt.bindLong(14, entity.getAdminId());
  
         String adminNumber = entity.getAdminNumber();
         if (adminNumber != null) {
-            stmt.bindString(7, adminNumber);
+            stmt.bindString(15, adminNumber);
         }
-        stmt.bindLong(8, entity.getEnterTime());
-        stmt.bindLong(9, entity.getCreateTime());
-        stmt.bindLong(10, entity.getCreateDayTime());
+ 
+        String terminalNumber = entity.getTerminalNumber();
+        if (terminalNumber != null) {
+            stmt.bindString(16, terminalNumber);
+        }
+ 
+        String parkingNumber = entity.getParkingNumber();
+        if (parkingNumber != null) {
+            stmt.bindString(17, parkingNumber);
+        }
+        stmt.bindLong(18, entity.getEnterTime());
+        stmt.bindLong(19, entity.getCreateTime());
+        stmt.bindLong(20, entity.getCreateDayTime());
+        stmt.bindLong(21, entity.getExitTime());
+        stmt.bindLong(22, entity.getExitCreateTime());
+        stmt.bindLong(23, entity.getExitCreateDayTime());
+        stmt.bindLong(24, entity.getDeductionMethod());
+        stmt.bindDouble(25, entity.getParkingAmount());
+        stmt.bindLong(26, entity.getParkingTime());
+        stmt.bindLong(27, entity.getIntTime());
+        stmt.bindDouble(28, entity.getCardAmount());
+        stmt.bindDouble(29, entity.getCashAmount());
     }
 
     @Override
     protected final void bindValues(SQLiteStatement stmt, ParkingRecordReportBean entity) {
         stmt.clearBindings();
-        stmt.bindLong(1, entity.getId());
-        stmt.bindLong(2, entity.getUserId());
+ 
+        Long id = entity.getId();
+        if (id != null) {
+            stmt.bindLong(1, id);
+        }
+ 
+        String serialNumber = entity.getSerialNumber();
+        if (serialNumber != null) {
+            stmt.bindString(2, serialNumber);
+        }
+        stmt.bindLong(3, entity.getType());
+ 
+        String UUID = entity.getUUID();
+        if (UUID != null) {
+            stmt.bindString(4, UUID);
+        }
+ 
+        String cardId = entity.getCardId();
+        if (cardId != null) {
+            stmt.bindString(5, cardId);
+        }
+ 
+        String cardNumber = entity.getCardNumber();
+        if (cardNumber != null) {
+            stmt.bindString(6, cardNumber);
+        }
  
         String lastName = entity.getLastName();
         if (lastName != null) {
-            stmt.bindString(3, lastName);
+            stmt.bindString(7, lastName);
         }
  
         String firstName = entity.getFirstName();
         if (firstName != null) {
-            stmt.bindString(4, firstName);
+            stmt.bindString(8, firstName);
         }
-        stmt.bindLong(5, entity.getPType());
-        stmt.bindLong(6, entity.getAdminId());
+ 
+        String licensePlateNumber = entity.getLicensePlateNumber();
+        if (licensePlateNumber != null) {
+            stmt.bindString(9, licensePlateNumber);
+        }
+        stmt.bindDouble(10, entity.getPreTradeBalance());
+        stmt.bindDouble(11, entity.getPostTradeBalance());
+        stmt.bindLong(12, entity.getParkingTimeIsValidEnd());
+        stmt.bindLong(13, entity.getPType());
+        stmt.bindLong(14, entity.getAdminId());
  
         String adminNumber = entity.getAdminNumber();
         if (adminNumber != null) {
-            stmt.bindString(7, adminNumber);
+            stmt.bindString(15, adminNumber);
         }
-        stmt.bindLong(8, entity.getEnterTime());
-        stmt.bindLong(9, entity.getCreateTime());
-        stmt.bindLong(10, entity.getCreateDayTime());
+ 
+        String terminalNumber = entity.getTerminalNumber();
+        if (terminalNumber != null) {
+            stmt.bindString(16, terminalNumber);
+        }
+ 
+        String parkingNumber = entity.getParkingNumber();
+        if (parkingNumber != null) {
+            stmt.bindString(17, parkingNumber);
+        }
+        stmt.bindLong(18, entity.getEnterTime());
+        stmt.bindLong(19, entity.getCreateTime());
+        stmt.bindLong(20, entity.getCreateDayTime());
+        stmt.bindLong(21, entity.getExitTime());
+        stmt.bindLong(22, entity.getExitCreateTime());
+        stmt.bindLong(23, entity.getExitCreateDayTime());
+        stmt.bindLong(24, entity.getDeductionMethod());
+        stmt.bindDouble(25, entity.getParkingAmount());
+        stmt.bindLong(26, entity.getParkingTime());
+        stmt.bindLong(27, entity.getIntTime());
+        stmt.bindDouble(28, entity.getCardAmount());
+        stmt.bindDouble(29, entity.getCashAmount());
     }
 
     @Override
     public Long readKey(Cursor cursor, int offset) {
-        return cursor.getLong(offset + 0);
+        return cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0);
     }    
 
     @Override
     public ParkingRecordReportBean readEntity(Cursor cursor, int offset) {
         ParkingRecordReportBean entity = new ParkingRecordReportBean( //
-            cursor.getLong(offset + 0), // id
-            cursor.getLong(offset + 1), // userId
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // lastName
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // firstName
-            cursor.getInt(offset + 4), // pType
-            cursor.getLong(offset + 5), // adminId
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // adminNumber
-            cursor.getLong(offset + 7), // enterTime
-            cursor.getLong(offset + 8), // createTime
-            cursor.getLong(offset + 9) // createDayTime
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // serialNumber
+            cursor.getInt(offset + 2), // type
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // UUID
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // cardId
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // cardNumber
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // lastName
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // firstName
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // licensePlateNumber
+            cursor.getDouble(offset + 9), // preTradeBalance
+            cursor.getDouble(offset + 10), // postTradeBalance
+            cursor.getLong(offset + 11), // parkingTimeIsValidEnd
+            cursor.getInt(offset + 12), // pType
+            cursor.getLong(offset + 13), // adminId
+            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14), // adminNumber
+            cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15), // terminalNumber
+            cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16), // parkingNumber
+            cursor.getLong(offset + 17), // enterTime
+            cursor.getLong(offset + 18), // createTime
+            cursor.getLong(offset + 19), // createDayTime
+            cursor.getLong(offset + 20), // exitTime
+            cursor.getLong(offset + 21), // exitCreateTime
+            cursor.getLong(offset + 22), // exitCreateDayTime
+            cursor.getInt(offset + 23), // deductionMethod
+            cursor.getDouble(offset + 24), // parkingAmount
+            cursor.getLong(offset + 25), // parkingTime
+            cursor.getInt(offset + 26), // intTime
+            cursor.getDouble(offset + 27), // cardAmount
+            cursor.getDouble(offset + 28) // cashAmount
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, ParkingRecordReportBean entity, int offset) {
-        entity.setId(cursor.getLong(offset + 0));
-        entity.setUserId(cursor.getLong(offset + 1));
-        entity.setLastName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setFirstName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setPType(cursor.getInt(offset + 4));
-        entity.setAdminId(cursor.getLong(offset + 5));
-        entity.setAdminNumber(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
-        entity.setEnterTime(cursor.getLong(offset + 7));
-        entity.setCreateTime(cursor.getLong(offset + 8));
-        entity.setCreateDayTime(cursor.getLong(offset + 9));
+        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setSerialNumber(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setType(cursor.getInt(offset + 2));
+        entity.setUUID(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setCardId(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setCardNumber(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setLastName(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setFirstName(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setLicensePlateNumber(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setPreTradeBalance(cursor.getDouble(offset + 9));
+        entity.setPostTradeBalance(cursor.getDouble(offset + 10));
+        entity.setParkingTimeIsValidEnd(cursor.getLong(offset + 11));
+        entity.setPType(cursor.getInt(offset + 12));
+        entity.setAdminId(cursor.getLong(offset + 13));
+        entity.setAdminNumber(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
+        entity.setTerminalNumber(cursor.isNull(offset + 15) ? null : cursor.getString(offset + 15));
+        entity.setParkingNumber(cursor.isNull(offset + 16) ? null : cursor.getString(offset + 16));
+        entity.setEnterTime(cursor.getLong(offset + 17));
+        entity.setCreateTime(cursor.getLong(offset + 18));
+        entity.setCreateDayTime(cursor.getLong(offset + 19));
+        entity.setExitTime(cursor.getLong(offset + 20));
+        entity.setExitCreateTime(cursor.getLong(offset + 21));
+        entity.setExitCreateDayTime(cursor.getLong(offset + 22));
+        entity.setDeductionMethod(cursor.getInt(offset + 23));
+        entity.setParkingAmount(cursor.getDouble(offset + 24));
+        entity.setParkingTime(cursor.getLong(offset + 25));
+        entity.setIntTime(cursor.getInt(offset + 26));
+        entity.setCardAmount(cursor.getDouble(offset + 27));
+        entity.setCashAmount(cursor.getDouble(offset + 28));
      }
     
     @Override
@@ -174,7 +352,7 @@ public class ParkingRecordReportBeanDao extends AbstractDao<ParkingRecordReportB
 
     @Override
     public boolean hasKey(ParkingRecordReportBean entity) {
-        throw new UnsupportedOperationException("Unsupported for entities with a non-null key");
+        return entity.getId() != null;
     }
 
     @Override

@@ -24,6 +24,8 @@ public class UserInformation  implements Serializable{
     private String licensePlateNumber;
     private String telephoneNumber;
 
+    private String cardNumber;
+
 
     @Index(unique = true)
     private String cardId;
@@ -35,15 +37,16 @@ public class UserInformation  implements Serializable{
     private double balance;
     private long parkingTimeIsValidEnd;
 
-    @Generated(hash = 1438713959)
+    @Generated(hash = 1003781941)
     public UserInformation(Long id, String lastName, String firstName, String licensePlateNumber,
-            String telephoneNumber, String cardId, long createTime, long createDayTime, String UUID,
-            double balance, long parkingTimeIsValidEnd) {
+            String telephoneNumber, String cardNumber, String cardId, long createTime,
+            long createDayTime, String UUID, double balance, long parkingTimeIsValidEnd) {
         this.id = id;
         this.lastName = lastName;
         this.firstName = firstName;
         this.licensePlateNumber = licensePlateNumber;
         this.telephoneNumber = telephoneNumber;
+        this.cardNumber = cardNumber;
         this.cardId = cardId;
         this.createTime = createTime;
         this.createDayTime = createDayTime;
@@ -181,5 +184,15 @@ public class UserInformation  implements Serializable{
 
     public void setParkingTimeIsValidEnd(long parkingTimeIsValidEnd) {
         this.parkingTimeIsValidEnd = parkingTimeIsValidEnd;
+    }
+
+
+    public String getCardNumber() {
+        return this.cardNumber;
+    }
+
+
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
     }
 }

@@ -1,11 +1,24 @@
 package com.szfp.ss.utils;
 
+import com.szfp.ss.R;
+import com.szfp.ss.domain.ParkingRecordReportBean;
 import com.szfp.ss.domain.RechargeRecordBean;
 import com.szfp.ss.domain.UserInformation;
+import com.szfp.ss.greendao.ParkingRecordReportBeanDao;
 import com.szfp.ss.greendao.UserInformationDao;
+import com.szfp.ss.inter.OnEntryVehicleListener;
+import com.szfp.ss.inter.OnExitVehicleListener;
 import com.szfp.ss.inter.OnRechargeRecordListener;
+import com.szfp.utils.BluetoothService;
 import com.szfp.utils.DataUtils;
 import com.szfp.utils.TimeUtils;
+import com.szfp.utils.ToastUtils;
+
+import org.greenrobot.greendao.query.Query;
+
+import java.util.ArrayList;
+
+import static com.szfp.utils.Utils.getContext;
 
 /**
  * author：ct on 2017/9/12 10:47
@@ -180,5 +193,49 @@ public class DbHelper {
 
         GreenDaoManager.getInstance().getSession().getRechargeRecordBeanDao().insert(recordBean);
         GreenDaoManager.getInstance().getSession().getUserInformationDao().update(uInfo);
+    }
+
+    public static void insertEntryVehicle(ParkingRecordReportBean reportBean, OnEntryVehicleListener onEntryVehicleListener) {
+        try {
+            GreenDaoManager.getInstance().getSession().getParkingRecordReportBeanDao().insert(reportBean);
+            onEntryVehicleListener.success(reportBean);
+        }catch (Exception e){
+            onEntryVehicleListener.error(e.toString());
+        }
+    }
+
+    public static void getParkingExitList(UserInformation userInformation, OnExitVehicleListener  listener) {
+        try {
+            Query<ParkingRecordReportBean> query = null;
+            ArrayList count = null;
+            query = GreenDaoManager.getInstance().getSession().getParkingRecordReportBeanDao().queryBuilder()
+                    .where(ParkingRecordReportBeanDao.Properties.CardId.eq(userInformation.getCardId())
+                            ,ParkingRecordReportBeanDao.Properties.Type.eq(0))
+                    .orderDesc(ParkingRecordReportBeanDao.Properties.Id).build();
+            if (query == null)
+            {
+                listener.error(getContext().getString(R.string.no_park_data));
+            }
+            else
+            {
+                count = (ArrayList) query.list();
+                listener.success(count);
+            }
+        }catch (Exception e){
+            listener.error(e.toString());
+        }
+    }
+
+
+    public static void updateExitVehicle(ParkingRecordReportBean reportBean, UserInformation userInformation) {
+        try {
+            GreenDaoManager.getInstance().getSession().getUserInformationDao().update(userInformation);
+            GreenDaoManager.getInstance().getSession().getParkingRecordReportBeanDao().update(reportBean);
+            if (BluetoothService.IsNoConnection()) ToastUtils.error(getContext().getString(R.string.not_connected));
+            else PrintUtils.printExitVehicle(userInformation,reportBean);
+            ToastUtils.success(getContext().getString(R.string.exit_success));
+        }catch (Exception e){
+            ToastUtils.error(e.toString());
+        }
     }
 }

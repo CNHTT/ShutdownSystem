@@ -29,12 +29,13 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
         public final static Property FirstName = new Property(2, String.class, "firstName", false, "FIRST_NAME");
         public final static Property LicensePlateNumber = new Property(3, String.class, "licensePlateNumber", false, "LICENSE_PLATE_NUMBER");
         public final static Property TelephoneNumber = new Property(4, String.class, "telephoneNumber", false, "TELEPHONE_NUMBER");
-        public final static Property CardId = new Property(5, String.class, "cardId", false, "CARD_ID");
-        public final static Property CreateTime = new Property(6, long.class, "createTime", false, "CREATE_TIME");
-        public final static Property CreateDayTime = new Property(7, long.class, "createDayTime", false, "CREATE_DAY_TIME");
-        public final static Property UUID = new Property(8, String.class, "UUID", false, "UUID");
-        public final static Property Balance = new Property(9, double.class, "balance", false, "BALANCE");
-        public final static Property ParkingTimeIsValidEnd = new Property(10, long.class, "parkingTimeIsValidEnd", false, "PARKING_TIME_IS_VALID_END");
+        public final static Property CardNumber = new Property(5, String.class, "cardNumber", false, "CARD_NUMBER");
+        public final static Property CardId = new Property(6, String.class, "cardId", false, "CARD_ID");
+        public final static Property CreateTime = new Property(7, long.class, "createTime", false, "CREATE_TIME");
+        public final static Property CreateDayTime = new Property(8, long.class, "createDayTime", false, "CREATE_DAY_TIME");
+        public final static Property UUID = new Property(9, String.class, "UUID", false, "UUID");
+        public final static Property Balance = new Property(10, double.class, "balance", false, "BALANCE");
+        public final static Property ParkingTimeIsValidEnd = new Property(11, long.class, "parkingTimeIsValidEnd", false, "PARKING_TIME_IS_VALID_END");
     }
 
 
@@ -55,12 +56,13 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
                 "\"FIRST_NAME\" TEXT," + // 2: firstName
                 "\"LICENSE_PLATE_NUMBER\" TEXT," + // 3: licensePlateNumber
                 "\"TELEPHONE_NUMBER\" TEXT," + // 4: telephoneNumber
-                "\"CARD_ID\" TEXT," + // 5: cardId
-                "\"CREATE_TIME\" INTEGER NOT NULL ," + // 6: createTime
-                "\"CREATE_DAY_TIME\" INTEGER NOT NULL ," + // 7: createDayTime
-                "\"UUID\" TEXT," + // 8: UUID
-                "\"BALANCE\" REAL NOT NULL ," + // 9: balance
-                "\"PARKING_TIME_IS_VALID_END\" INTEGER NOT NULL );"); // 10: parkingTimeIsValidEnd
+                "\"CARD_NUMBER\" TEXT," + // 5: cardNumber
+                "\"CARD_ID\" TEXT," + // 6: cardId
+                "\"CREATE_TIME\" INTEGER NOT NULL ," + // 7: createTime
+                "\"CREATE_DAY_TIME\" INTEGER NOT NULL ," + // 8: createDayTime
+                "\"UUID\" TEXT," + // 9: UUID
+                "\"BALANCE\" REAL NOT NULL ," + // 10: balance
+                "\"PARKING_TIME_IS_VALID_END\" INTEGER NOT NULL );"); // 11: parkingTimeIsValidEnd
         // Add Indexes
         db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_USER_INFORMATION_CARD_ID ON USER_INFORMATION" +
                 " (\"CARD_ID\" ASC);");
@@ -101,19 +103,24 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
             stmt.bindString(5, telephoneNumber);
         }
  
+        String cardNumber = entity.getCardNumber();
+        if (cardNumber != null) {
+            stmt.bindString(6, cardNumber);
+        }
+ 
         String cardId = entity.getCardId();
         if (cardId != null) {
-            stmt.bindString(6, cardId);
+            stmt.bindString(7, cardId);
         }
-        stmt.bindLong(7, entity.getCreateTime());
-        stmt.bindLong(8, entity.getCreateDayTime());
+        stmt.bindLong(8, entity.getCreateTime());
+        stmt.bindLong(9, entity.getCreateDayTime());
  
         String UUID = entity.getUUID();
         if (UUID != null) {
-            stmt.bindString(9, UUID);
+            stmt.bindString(10, UUID);
         }
-        stmt.bindDouble(10, entity.getBalance());
-        stmt.bindLong(11, entity.getParkingTimeIsValidEnd());
+        stmt.bindDouble(11, entity.getBalance());
+        stmt.bindLong(12, entity.getParkingTimeIsValidEnd());
     }
 
     @Override
@@ -145,19 +152,24 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
             stmt.bindString(5, telephoneNumber);
         }
  
+        String cardNumber = entity.getCardNumber();
+        if (cardNumber != null) {
+            stmt.bindString(6, cardNumber);
+        }
+ 
         String cardId = entity.getCardId();
         if (cardId != null) {
-            stmt.bindString(6, cardId);
+            stmt.bindString(7, cardId);
         }
-        stmt.bindLong(7, entity.getCreateTime());
-        stmt.bindLong(8, entity.getCreateDayTime());
+        stmt.bindLong(8, entity.getCreateTime());
+        stmt.bindLong(9, entity.getCreateDayTime());
  
         String UUID = entity.getUUID();
         if (UUID != null) {
-            stmt.bindString(9, UUID);
+            stmt.bindString(10, UUID);
         }
-        stmt.bindDouble(10, entity.getBalance());
-        stmt.bindLong(11, entity.getParkingTimeIsValidEnd());
+        stmt.bindDouble(11, entity.getBalance());
+        stmt.bindLong(12, entity.getParkingTimeIsValidEnd());
     }
 
     @Override
@@ -173,12 +185,13 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // firstName
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // licensePlateNumber
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // telephoneNumber
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // cardId
-            cursor.getLong(offset + 6), // createTime
-            cursor.getLong(offset + 7), // createDayTime
-            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // UUID
-            cursor.getDouble(offset + 9), // balance
-            cursor.getLong(offset + 10) // parkingTimeIsValidEnd
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // cardNumber
+            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // cardId
+            cursor.getLong(offset + 7), // createTime
+            cursor.getLong(offset + 8), // createDayTime
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // UUID
+            cursor.getDouble(offset + 10), // balance
+            cursor.getLong(offset + 11) // parkingTimeIsValidEnd
         );
         return entity;
     }
@@ -190,12 +203,13 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
         entity.setFirstName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setLicensePlateNumber(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setTelephoneNumber(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setCardId(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setCreateTime(cursor.getLong(offset + 6));
-        entity.setCreateDayTime(cursor.getLong(offset + 7));
-        entity.setUUID(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
-        entity.setBalance(cursor.getDouble(offset + 9));
-        entity.setParkingTimeIsValidEnd(cursor.getLong(offset + 10));
+        entity.setCardNumber(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setCardId(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setCreateTime(cursor.getLong(offset + 7));
+        entity.setCreateDayTime(cursor.getLong(offset + 8));
+        entity.setUUID(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
+        entity.setBalance(cursor.getDouble(offset + 10));
+        entity.setParkingTimeIsValidEnd(cursor.getLong(offset + 11));
      }
     
     @Override

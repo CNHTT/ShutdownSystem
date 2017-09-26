@@ -24,10 +24,17 @@ public class App extends Application {
     private  String rootPath;
     public static String companyName="SZFP TECHNOLOGY LIMITED";
 
+    public static String tel = "0086-0755-86276295";
+
+    public static String website ="http://www.szfptech.com";
+
+    public static String address="Room 506-507,HuaTong Business Building,XinGao Road,XiLi Town,NanShan District,ShenZhen,China.Post Code 518055";
+    //操作员编号
     public static String operator = "00001";
-
+    //终端号
     public static String terminalNumber="00001";
-
+    //停车场编号
+    public static String parkingNumber="000009";
 
     public static  final Logger logger = LoggerFactory.getLogger();
 

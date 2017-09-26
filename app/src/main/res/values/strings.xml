@@ -135,4 +135,6 @@
     <string name="read">READ</string>
     <string name="repeat_on">REPEAT ON</string>
     <string name="repeat_off">REPEAT OFF</string>
+    <string name="no_park_data">No parking information data</string>
+    <string name="exit_success">Success Fee</string>
 </resources>
