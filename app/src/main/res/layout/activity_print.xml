@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.szfp.ss.PrintActivity">
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="right"
+        android:background="@color/transparent_a"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:paddingLeft="@dimen/length_100"
+                android:id="@+id/conn_print"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true">
+
+                <ImageView
+                    android:id="@+id/iv_print"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="41dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/ic_print_no_conn"
+                    android:cropToPadding="false"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true" />
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+    </android.support.v7.widget.Toolbar>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/bt_select_recharge"
+            android:layout_width="0dp"
+            android:background="@drawable/btn_nor_down"
+            android:layout_height="wrap_content"
+            android:text="@string/r"
+            android:layout_weight="1" />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="@color/help_view"/>
+        <Button
+            android:id="@+id/bt_select_purchase"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/p"
+            android:background="@drawable/btn_nor_down"
+            android:layout_weight="1" />
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="@color/help_view"/>
+        <Button
+            android:id="@+id/bt_select_Enter"
+            android:layout_width="0dp"
+            android:background="@drawable/btn_nor_down"
+            android:layout_height="wrap_content"
+            android:text="@string/r"
+            android:layout_weight="1" />
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="fill_parent"
+            android:background="@color/help_view"/>
+        <Button
+            android:id="@+id/bt_select_Exit"
+            android:layout_width="0dp"
+            android:background="@drawable/btn_nor_down"
+            android:layout_height="wrap_content"
+            android:text="@string/r"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+
+    <com.szfp.view.listview.PullToRefreshLayout
+        android:id="@+id/mRefreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.szfp.view.listview.PullListView
+            android:id="@+id/mPullListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:listSelector="@android:color/transparent"
+            android:overScrollMode="never"
+            android:scrollingCache="false"></com.szfp.view.listview.PullListView>
+    </com.szfp.view.listview.PullToRefreshLayout>
+
+
+</LinearLayout>

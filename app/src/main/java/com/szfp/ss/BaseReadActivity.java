@@ -1,11 +1,13 @@
 package com.szfp.ss;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.annotation.Nullable;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.webkit.WebView;
 import android.widget.ImageView;
 
@@ -53,6 +55,7 @@ public abstract class BaseReadActivity extends BaseAty {
     protected static final long VIBRATE_DURATION = 200L;
     protected UserInformation userInformation;
     protected boolean isRepeat=true;
+    protected ProgressDialog loadDialog;
 
 
     @Override
@@ -133,6 +136,28 @@ public abstract class BaseReadActivity extends BaseAty {
             }
         });
 
+        initDialog();
+
+    }
+
+
+    private void initDialog() {
+        loadDialog = new ProgressDialog(this);
+        loadDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        loadDialog.setCanceledOnTouchOutside(false);
+        loadDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loadDialog.setMessage("Connecting device...");
+    }
+
+    protected void showLoadDialog(){
+        if (dialog != null && !dialog.isShowing()) {
+            dialog.show();
+        }
+    }
+    protected void showLoadDismiss(){
+        if (dialog != null && dialog.isShowing()) {
+            dialog.dismiss();
+        }
     }
 
     protected abstract void showUser(UserInformation userInformation);

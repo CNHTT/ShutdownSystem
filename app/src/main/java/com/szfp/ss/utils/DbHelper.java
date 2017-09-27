@@ -112,6 +112,7 @@ public class DbHelper {
         userInformation = selectCardIdForUserList(card);
         RechargeRecordBean recordBean = new RechargeRecordBean();
         try {
+            recordBean.setSerialNumber(TimeUtils.generateSequenceNo());
             recordBean.setTradeType("2");
             recordBean.setUUID(TimeUtils.getUUID());
             recordBean.setUserId(userInformation.getId());

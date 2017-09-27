@@ -22,7 +22,7 @@
         <item>The temporary card</item>
         <item>Entry of Vehicle Information</item>
         <item>Issuing new Member Cards </item>
-        <item>Permissions/Operation card</item>
+        <item>PRINT</item>
         <item>Statistical Control</item>
         <item>Query Log</item>
         <item>System Settings</item>
@@ -137,4 +137,18 @@
     <string name="repeat_off">REPEAT OFF</string>
     <string name="no_park_data">No parking information data</string>
     <string name="exit_success">Success Fee</string>
+    <string name="r">R</string>
+    <string name="p">P</string>
+    <string name="has_no_data">没有内容，刷新一下吧~</string>
+    <string name="pull_to_refresh">pull to refresh</string>
+    <string name="release_to_refresh">release to refresh</string>
+    <string name="refreshing">refreshing…</string>
+    <string name="refresh_succeeded">refresh succeeded</string>
+    <string name="refresh_failed">refresh failed</string>
+    <string name="pull_up_to_load">pull up to load</string>
+    <string name="release_to_load">release to load</string>
+    <string name="loading">loading…</string>
+    <string name="load_succeeded">load succeeded</string>
+    <string name="load_failed">load failed</string>
+    <string name="customize_resources">cus resources</string>
 </resources>

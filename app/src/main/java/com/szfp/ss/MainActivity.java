@@ -138,6 +138,7 @@ public class MainActivity extends BaseNoAty implements AdapterView.OnItemClickLi
                 i.setClass(this,AddUserAty.class);
                 break;
             case P0:        //权限、管理
+                i.setClass(this,PrintActivity.class);
                 break;
             case SC:        //统计管理
                 break;

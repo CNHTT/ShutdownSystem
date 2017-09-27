@@ -36,7 +36,7 @@ public class SerialNumberAdapter  extends BaseListAdapter<ParkingRecordReportBea
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.tvContent.setText(position+1+getItem(position).getSerialNumber());
+        viewHolder.tvContent.setText(position+1+":"+getItem(position).getSerialNumber());
 
 
         return convertView;

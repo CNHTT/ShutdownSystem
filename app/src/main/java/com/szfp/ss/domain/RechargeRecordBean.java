@@ -23,6 +23,10 @@ public class RechargeRecordBean implements Serializable {
     private String lastName;
     private String firstName;
 
+    private String prepaidAmount;
+
+    private String serialNumber;
+
     private String cardId;
     private String cardNumber;
 
@@ -41,9 +45,9 @@ public class RechargeRecordBean implements Serializable {
     private long createTime;
     private long createDayTime;
     private String UUID;
-    @Generated(hash = 11861036)
+    @Generated(hash = 1564982066)
     public RechargeRecordBean(Long id, Long userId, String lastName,
-            String firstName, String cardId, String cardNumber,
+            String firstName, String serialNumber, String cardId, String cardNumber,
             String rechargeAmount, String tradeType, String twoCashAmount,
             String twoCardAmount, double twoAmount, int twoBuyType, int twoBuyNum,
             String twoBuyName, long createTime, long createDayTime, String UUID) {
@@ -51,6 +55,7 @@ public class RechargeRecordBean implements Serializable {
         this.userId = userId;
         this.lastName = lastName;
         this.firstName = firstName;
+        this.serialNumber = serialNumber;
         this.cardId = cardId;
         this.cardNumber = cardNumber;
         this.rechargeAmount = rechargeAmount;
@@ -169,6 +174,12 @@ public class RechargeRecordBean implements Serializable {
     }
     public void setCardNumber(String cardNumber) {
         this.cardNumber = cardNumber;
+    }
+    public String getSerialNumber() {
+        return this.serialNumber;
+    }
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
     }
    
 

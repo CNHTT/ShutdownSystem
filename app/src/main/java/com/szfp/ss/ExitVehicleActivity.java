@@ -69,7 +69,7 @@ public class ExitVehicleActivity  extends BaseReadActivity {
     private void initView() {
         if (!BluetoothService.IsNoConnection()){
             mWave = new Wave();
-            mWave.setBounds(0,0,100,100);
+            mWave.setBounds(0,0,60,60);
             mWave.setColor(getResources().getColor(R.color.wheat));
             btCommPrint.setCompoundDrawables(mWave,null,null,null);
             mWave.start();
@@ -128,6 +128,7 @@ public class ExitVehicleActivity  extends BaseReadActivity {
                             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                                 reportBean = list.get(position);
                                 addReportBean(userInformation);
+                                dialog.cancel();
                             }
                         });
 
