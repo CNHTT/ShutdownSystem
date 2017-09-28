@@ -65,37 +65,19 @@
             android:layout_height="fill_parent"
             android:background="@color/help_view"/>
         <Button
-            android:id="@+id/bt_select_purchase"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/p"
-            android:background="@drawable/btn_nor_down"
-            android:layout_weight="1" />
-        <View
-            android:layout_width="1dp"
-            android:layout_height="fill_parent"
-            android:background="@color/help_view"/>
-        <Button
             android:id="@+id/bt_select_Enter"
             android:layout_width="0dp"
             android:background="@drawable/btn_nor_down"
             android:layout_height="wrap_content"
-            android:text="@string/r"
+            android:text="@string/p"
             android:layout_weight="1" />
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="fill_parent"
-            android:background="@color/help_view"/>
-        <Button
-            android:id="@+id/bt_select_Exit"
-            android:layout_width="0dp"
-            android:background="@drawable/btn_nor_down"
-            android:layout_height="wrap_content"
-            android:text="@string/r"
-            android:layout_weight="1" />
     </LinearLayout>
 
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0.5dp"
+        android:background="@color/encode_view"/>
 
     <com.szfp.view.listview.PullToRefreshLayout
         android:id="@+id/mRefreshLayout"

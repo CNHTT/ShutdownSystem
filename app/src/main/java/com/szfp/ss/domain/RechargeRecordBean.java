@@ -23,7 +23,8 @@ public class RechargeRecordBean implements Serializable {
     private String lastName;
     private String firstName;
 
-    private String prepaidAmount;
+    private double prepaidAmount;
+    private double afterAmount;
 
     private String serialNumber;
 
@@ -41,20 +42,25 @@ public class RechargeRecordBean implements Serializable {
     private double  twoAmount;
     private  int twoBuyType;
     private int     twoBuyNum;
+    private long parkingTimeIsValidEnd;
     private   String   twoBuyName;
     private long createTime;
     private long createDayTime;
     private String UUID;
-    @Generated(hash = 1564982066)
+    @Generated(hash = 373560559)
     public RechargeRecordBean(Long id, Long userId, String lastName,
-            String firstName, String serialNumber, String cardId, String cardNumber,
+            String firstName, double prepaidAmount, double afterAmount,
+            String serialNumber, String cardId, String cardNumber,
             String rechargeAmount, String tradeType, String twoCashAmount,
             String twoCardAmount, double twoAmount, int twoBuyType, int twoBuyNum,
-            String twoBuyName, long createTime, long createDayTime, String UUID) {
+            long parkingTimeIsValidEnd, String twoBuyName, long createTime,
+            long createDayTime, String UUID) {
         this.id = id;
         this.userId = userId;
         this.lastName = lastName;
         this.firstName = firstName;
+        this.prepaidAmount = prepaidAmount;
+        this.afterAmount = afterAmount;
         this.serialNumber = serialNumber;
         this.cardId = cardId;
         this.cardNumber = cardNumber;
@@ -65,6 +71,7 @@ public class RechargeRecordBean implements Serializable {
         this.twoAmount = twoAmount;
         this.twoBuyType = twoBuyType;
         this.twoBuyNum = twoBuyNum;
+        this.parkingTimeIsValidEnd = parkingTimeIsValidEnd;
         this.twoBuyName = twoBuyName;
         this.createTime = createTime;
         this.createDayTime = createDayTime;
@@ -97,6 +104,36 @@ public class RechargeRecordBean implements Serializable {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
+    public double getPrepaidAmount() {
+        return this.prepaidAmount;
+    }
+    public void setPrepaidAmount(double prepaidAmount) {
+        this.prepaidAmount = prepaidAmount;
+    }
+    public double getAfterAmount() {
+        return this.afterAmount;
+    }
+    public void setAfterAmount(double afterAmount) {
+        this.afterAmount = afterAmount;
+    }
+    public String getSerialNumber() {
+        return this.serialNumber;
+    }
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+    public String getCardId() {
+        return this.cardId;
+    }
+    public void setCardId(String cardId) {
+        this.cardId = cardId;
+    }
+    public String getCardNumber() {
+        return this.cardNumber;
+    }
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
     public String getRechargeAmount() {
         return this.rechargeAmount;
     }
@@ -120,6 +157,12 @@ public class RechargeRecordBean implements Serializable {
     }
     public void setTwoCardAmount(String twoCardAmount) {
         this.twoCardAmount = twoCardAmount;
+    }
+    public double getTwoAmount() {
+        return this.twoAmount;
+    }
+    public void setTwoAmount(double twoAmount) {
+        this.twoAmount = twoAmount;
     }
     public int getTwoBuyType() {
         return this.twoBuyType;
@@ -157,30 +200,10 @@ public class RechargeRecordBean implements Serializable {
     public void setUUID(String UUID) {
         this.UUID = UUID;
     }
-    public double getTwoAmount() {
-        return this.twoAmount;
+    public long getParkingTimeIsValidEnd() {
+        return this.parkingTimeIsValidEnd;
     }
-    public void setTwoAmount(double twoAmount) {
-        this.twoAmount = twoAmount;
+    public void setParkingTimeIsValidEnd(long parkingTimeIsValidEnd) {
+        this.parkingTimeIsValidEnd = parkingTimeIsValidEnd;
     }
-    public String getCardId() {
-        return this.cardId;
-    }
-    public void setCardId(String cardId) {
-        this.cardId = cardId;
-    }
-    public String getCardNumber() {
-        return this.cardNumber;
-    }
-    public void setCardNumber(String cardNumber) {
-        this.cardNumber = cardNumber;
-    }
-    public String getSerialNumber() {
-        return this.serialNumber;
-    }
-    public void setSerialNumber(String serialNumber) {
-        this.serialNumber = serialNumber;
-    }
-   
-
 }

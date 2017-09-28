@@ -8,6 +8,8 @@ import com.szfp.ss.greendao.ParkingRecordReportBeanDao;
 import com.szfp.ss.greendao.UserInformationDao;
 import com.szfp.ss.inter.OnEntryVehicleListener;
 import com.szfp.ss.inter.OnExitVehicleListener;
+import com.szfp.ss.inter.OnPrintParkListener;
+import com.szfp.ss.inter.OnPrintRechargeListener;
 import com.szfp.ss.inter.OnRechargeRecordListener;
 import com.szfp.utils.BluetoothService;
 import com.szfp.utils.DataUtils;
@@ -17,6 +19,7 @@ import com.szfp.utils.ToastUtils;
 import org.greenrobot.greendao.query.Query;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.szfp.utils.Utils.getContext;
 
@@ -81,7 +84,10 @@ public class DbHelper {
 
     public static void insertRechargeRecordBean(UserInformation userInformation, String amount, OnRechargeRecordListener listener) {
         RechargeRecordBean recordBean = new RechargeRecordBean();
+        recordBean.setPrepaidAmount(userInformation.getBalance());
         recordBean.setUUID(TimeUtils.getUUID());
+        recordBean.setSerialNumber(TimeUtils.generateSequenceNo());
+        recordBean.setCardNumber(userInformation.getLicensePlateNumber());
         recordBean.setUserId(userInformation.getId());
         recordBean.setFirstName(userInformation.getFirstName());
         recordBean.setLastName(userInformation.getLastName());
@@ -90,7 +96,9 @@ public class DbHelper {
         recordBean.setCreateTime(TimeUtils.getCurTimeMills());
         recordBean.setCreateDayTime(TimeUtils.getCrateDayTime());
 
+
         userInformation.setBalance(userInformation.getBalance()+Double.valueOf(amount));
+        recordBean.setAfterAmount(userInformation.getBalance());
         try {
 
             GreenDaoManager.getInstance().getSession().getUserInformationDao().update(userInformation);
@@ -112,11 +120,13 @@ public class DbHelper {
         userInformation = selectCardIdForUserList(card);
         RechargeRecordBean recordBean = new RechargeRecordBean();
         try {
+            recordBean.setPrepaidAmount(userInformation.getBalance());
             recordBean.setSerialNumber(TimeUtils.generateSequenceNo());
             recordBean.setTradeType("2");
             recordBean.setUUID(TimeUtils.getUUID());
             recordBean.setUserId(userInformation.getId());
             recordBean.setCardId(card);
+            recordBean.setCardNumber(userInformation.getLicensePlateNumber());
             recordBean.setFirstName(userInformation.getFirstName());
             recordBean.setLastName(userInformation.getLastName());
             recordBean.setCreateTime(TimeUtils.getCurTimeMills());
@@ -190,6 +200,9 @@ public class DbHelper {
 
 
 
+        recordBean.setAfterAmount(uInfo.getBalance());
+        recordBean.setParkingTimeIsValidEnd(uInfo.getParkingTimeIsValidEnd());
+
 
 
         GreenDaoManager.getInstance().getSession().getRechargeRecordBeanDao().insert(recordBean);
@@ -237,6 +250,29 @@ public class DbHelper {
             ToastUtils.success(getContext().getString(R.string.exit_success));
         }catch (Exception e){
             ToastUtils.error(e.toString());
+        }
+    }
+
+    public static void getRechargeList(int dataPageNum, OnPrintRechargeListener listener) {
+
+        try {
+            List<RechargeRecordBean> list = GreenDaoManager.getInstance().getSession().getRechargeRecordBeanDao().queryBuilder()
+                    .offset(dataPageNum*10).limit(10).list();
+
+            listener.success(list);
+        }catch (Exception e){
+            listener.success(new ArrayList<RechargeRecordBean>());
+        }
+    }
+
+    public static void getParkRechargeList(int dataNum, OnPrintParkListener listener) {
+        try {
+            List<ParkingRecordReportBean> list = GreenDaoManager.getInstance().getSession().getParkingRecordReportBeanDao().queryBuilder()
+                    .offset(dataNum*10).limit(10).list();
+
+            listener.successPark(list);
+        }catch (Exception e){
+            listener.successPark(new ArrayList<ParkingRecordReportBean>());
         }
     }
 }

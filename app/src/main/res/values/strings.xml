@@ -137,9 +137,9 @@
     <string name="repeat_off">REPEAT OFF</string>
     <string name="no_park_data">No parking information data</string>
     <string name="exit_success">Success Fee</string>
-    <string name="r">R</string>
-    <string name="p">P</string>
-    <string name="has_no_data">没有内容，刷新一下吧~</string>
+    <string name="r">RECHARGE/PURCHASE</string>
+    <string name="p">ENTRY/EXIT</string>
+    <string name="has_no_data">No content, refresh it ~</string>
     <string name="pull_to_refresh">pull to refresh</string>
     <string name="release_to_refresh">release to refresh</string>
     <string name="refreshing">refreshing…</string>
@@ -151,4 +151,8 @@
     <string name="load_succeeded">load succeeded</string>
     <string name="load_failed">load failed</string>
     <string name="customize_resources">cus resources</string>
+    <string name="t_name">NAME:</string>
+    <string name="t_card">CARD NUMBER:</string>
+    <string name="t_recharge_amount">RECHARGE AMOUNT</string>
+    <string name="t_time">TIME:</string>
 </resources>

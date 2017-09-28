@@ -107,7 +107,8 @@
             android:configChanges="mcc|mnc|orientation|screenSize|keyboard|layoutDirection"
             android:windowSoftInputMode="stateHidden|stateUnchanged" />
         <activity android:name=".PrintActivity" />
-        <activity android:name=".Main2Activity"></activity>
+        <activity android:name=".Main2Activity" />
+        <activity android:name=".SearchInformationActivity"></activity>
     </application>
 
 </manifest>
