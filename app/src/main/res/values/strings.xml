@@ -21,9 +21,7 @@
         <item>Out of the vehicle</item>
         <item>The temporary card</item>
         <item>Entry of Vehicle Information</item>
-        <item>Issuing new Member Cards </item>
         <item>PRINT</item>
-        <item>Statistical Control</item>
         <item>Query Log</item>
         <item>System Settings</item>
     </string-array>
@@ -155,4 +153,6 @@
     <string name="t_card">CARD NUMBER:</string>
     <string name="t_recharge_amount">RECHARGE AMOUNT</string>
     <string name="t_time">TIME:</string>
+    <string name="no_data">No more data</string>
+    <string name="el">Enter the license plate</string>
 </resources>

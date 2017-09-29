@@ -48,6 +48,7 @@ public class PrintActivity extends BaseReadActivity implements PullToRefreshLayo
 
     private int dataNum =0;
 
+    private boolean is =true;
     private PrintDataAdapter adapter;
     private List<RechargeRecordBean>  rechargeList=new ArrayList<>();
 
@@ -105,24 +106,31 @@ public class PrintActivity extends BaseReadActivity implements PullToRefreshLayo
 
     @OnClick({R.id.conn_print, R.id.bt_select_recharge, R.id.bt_select_Enter})
     public void onClick(View view) {
-        dataNum=0;
+
         switch (view.getId()) {
             case R.id.conn_print:
                 showDeviceList();
                 break;
             case R.id.bt_select_recharge:
-                showLoadDialog();
+                showLoadDialog(); dataNum=0; is = true;
                 DbHelper.getRechargeList(dataNum,this);
                 break;
             case R.id.bt_select_Enter:
-                showLoadDialog();
+                showLoadDialog(); dataNum=0; is =false;
                 DbHelper.getParkRechargeList(dataNum,this);
                 break;
         }
     }
 
+
     @Override
     public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+        dataNum=0;
+        if (is){
+            DbHelper.getRechargeList(dataNum,this);
+        }else {
+            DbHelper.getParkRechargeList(dataNum,this);
+        }
         mRefreshLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -134,9 +142,33 @@ public class PrintActivity extends BaseReadActivity implements PullToRefreshLayo
 
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
+        if (is){
+            DbHelper.getRechargeList(dataNum, new OnPrintRechargeListener() {
+                @Override
+                public void success(List<RechargeRecordBean> list) {
+                    if (list.size()==0) ToastUtils.showToast(R.string.no_data);else{
+                        adapter.updateListView(list);dataNum++;
+                    }
+
+                }
+            });
+        }else {
+            DbHelper.getParkRechargeList(dataNum, new OnPrintParkListener() {
+                @Override
+                public void successPark(List<ParkingRecordReportBean> list) {
+                    if (list.size()==0) ToastUtils.showToast(R.string.no_data);else {
+                        parkAdapter.updateListView(list); dataNum++;
+                    }
+
+                }
+            });
+        }
+
         mRefreshLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
+
+
                 mRefreshLayout.loadMoreFinish(true);
 
             }

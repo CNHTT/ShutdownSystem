@@ -17,8 +17,8 @@ import com.szfp.utils.AndroidBug5497Workaround;
 import com.szfp.utils.ContextUtils;
 import com.szfp.utils.SPUtils;
 import com.szfp.utils.StatusBarUtil;
-import com.szfp.view.dialog.BaseDialog;
 import com.szfp.view.SSeekBar;
+import com.szfp.view.dialog.BaseDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +42,10 @@ public class SettingAty extends BaseAty implements CompoundButton.OnCheckedChang
     TextView tvCacheDataSize;
     @BindView(R.id.bt_parking_fee_setting)
     TextView btParkingFeeSetting;
+    @BindView(R.id.sw_number_plate)
+    SwitchCompat swNumberPlate;
+    @BindView(R.id.ll_cache_data_size)
+    LinearLayout llCacheDataSize;
     private TextView tvTitle;
     private SSeekBar sbDataSize;
     private TextView tvSure;
@@ -71,6 +75,8 @@ public class SettingAty extends BaseAty implements CompoundButton.OnCheckedChang
         setSupportActionBar(toolbar);
         StatusBarUtil.setTransparent(this);
 
+        swNumberPlate.setChecked(SPUtils.getBoolean(this,KEY.));
+
         if (isFullScreen(this))
             AndroidBug5497Workaround.assistActivity(this);
         initEvent();
@@ -93,6 +99,7 @@ public class SettingAty extends BaseAty implements CompoundButton.OnCheckedChang
 
         cacheDataSize = SPUtils.getInt(mContext, KEY.CACHE_DATA_SIZE);
         tvCacheDataSize.setText(cacheDataSize + "");
+
 
     }
 
@@ -172,7 +179,7 @@ public class SettingAty extends BaseAty implements CompoundButton.OnCheckedChang
         tvCancel = (TextView) view.findViewById(R.id.tv_cancel);
         tvCancel.setOnClickListener(OnClickListener);
         tvSure.setOnClickListener(OnClickListener);
-        sbDataSize.setValue( SPUtils.getInt(mContext, KEY.CACHE_DATA_SIZE));
+        sbDataSize.setValue(SPUtils.getInt(mContext, KEY.CACHE_DATA_SIZE));
 
         dialog = new BaseDialog(mContext, R.style.AlertDialogStyle);
         dialog.setContentView(view);

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:gravity="center"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@mipmap/bg"
@@ -23,10 +24,111 @@
     <android.support.v4.view.ViewPager
         android:paddingTop="40dp"
         android:id="@+id/viewPager"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </android.support.v4.view.ViewPager>
 
+    <LinearLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <Button
+                android:layout_width="0dp"
+                android:id="@+id/b1"
+                android:gravity="center"
+                android:background="@drawable/shadow"
+                android:textSize="@dimen/text_font_10"
+                android:layout_height="match_parent"
+                android:text="Entry"
+                android:layout_weight="1" />
+            <Button
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:id="@+id/b2"
+                android:textSize="@dimen/text_font_10"
+                android:layout_height="match_parent"
+                android:text="Exit"
+                android:background="@drawable/shadow"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@drawable/shadow"
+            android:layout_weight="1">
+            <Button
+                android:id="@+id/b3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="Recharge"
+                android:textSize="@dimen/text_font_10"
+                android:background="@drawable/shadow"
+                android:gravity="center"
+                android:layout_weight="1" />
+            <Button
+                android:id="@+id/b4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/text_font_10"
+                android:text="Add"
+                android:background="@drawable/shadow"
+                android:gravity="center"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <Button
+                android:id="@+id/b5"
+                android:layout_width="0dp"
+                android:textSize="@dimen/text_font_10"
+                android:gravity="center"
+                android:background="@drawable/shadow"
+                android:layout_height="match_parent"
+                android:text="Print"
+                android:layout_weight="1" />
+            <Button
+                android:id="@+id/b6"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:textSize="@dimen/text_font_10"
+                android:background="@drawable/shadow"
+                android:layout_height="match_parent"
+                android:text="SQ"
+                android:layout_weight="1" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <Button
+                android:id="@+id/b7"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:text="Setting"
+                android:textSize="@dimen/text_font_10"
+                android:background="@drawable/shadow"
+                android:layout_weight="1" />
+            <Button
+                android:id="@+id/b8"
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="match_parent"
+                android:text="EXIT"
+                android:textSize="@dimen/text_font_10"
+                android:background="@drawable/shadow"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

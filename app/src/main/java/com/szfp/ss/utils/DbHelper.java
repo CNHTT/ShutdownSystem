@@ -1,10 +1,13 @@
 package com.szfp.ss.utils;
 
+import android.util.Log;
+
 import com.szfp.ss.R;
 import com.szfp.ss.domain.ParkingRecordReportBean;
 import com.szfp.ss.domain.RechargeRecordBean;
 import com.szfp.ss.domain.UserInformation;
 import com.szfp.ss.greendao.ParkingRecordReportBeanDao;
+import com.szfp.ss.greendao.RechargeRecordBeanDao;
 import com.szfp.ss.greendao.UserInformationDao;
 import com.szfp.ss.inter.OnEntryVehicleListener;
 import com.szfp.ss.inter.OnExitVehicleListener;
@@ -21,6 +24,7 @@ import org.greenrobot.greendao.query.Query;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.szfp.ss.App.logger;
 import static com.szfp.utils.Utils.getContext;
 
 /**
@@ -86,6 +90,7 @@ public class DbHelper {
         RechargeRecordBean recordBean = new RechargeRecordBean();
         recordBean.setPrepaidAmount(userInformation.getBalance());
         recordBean.setUUID(TimeUtils.getUUID());
+        recordBean.setCardId(userInformation.getCardId());
         recordBean.setSerialNumber(TimeUtils.generateSequenceNo());
         recordBean.setCardNumber(userInformation.getLicensePlateNumber());
         recordBean.setUserId(userInformation.getId());
@@ -125,7 +130,7 @@ public class DbHelper {
             recordBean.setTradeType("2");
             recordBean.setUUID(TimeUtils.getUUID());
             recordBean.setUserId(userInformation.getId());
-            recordBean.setCardId(card);
+            recordBean.setCardId(userInformation.getCardId());
             recordBean.setCardNumber(userInformation.getLicensePlateNumber());
             recordBean.setFirstName(userInformation.getFirstName());
             recordBean.setLastName(userInformation.getLastName());
@@ -257,7 +262,7 @@ public class DbHelper {
 
         try {
             List<RechargeRecordBean> list = GreenDaoManager.getInstance().getSession().getRechargeRecordBeanDao().queryBuilder()
-                    .offset(dataPageNum*10).limit(10).list();
+                    .offset(dataPageNum*10).limit(10).orderDesc(RechargeRecordBeanDao.Properties.Id).list();
 
             listener.success(list);
         }catch (Exception e){
@@ -268,10 +273,89 @@ public class DbHelper {
     public static void getParkRechargeList(int dataNum, OnPrintParkListener listener) {
         try {
             List<ParkingRecordReportBean> list = GreenDaoManager.getInstance().getSession().getParkingRecordReportBeanDao().queryBuilder()
-                    .offset(dataNum*10).limit(10).list();
+                    .offset(dataNum*10).limit(10).orderDesc(ParkingRecordReportBeanDao.Properties.Id).list();
 
             listener.successPark(list);
         }catch (Exception e){
+            listener.successPark(new ArrayList<ParkingRecordReportBean>());
+        }
+    }
+
+    public static void getSearchRechargeList(UserInformation user, long time, int dataNum,OnPrintRechargeListener listener) {
+        Query<RechargeRecordBean> query = null;
+        try {
+            if (!DataUtils.isEmpty(user)&&time!=0){
+                query = GreenDaoManager.getInstance().getSession().getRechargeRecordBeanDao()
+                       .queryBuilder().where(RechargeRecordBeanDao.Properties.CardId.eq(user.getCardId()),
+                                RechargeRecordBeanDao.Properties.CreateDayTime.eq(time)).offset(dataNum*10)
+                        .orderDesc(RechargeRecordBeanDao.Properties.Id).limit(10).build();
+                logger.debug("1");
+                ToastUtils.showToast("1");
+                listener.success(query.list());
+
+            }else {
+                List<RechargeRecordBean> list = GreenDaoManager.getInstance().getSession().getRechargeRecordBeanDao().queryBuilder()
+                        .offset(dataNum*10).limit(10).orderDesc(RechargeRecordBeanDao.Properties.Id).list();
+                logger.debug("2");
+                ToastUtils.showToast("2");
+                listener.success(list);
+
+            }
+            if (!DataUtils.isEmpty(user)){
+                query = GreenDaoManager.getInstance().getSession().getRechargeRecordBeanDao()
+                        .queryBuilder().where(RechargeRecordBeanDao.Properties.CardId.eq(user.getCardId())).offset(dataNum*10).limit(10)
+                        .orderDesc(RechargeRecordBeanDao.Properties.Id).build();
+
+                ToastUtils.showToast("3");
+                listener.success(query.list());
+            }
+            if (time!=0){
+                query = GreenDaoManager.getInstance().getSession().getRechargeRecordBeanDao()
+                        .queryBuilder().where(RechargeRecordBeanDao.Properties.CreateDayTime.eq(time)).offset(dataNum*10).limit(10)
+                        .orderDesc(RechargeRecordBeanDao.Properties.Id).build();
+
+                ToastUtils.showToast("4");
+                listener.success(query.list());
+            }
+        }catch (Exception e){
+            Log.d("error",e.toString());
+
+            ToastUtils.showToast("5");
+            listener.success(new ArrayList<RechargeRecordBean>());
+        }
+    }
+
+    public static void getSearchParkList(UserInformation user, long time, int dataNum,OnPrintParkListener listener) {
+        Query<ParkingRecordReportBean> query = null;
+        try {
+            if (!DataUtils.isEmpty(user)&&!(time==0)){
+                query = GreenDaoManager.getInstance().getSession().getParkingRecordReportBeanDao()
+                        .queryBuilder().where(ParkingRecordReportBeanDao.Properties.CardId.eq(user.getCardId()),
+                                ParkingRecordReportBeanDao.Properties.CreateDayTime.eq(time)).offset(dataNum*10)
+                        .orderDesc(ParkingRecordReportBeanDao.Properties.Id).limit(10).build();
+                listener.successPark(query.list());
+            }else {
+                List<ParkingRecordReportBean> list = GreenDaoManager.getInstance().getSession().getParkingRecordReportBeanDao().queryBuilder()
+                        .offset(dataNum*10).limit(10).orderDesc(ParkingRecordReportBeanDao.Properties.Id).list();
+
+                listener.successPark(list);
+            }
+            if (!DataUtils.isEmpty(user)){
+                query = GreenDaoManager.getInstance().getSession().getParkingRecordReportBeanDao()
+                        .queryBuilder().where(ParkingRecordReportBeanDao.Properties.CardId.eq(user.getCardId())).offset(dataNum*10).limit(10)
+                        .orderDesc(ParkingRecordReportBeanDao.Properties.Id).build();
+                listener.successPark(query.list());
+            }
+            if (time!=0){
+                query = GreenDaoManager.getInstance().getSession().getParkingRecordReportBeanDao()
+                        .queryBuilder().where(ParkingRecordReportBeanDao.Properties.CreateDayTime.eq(time)).offset(dataNum*10).limit(10)
+                        .orderDesc(ParkingRecordReportBeanDao.Properties.Id).build();
+                listener.successPark(query.list());
+            }
+        }catch (Exception e){
+
+            Log.d("error",e.toString());
+            logger.debug(e.toString());
             listener.successPark(new ArrayList<ParkingRecordReportBean>());
         }
     }
