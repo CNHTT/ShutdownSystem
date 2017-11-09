@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.szfp.ss.adapter.SerialNumberAdapter;
@@ -28,6 +29,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.szfp.utils.DataUtils.isNullString;
 import static com.szfp.utils.Utils.getContext;
 
 /**
@@ -48,6 +50,8 @@ public class ExitVehicleActivity  extends BaseReadActivity {
     SelectButton btRepeat;
     @BindView(R.id.bt_stop)
     SelectButton btStop;
+    @BindView(R.id.bt_input_number)
+    SelectButton btInputNumber;
 
     private Wave mWave;
 
@@ -75,6 +79,11 @@ public class ExitVehicleActivity  extends BaseReadActivity {
             mWave.start();
             btCommPrint.setText("CONN");
         }
+
+
+        if (SPUtils.getBoolean(this, KEY.NUMBERPLATE)){
+            btInputNumber.setVisibility(View.VISIBLE);
+        }else  btInputNumber.setVisibility(View.GONE);
     }
 
     @Override
@@ -89,7 +98,7 @@ public class ExitVehicleActivity  extends BaseReadActivity {
 
     @Override
     protected void showConnectedDeviceName(String mConnectedDeviceName) {
-        btCommPrint.setText("CONN");
+        btCommPrint.setText("CONNECTION");
     }
 
     /**
@@ -149,46 +158,6 @@ public class ExitVehicleActivity  extends BaseReadActivity {
             }
         });
 
-
-
-
-//        ParkingRecordReportBean reportBean = new ParkingRecordReportBean();
-//        reportBean.setSerialNumber(TimeUtils.generateSequenceNo());
-//        reportBean.setUUID(userInformation.getUUID());
-//        reportBean.setCardId(userInformation.getCardId());
-//        reportBean.setLicensePlateNumber(userInformation.getLicensePlateNumber());
-//        reportBean.setCardNumber(DataUtils.isNullString(userInformation.getCardNumber())?userInformation.getCardNumber():"0000000000");
-//        reportBean.setLastName(userInformation.getLastName());
-//        reportBean.setFirstName(userInformation.getFirstName());
-//        reportBean.setPType(1);
-//        reportBean.setAdminId(1);
-//        reportBean.setAdminNumber(App.operator);
-//        reportBean.setTerminalNumber(App.terminalNumber);
-//        reportBean.setParkingNumber(App.parkingNumber);
-//        reportBean.setEnterTime(TimeUtils.getCurTimeMills());
-//        reportBean.setCreateTime(TimeUtils.getCurTimeMills());
-//        reportBean.setCreateDayTime(TimeUtils.getCrateDayTime());
-//
-//        DbHelper.insertEntryVehicle(reportBean, new OnEntryVehicleListener() {
-//            @Override
-//            public void success(ParkingRecordReportBean reportBean) {
-//                if (BluetoothService.IsNoConnection()){
-//                    ToastUtils.showToast(R.string.not_connected);
-//                }
-//
-//                PrintUtils.printEntryVehicle(reportBean);
-//
-//            }
-//
-//            @Override
-//            public void error(String str) {
-//                ToastUtils.error(str);
-//
-//            }
-//        });
-
-
-
     }
 
     private void addReportBean(UserInformation userInformation) {
@@ -225,7 +194,7 @@ public class ExitVehicleActivity  extends BaseReadActivity {
                     userInformation.setBalance(userInformation.getBalance()-parkingAmount);
                     DbHelper.updateExitVehicle(reportBean,userInformation);
                 }else {
-                    reportBean.setCashAmount(hourFee -userInformation.getBalance());
+                    reportBean.setCashAmount(parkingAmount -userInformation.getBalance());
                     reportBean.setCardAmount(userInformation.getBalance());
                     userInformation.setBalance(0);
                     reportBean.setPostTradeBalance(userInformation.getBalance());
@@ -263,7 +232,7 @@ public class ExitVehicleActivity  extends BaseReadActivity {
         btCommPrint.setText("Bluetooth Disconnect");mWave.stop();
     }
 
-    @OnClick({R.id.bt_ve_read, R.id.bt_comm_print, R.id.bt_repeat, R.id.bt_stop})
+    @OnClick({R.id.bt_ve_read, R.id.bt_comm_print, R.id.bt_repeat, R.id.bt_stop, R.id.bt_input_number})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_ve_read:
@@ -284,13 +253,135 @@ public class ExitVehicleActivity  extends BaseReadActivity {
             case R.id.bt_stop:
                 isReader =false;
                 break;
+            case R.id.bt_input_number:
+                showInputNumber();
+                break;
         }
+    }
+
+    /**
+     * 手动输入车牌
+     */
+    private BaseDialog baseDialog;
+    private EditText editNumber;
+    private String  licenseNumber;
+    private void showInputNumber() {
+        if (baseDialog == null){
+            View view = ContextUtils.inflate(ExitVehicleActivity.this,R.layout.layout_input_license);
+            editNumber = (EditText) view.findViewById(R.id.editText);
+            view.findViewById(R.id.tv_cancel).setOnClickListener( new OnExitAClickListener());
+            view.findViewById(R.id.tv_sure).setOnClickListener( new OnExitAClickListener());
+            baseDialog = new BaseDialog(ExitVehicleActivity.this,R.style.AlertDialogStyle);
+            baseDialog.setContentView(view);
+            baseDialog.setCancelable(false);
+        }
+        baseDialog.show();
+
     }
 
     private class OnExitClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            dialog.cancel();
+
+                    dialog.cancel();
+            }
+    }
+
+    private void addReportList(String licenseNumber) {
+        DbHelper.getParkingExitStrList(licenseNumber, new OnExitVehicleListener() {
+            @Override
+            public void success(final List<ParkingRecordReportBean> list) {
+                //查询到的数据
+                if(list.size() ==1)
+                {//只有一条数据的时候
+                    reportBean = list.get(0);
+                    addReportLicenseBean();
+                }else
+                {//
+                        View view = ContextUtils.inflate(ExitVehicleActivity.this,R.layout.dialog_exit_list);
+                        dialog = new BaseDialog(ExitVehicleActivity.this,R.style.AlertDialogStyle);
+                        dialog.setContentView(view);
+                        listView = (ListView) view.findViewById(R.id.lv_no);
+                        view.findViewById(R.id.tv_cancel).setOnClickListener( new OnExitClickListener());
+                        view.findViewById(R.id.tv_sure).setOnClickListener( new OnExitClickListener());
+                        adapter = new SerialNumberAdapter(ExitVehicleActivity.this,list);
+                        listView.setAdapter(adapter);
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                reportBean = list.get(position);
+                                addReportLicenseBean();
+                                dialog.cancel();
+                            }
+                        });
+
+                        dialog.setCancelable(false);
+
+
+                    dialog.show();
+
+
+                }
+
+            }
+
+            @Override
+            public void error(String str) {
+                ToastUtils.error(str);
+            }
+        });
+    }
+
+    private void addReportLicenseBean() {
+        reportBean.setType(1);
+        long exitTime = TimeUtils.getCurTimeMills();
+        long parkingTime = exitTime - reportBean.getEnterTime();
+        //小时
+        int  intTime = (int) (parkingTime/60/60/1000);
+        reportBean.setPreTradeBalance(0);
+        reportBean.setExitTime(exitTime);
+        reportBean.setExitCreateTime(TimeUtils.getCurTimeMills());
+        reportBean.setCreateDayTime(TimeUtils.getCrateDayTime());
+        reportBean.setParkingTime(parkingTime);
+        reportBean.setIntTime(intTime);
+        String hour = SPUtils.getString(getContext(), KEY.HOUR_FEE);
+        double hourFee  = Double.parseDouble(hour);
+
+                long endParkingTime = parkingTime;
+                long hourTime= 60*60*1000;
+                int endIntTime = (int) (endParkingTime%hourTime==0?endParkingTime/hourTime:endParkingTime/hourTime+1);
+                double parkingAmount = hourFee*endIntTime;
+
+                reportBean.setParkingAmount(parkingAmount);
+                reportBean.setCashAmount(parkingAmount);
+                reportBean.setCardAmount(0);
+                reportBean.setPostTradeBalance(0);
+                DbHelper.updateExitLicenseVehicle(reportBean);
+
+
+        }
+
+
+    private  class OnExitAClickListener implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.tv_cancel:
+                    editNumber.setText("");
+                    baseDialog.cancel();
+                    break;
+                case R.id.tv_sure:
+                    licenseNumber = editNumber.getText().toString();
+                    if (isNullString(licenseNumber)) {
+                        ToastUtils.error(getResources().getString(R.string.error_no));
+                        return;
+                    }
+                    addReportList(licenseNumber);
+                    editNumber.setText("");
+                    baseDialog.cancel();
+                    break;
+            }
         }
     }
 }

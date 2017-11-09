@@ -238,6 +238,10 @@ public class DbHelper {
             else
             {
                 count = (ArrayList) query.list();
+
+                if (count.size()==0){
+                    listener.error(getContext().getString(R.string.no_park_data));return;
+                }
                 listener.success(count);
             }
         }catch (Exception e){
@@ -357,6 +361,42 @@ public class DbHelper {
             Log.d("error",e.toString());
             logger.debug(e.toString());
             listener.successPark(new ArrayList<ParkingRecordReportBean>());
+        }
+    }
+
+    public static void getParkingExitStrList(String licenseNumber, OnExitVehicleListener listener) {
+        try {
+            Query<ParkingRecordReportBean> query = null;
+            ArrayList count = null;
+            query = GreenDaoManager.getInstance().getSession().getParkingRecordReportBeanDao().queryBuilder()
+                    .where(ParkingRecordReportBeanDao.Properties.LicensePlateNumber.eq(licenseNumber)
+                            ,ParkingRecordReportBeanDao.Properties.Type.eq(0))
+                    .orderDesc(ParkingRecordReportBeanDao.Properties.Id).build();
+            if (query == null)
+            {
+                listener.error(getContext().getString(R.string.no_park_data));
+            }
+            else
+            {
+                count = (ArrayList) query.list();
+                if (count.size()==0){
+                    listener.error(getContext().getString(R.string.no_park_data));return;
+                }
+                listener.success(count);
+            }
+        }catch (Exception e){
+            listener.error(e.toString());
+        }
+    }
+
+    public static void updateExitLicenseVehicle(ParkingRecordReportBean reportBean) {
+        try {
+            GreenDaoManager.getInstance().getSession().getParkingRecordReportBeanDao().update(reportBean);
+            if (BluetoothService.IsNoConnection()) ToastUtils.error(getContext().getString(R.string.not_connected));
+            else PrintUtils.printParkPrint(reportBean);
+            ToastUtils.success(getContext().getString(R.string.exit_success));
+        }catch (Exception e){
+            ToastUtils.error(e.toString());
         }
     }
 }

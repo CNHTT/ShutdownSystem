@@ -1,1 +1,1 @@
-include ':app', ':flib'
+include ':app', ':flib', ':asoriba', ':gmialprint'

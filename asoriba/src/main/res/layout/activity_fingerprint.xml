@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/drop_down_shadow">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1:1"
+                    android:textColor="@color/black" />
+
+                <com.szfp.view.button.SelectButton
+                    app:normalBackgroundColor="@color/login_normal"
+                    app:normalTextColor="@color/white"
+                    app:pressedBackgroundColor="@color/login_pass"
+                    app:pressedTextColor="@color/white"
+                    android:id="@+id/register"
+                    android:layout_width="250dp"
+                    android:layout_margin="@dimen/length_5"
+                    android:layout_height="wrap_content"
+                    android:text="@string/register_fingerprint"
+                    android:textColor="@color/black"
+                    android:textSize="20sp" />
+
+                <com.szfp.view.button.SelectButton
+                    android:id="@+id/validate"
+                    android:layout_width="250dp"
+                    android:layout_margin="@dimen/length_5"
+                    android:layout_height="wrap_content"
+                    android:text="@string/validate_fingerprint"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:normalBackgroundColor="@color/login_normal"
+                    app:normalTextColor="@color/white"
+                    app:pressedBackgroundColor="@color/login_pass"
+                    app:pressedTextColor="@color/white"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1:N"
+                    android:textColor="@color/black" />
+
+                <com.szfp.view.button.SelectButton
+                    android:id="@+id/register2"
+                    android:layout_width="250dp"
+                    android:layout_margin="@dimen/length_5"
+                    android:layout_height="wrap_content"
+                    android:text="@string/register_fingerprint"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:normalBackgroundColor="@color/login_normal"
+                    app:normalTextColor="@color/white"
+                    app:pressedBackgroundColor="@color/login_pass"
+                    app:pressedTextColor="@color/white" />
+
+                <com.szfp.view.button.SelectButton
+                    android:id="@+id/validate2"
+                    android:layout_width="250dp"
+                    android:layout_margin="@dimen/length_5"
+                    android:layout_height="wrap_content"
+                    android:text="@string/validate_fingerprint"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:normalBackgroundColor="@color/login_normal"
+                    app:normalTextColor="@color/white"
+                    app:pressedBackgroundColor="@color/login_pass"
+                    app:pressedTextColor="@color/white" />
+
+                <com.szfp.view.button.SelectButton
+                    android:id="@+id/clear_flash"
+                    android:layout_width="250dp"
+                    android:layout_margin="@dimen/length_5"
+                    android:layout_height="wrap_content"
+                    android:text="@string/clear_flash"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:normalBackgroundColor="@color/login_normal"
+                    app:normalTextColor="@color/white"
+                    app:pressedBackgroundColor="@color/login_pass"
+                    app:pressedTextColor="@color/white" />
+
+                <com.szfp.view.button.SelectButton
+                    android:id="@+id/calibration"
+                    android:layout_width="250dp"
+                    android:layout_margin="@dimen/length_5"
+                    android:layout_height="wrap_content"
+                    android:text="@string/calibration"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    app:normalBackgroundColor="@color/login_normal"
+                    app:normalTextColor="@color/white"
+                    app:pressedBackgroundColor="@color/login_pass"
+                    app:pressedTextColor="@color/white" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@android:color/background_dark" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal" >
+
+                    <com.szfp.view.button.SelectButton
+                        android:id="@+id/bt_registe"
+                        android:layout_width="250dp"
+                        android:layout_margin="@dimen/length_5"
+                        android:layout_height="wrap_content"
+                        android:text="@string/register_fingerprint"
+                        android:textSize="20sp"
+                        app:normalBackgroundColor="@color/login_normal"
+                        app:normalTextColor="@color/white"
+                        app:pressedBackgroundColor="@color/login_pass"
+                        app:pressedTextColor="@color/white" />
+
+                    <com.szfp.view.button.SelectButton
+                        android:id="@+id/bt_save"
+                        android:layout_width="250dp"
+                        android:layout_margin="@dimen/length_5"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/bt_registe"
+                        android:text="@string/save_model"
+                        android:textSize="20sp"
+                        app:normalBackgroundColor="@color/login_normal"
+                        app:normalTextColor="@color/white"
+                        app:pressedBackgroundColor="@color/login_pass"
+                        app:pressedTextColor="@color/white" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal" >
+
+                    <EditText
+                        android:id="@+id/et_fingerId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:hint="ID"
+                        android:inputType="number" />
+
+                    <com.szfp.view.button.SelectButton
+                        android:id="@+id/bt_compares"
+                        android:layout_width="wrap_content"
+                        android:padding="@dimen/length_10"
+                        android:layout_margin="@dimen/length_5"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/et_fingerId"
+                        android:text="@string/compares"
+                        android:textSize="20sp"
+                        app:normalBackgroundColor="@color/login_normal"
+                        app:normalTextColor="@color/white"
+                        app:pressedBackgroundColor="@color/login_pass"
+                        app:pressedTextColor="@color/white" />
+
+                    <com.szfp.view.button.SelectButton
+                        android:id="@+id/bt_clear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/bt_compares"
+                        android:text="@string/clear_flash"
+                        android:textSize="20sp"
+                        android:padding="@dimen/length_10"
+                        android:layout_margin="@dimen/length_5"
+                        app:normalBackgroundColor="@color/login_normal"
+                        app:normalTextColor="@color/white"
+                        app:pressedBackgroundColor="@color/login_pass"
+                        app:pressedTextColor="@color/white"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/upfail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black" />
+
+            <ImageView
+                android:id="@+id/fingerprintImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal" />
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

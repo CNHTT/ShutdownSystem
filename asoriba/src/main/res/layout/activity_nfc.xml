@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="com.szfp.asoriba.view.NFCActivity">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:padding="@dimen/length_10"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textSize="18sp"
+                    android:minWidth="150dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/card_type"/>
+
+                <Spinner
+                    android:id="@+id/spinner_card_type"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+            <LinearLayout
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textSize="18sp"
+                    android:minWidth="150dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/m1_pwd_type"/>
+
+                <Spinner
+                    android:id="@+id/spinner_pwd_type"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textSize="18sp"
+                    android:minWidth="150dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/m1_card_name"/>
+
+                <TextView
+                    android:id="@+id/tv_card_name"
+                    android:layout_width="fill_parent"
+                    android:hint="@string/m1_card_name"
+                    android:padding="@dimen/length_10"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/shadow"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textSize="18sp"
+                    android:minWidth="150dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/m1_pwda"/>
+
+                <EditText
+                    android:id="@+id/ed_pwd_a"
+                    android:layout_width="fill_parent"
+                    android:hint="@string/m1_hint_tips12"
+                    android:padding="@dimen/length_10"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/shadow"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textSize="18sp"
+                    android:minWidth="150dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/m1_pwdb"/>
+
+                <EditText
+                    android:inputType="text"
+                    android:id="@+id/ed_pwd_b"
+                    android:layout_width="fill_parent"
+                    android:hint="@string/m1_hint_tips12"
+                    android:padding="@dimen/length_10"
+                    android:textSize="15sp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:background="@drawable/shadow"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <LinearLayout
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textSize="18sp"
+                    android:minWidth="150dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/m1_block_num"/>
+
+                <EditText
+                    android:id="@+id/ed_block_num"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shadow"
+                    android:hint="@string/m1_hint_tips12"
+                    android:inputType="number"
+                    android:padding="@dimen/length_10"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+            </LinearLayout>
+            <LinearLayout
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textSize="18sp"
+                    android:minWidth="150dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/m1_write_block"/>
+
+                <EditText
+                    android:inputType="text"
+                    android:id="@+id/ed_write_block"
+                    android:layout_width="fill_parent"
+                    android:hint="@string/m1_hint_tips32"
+                    android:padding="@dimen/length_10"
+                    android:textSize="15sp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:background="@drawable/shadow"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textSize="18sp"
+                    android:minWidth="150dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/m1_new_pwd"/>
+
+                <EditText
+                    android:inputType="text"
+                    android:id="@+id/ed_write_pwd"
+                    android:layout_width="fill_parent"
+                    android:hint="@string/m1_hint_tips12"
+                    android:padding="@dimen/length_10"
+                    android:textSize="15sp"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:background="@drawable/shadow"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:padding="5dp"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:textSize="18sp"
+                    android:minWidth="150dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/m1_read_block"/>
+
+                <TextView
+                    android:id="@+id/ed_read_block" android:layout_width="fill_parent"
+                    android:padding="@dimen/length_10"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:background="@drawable/shadow"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <TextView
+                android:id="@+id/func_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/grey"
+                android:text="@string/m1_necessary_done"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.szfp.view.button.SelectButton
+                    android:id="@+id/btn_getCardNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/m1_get_card"
+                    android:padding="9dp"
+                    android:layout_marginLeft="@dimen/length_10"
+                    android:maxWidth="@dimen/length_100"
+                    app:normalBackgroundColor="@color/login_normal"
+                    app:normalTextColor="@color/white"
+                    app:pressedBackgroundColor="@color/login_pass"
+                    app:pressedTextColor="@color/white"
+                    android:textSize="@dimen/text_font_8" />
+
+                <com.szfp.view.button.SelectButton
+                    android:id="@+id/btn_sendCardPwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="@dimen/length_10"
+                    android:hint="@string/set_weite"
+                    android:padding="9dp"
+                    android:maxWidth="@dimen/length_100"
+                    app:normalBackgroundColor="@color/login_normal"
+                    app:normalTextColor="@color/white"
+                    app:pressedBackgroundColor="@color/login_pass"
+                    app:pressedTextColor="@color/white"
+                    android:textSize="@dimen/text_font_8" />
+                <com.szfp.view.button.SelectButton
+                    android:id="@+id/btn_validatePwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="@dimen/length_10"
+                    android:maxWidth="150dp"
+                    android:hint="@string/m1_valid_pwd"
+                    android:padding="9dp"
+                    app:normalBackgroundColor="@color/login_normal"
+                    app:normalTextColor="@color/white"
+                    app:pressedBackgroundColor="@color/login_pass"
+                    app:pressedTextColor="@color/white"
+                    android:textSize="@dimen/text_font_8" />
+            </LinearLayout>
+
+
+
+            <TextView
+                android:id="@+id/io_func_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/grey"
+                android:text="@string/m1_io"
+                android:textColor="@color/white"
+                android:textSize="24sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.szfp.view.button.SelectButton
+                    android:id="@+id/btn_write"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:hint="@string/m1_write_numblock"
+                    android:padding="9dp"
+                    android:layout_marginLeft="@dimen/length_10"
+                    android:maxWidth="120dp"
+                    app:normalBackgroundColor="@color/login_normal"
+                    app:normalTextColor="@color/white"
+                    app:pressedBackgroundColor="@color/login_pass"
+                    app:pressedTextColor="@color/white"
+                    android:textSize="@dimen/text_font_8" />
+
+                <com.szfp.view.button.SelectButton
+                    android:id="@+id/btn_update"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="@dimen/length_10"
+                    android:hint="@string/m1_update_numblock"
+                    android:padding="9dp"
+                    android:maxWidth="200dp"
+                    app:normalBackgroundColor="@color/login_normal"
+                    app:normalTextColor="@color/white"
+                    app:pressedBackgroundColor="@color/login_pass"
+                    app:pressedTextColor="@color/white"
+                    android:textSize="@dimen/text_font_8" />
+                <com.szfp.view.button.SelectButton
+                    android:id="@+id/btn_read"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginLeft="@dimen/length_10"
+                    android:maxWidth="150dp"
+                    android:hint="@string/m1_get_numblock"
+                    android:padding="9dp"
+                    app:normalBackgroundColor="@color/login_normal"
+                    app:normalTextColor="@color/white"
+                    app:pressedBackgroundColor="@color/login_pass"
+                    app:pressedTextColor="@color/white"
+                    android:textSize="@dimen/text_font_8" />
+            </LinearLayout>
+            <TextView
+                android:id="@+id/tips"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rl_layout08"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:text="-"
+                android:textColor="@color/red"
+                android:textSize="24sp" />
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

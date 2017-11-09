@@ -12,6 +12,7 @@ public class KEY {
     public static final String MONTH_FEE ="MONTH_FEE" ;
     public static final String DB_NAME = "ss.db";
     public static final String CARD_INFO ="CARD_INFO" ;
+    public static final String NUMBERPLATE = "NUMBERPLATE";
     public static String START_KEY ="start_trans_key";
     public static String INFO = "info_info";
 }

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.szfp.asoriba.view.MainActivity">
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:scaleType="fitXY"
+        android:layout_height="match_parent"
+        android:src="@mipmap/home_bg"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#55000000" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:gravity="center"
+                android:drawableTop="@mipmap/dashboard"
+                android:id="@+id/bt_dashboard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/dashboard"
+                android:textSize="@dimen/text_font_22"
+                android:textColor="@color/cpb_white"
+                android:background="@drawable/bg_btn_main_selected"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/bt_fingerprint"
+                android:textSize="@dimen/text_font_22"
+                android:textColor="@color/cpb_white"
+                android:background="@drawable/bg_btn_main_selected"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/fingerprint"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/bt_reports"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/reports"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_font_22"
+                android:textColor="@color/cpb_white"
+                android:background="@drawable/bg_btn_main_selected" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:drawableTop="@mipmap/membership"
+                android:id="@+id/bt_membership"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/membership"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_font_22"
+                android:textColor="@color/cpb_white"
+                android:background="@drawable/bg_btn_main_selected" />
+
+            <Button
+                android:id="@+id/bt_nfc"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/bg_btn_main_selected"
+                android:text="@string/nfc"
+                android:textColor="@color/cpb_white"
+                android:textSize="@dimen/text_font_22" />
+
+            <Button
+                android:id="@+id/bt_settings"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/settings"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_font_22"
+                android:textColor="@color/cpb_white"
+                android:background="@drawable/bg_btn_main_selected"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/bt_communication"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/communication"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_font_22"
+                android:textColor="@color/cpb_white"
+                android:background="@drawable/bg_btn_main_selected" />
+
+            <Button
+                android:id="@+id/bt_huf"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/huf"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_font_22"
+                android:textColor="@color/cpb_white"
+                android:background="@drawable/bg_btn_main_selected"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text=""
+                android:layout_weight="1"
+                android:textSize="@dimen/text_font_22"
+                android:textColor="@color/cpb_white"
+                android:background="@drawable/bg_btn_main_selected" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+</FrameLayout>

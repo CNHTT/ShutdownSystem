@@ -5,14 +5,15 @@ import android.util.Log;
 import com.google.common.primitives.Bytes;
 import com.szfp.utils.DataUtils;
 
+import java.io.File;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class UHFHXAPI {
-	private static final byte[] OPEN_COMMAND_370 = "D&C0004010O".getBytes();
-	private static final byte[] CLOSE_COMMAND_370 = "D&C0004010P".getBytes();
+	private static final byte[] OPEN_COMMAND_4800 = "D&C0004010O".getBytes();
+	private static final byte[] CLOSE_COMMAND_4800 = "D&C0004010P".getBytes();
 	private static final byte[] OPEN_COMMAND_640 = "D&C0004010D".getBytes();
 	private static final byte[] CLOSE_COMMAND_640 = "D&C0004010E".getBytes();
 
@@ -131,7 +132,7 @@ public class UHFHXAPI {
 	public boolean open() {
 		switch (getModel()) {
 		case 0:
-			SerialPortManager.getInstance().write(OPEN_COMMAND_370);
+			SerialPortManager.getInstance().write(OPEN_COMMAND_4800);
 			break;
 		case 1:
 			SerialPortManager.getInstance().write(OPEN_COMMAND_640);
@@ -157,7 +158,7 @@ public class UHFHXAPI {
 	public void close() {
 		switch (getModel()) {
 		case 0:
-			SerialPortManager.getInstance().write(CLOSE_COMMAND_370);
+			SerialPortManager.getInstance().write(CLOSE_COMMAND_4800);
 			break;
 		case 1:
 			SerialPortManager.getInstance().write(CLOSE_COMMAND_640);
@@ -1735,17 +1736,17 @@ public class UHFHXAPI {
 			return -1;
 		}
 	}
-
 	/**
-	 * ��ȡ�豸�ͺţ������ж�ʹ��ʲôָ��
-	 * 
-	 * @return 0:A370 1:CFON640 2:��������
+	 * 获取设备型号，用来判断使用什么指令
+	 *
+	 * @return 0:A370 1:CFON640 2:其他机型
 	 */
 	private int getModel() {
 		String model = android.os.Build.MODEL;
-		if (model.equals("A370")) {
+		File file = new File("/sys/class/fbicode_gpios/fbicoe_state/control");
+		if (model.equals("A370")||file.exists()||model.equals("FP4800")) {
 			return 0;
-		} else if (model.contains("CFON640")) {
+		} else if (model.contains("CFON640")||model.contains("COREWISE_V0")) {
 			return 1;
 		} else {
 			return 2;

@@ -341,7 +341,7 @@ public class PurchaseTimeActivity extends BaseAty {
 
     @Override
     protected void showConnectedDeviceName(String mConnectedDeviceName) {
-        btCommPrint.setText("COMM");
+        btCommPrint.setText("Connection");
     }
     private void showSlotCard() {
         if (dialog == null){

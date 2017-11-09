@@ -68,7 +68,6 @@ public abstract class BaseAty extends AppCompatActivity {
     protected BluetoothAdapter mBluetoothAdapter = null;
     // Member object for the chat services
     protected BluetoothService mChatService = null;
-
     protected BluetoothDevice con_dev = null;
 
 

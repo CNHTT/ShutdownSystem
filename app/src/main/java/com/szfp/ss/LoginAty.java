@@ -1,7 +1,6 @@
 package com.szfp.ss;
 
 import android.animation.ObjectAnimator;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -18,15 +17,26 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import com.szfp.ss.domain.ManagerBean;
+import com.szfp.ss.domain.Result;
+import com.szfp.ss.retrofit.HttpBuilder;
+import com.szfp.ss.retrofit.HttpUtil;
+import com.szfp.ss.utils.CacheData;
+import com.szfp.ss.utils.JsonUtil;
 import com.szfp.utils.AlertAnimateUtil;
 import com.szfp.utils.AndroidBug5497Workaround;
 import com.szfp.utils.KeyboardUtils;
+import com.szfp.utils.SPUtils;
 import com.szfp.utils.StatusBarUtil;
 import com.szfp.utils.ToastUtils;
+import com.szfp.view.dialog.DialogSure;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.szfp.ss.App.logger;
+import static com.szfp.utils.Utils.getContext;
 
 /**
  * A login screen that offers login via email/password.
@@ -52,15 +62,16 @@ public class LoginAty extends BaseAty {
     LinearLayout content;
     @BindView(R.id.scrollView)
     ScrollView scrollView;
-
-    private  String mobile;
-    private  String pass;
+    private String name;
+    private String pass;
 
 
     private int screenHeight = 0;//屏幕高度
     private int keyHeight = 0; //软件盘弹起后所占高度
     private float scale = 0.6f; //logo缩放比例
     private int height = 0;
+    private DialogSure dialogSure;
+    private ManagerBean managerBean;
 
 
     @Override
@@ -95,6 +106,8 @@ public class LoginAty extends BaseAty {
     }
 
     private void initEvent() {
+        dialogSure = new DialogSure(mContext);
+        dialogSure.setCancelable(false);
         etMobile.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -138,14 +151,14 @@ public class LoginAty extends BaseAty {
                     return;
                 if (!s.toString().matches("[A-Za-z0-9]+")) {
                     String temp = s.toString();
-                    ToastUtils.error( "Please enter a number or letter");
+                    ToastUtils.error("Please enter a number or letter");
                     s.delete(temp.length() - 1, temp.length());
                     etPassword.setSelection(s.length());
                 }
             }
         });
 
-        scrollView .setOnTouchListener(new View.OnTouchListener() {
+        scrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return true;
@@ -213,15 +226,74 @@ public class LoginAty extends BaseAty {
                     etPassword.setSelection(pwd.length());
                 break;
             case R.id.btn_login:
+                showProgressDialog(R.string.net_load);
                 KeyboardUtils.hideSoftInput(mContext);
+                name  =etMobile .getText() .toString();
+                pass =  etPassword.getText().toString();
+
+                new HttpBuilder(AppUrl.LOGIN)
+                        .params("name",name)
+                        .params("pwd",pass)
+                        .tag(this).success( s ->{
+                            cancleProgressDialog();
+                            logger.info("s:"+s.toString());
+                            Result<ManagerBean> result= (Result<ManagerBean>) JsonUtil.stringToObject(s,Result.class);
+                            if (result.getCode() ==Result.OK){
+                                ManagerBean managerBean = result.getData();
+                                App.companyUUID = managerBean.getCompanyUUID();
+                                App.operator = managerBean.getNumber();
+                                //保存最后一次登陆的会员信息
+                                SPUtils.putString(getContext(), CacheData.LoginManager,JsonUtil.objectToString(result.getData()));
+                                //获取停车场信息
+                                loadParkingLot(managerBean.getCompanyUUID(),managerBean.getUUID(),managerBean.getParkingUuid());
 
 
-                startActivity(new Intent(this,MainActivity.class));
-                finish();
+                            }else {
+                                dialogSure.setTitle("ERROR");
+                                dialogSure.getTvContent().setText(result.getMsg());
+                                dialogSure.getTvSure().setOnClickListener(new View.OnClickListener() {
+                                    @Override public void onClick(View v) {
+                                        dialogSure.cancel();
+                                    }
+                                });
+                                dialogSure.show();
+                            }
 
+                        }).error( e ->{
+                            cancleProgressDialog();
+                            logger.info("e"+e.toString());
+                            dialogSure.setTitle("ERROR");
+                            dialogSure.getTvContent().setText(e.toString());
+                            dialogSure.getTvSure().setOnClickListener(new View.OnClickListener() {
+                                @Override public void onClick(View v) {
+                                    dialogSure.cancel();
+                                }
+                            });
+                            dialogSure.show();
+                        }).post();
+
+
+//                startActivity(new Intent(this, MainActivity.class));
+//                finish();
 
                 break;
         }
+    }
+
+    /**
+     * 获取 停车场.公司信息
+     * @param companyUUID    公司
+     * @param uuid          用户
+     * @param parkingUuid   管理的停车场
+     */
+    private void loadParkingLot(String companyUUID, String uuid, String parkingUuid) {
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        HttpUtil.cancel(this);
     }
 }
 

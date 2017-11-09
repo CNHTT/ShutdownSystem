@@ -4,7 +4,9 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ShutdownSystem.iml" filepath="$PROJECT_DIR$/ShutdownSystem.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/asoriba/asoriba.iml" filepath="$PROJECT_DIR$/asoriba/asoriba.iml" />
       <module fileurl="file://$PROJECT_DIR$/flib/flib.iml" filepath="$PROJECT_DIR$/flib/flib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gmialprint/gmialprint.iml" filepath="$PROJECT_DIR$/gmialprint/gmialprint.iml" />
     </modules>
   </component>
 </project>

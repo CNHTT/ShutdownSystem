@@ -21,17 +21,39 @@
         android:layout_height="match_parent"
         android:padding="@dimen/materialize_baseline_grid_x2">
 
-        <com.szfp.view.button.SelectButton
-            android:id="@+id/bt_ve_read"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:text="@string/read"
-            android:textSize="@dimen/text_font_20"
             android:layout_weight="1"
-            app:normalBackgroundColor="@color/login_normal"
-            app:normalTextColor="@color/white"
-            app:pressedBackgroundColor="@color/login_pass"
-            app:pressedTextColor="@color/white" />
+            android:layout_height="match_parent">
+            <com.szfp.view.button.SelectButton
+                android:id="@+id/bt_ve_read"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="@string/read"
+                android:textSize="@dimen/text_font_20"
+                app:normalBackgroundColor="@color/login_normal"
+                app:normalTextColor="@color/white"
+                app:pressedBackgroundColor="@color/login_pass"
+                app:pressedTextColor="@color/white" />
+
+
+            <com.szfp.view.button.SelectButton
+                android:layout_marginLeft="@dimen/length_10"
+                android:id="@+id/bt_input_number"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="@string/input_license"
+                android:textSize="@dimen/text_font_20"
+                app:normalBackgroundColor="@color/login_normal"
+                app:normalTextColor="@color/white"
+                app:pressedBackgroundColor="@color/login_pass"
+                app:pressedTextColor="@color/white" />
+
+
+        </LinearLayout>
+
 
 
         <View

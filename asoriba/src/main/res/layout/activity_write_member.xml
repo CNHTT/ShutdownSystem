@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="horizontal"
+    android:layout_height="match_parent"
+    tools:context="com.szfp.asoriba.view.WriteMemberActivity">
+
+    <LinearLayout
+        android:background="@color/lightgray"
+        android:orientation="vertical"
+        android:layout_width="300dp"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_margin="2dp"
+            android:background="@drawable/tex_borad_bg"
+            android:gravity="center"
+            android:padding="@dimen/length_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:text="@string/open"
+                android:textSize="@dimen/text_font_15"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <ToggleButton
+                android:id="@+id/sw_open"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_margin="2dp"
+            android:background="@drawable/tex_borad_bg"
+            android:gravity="center"
+            android:padding="@dimen/length_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:text="@string/inventory"
+                android:textSize="@dimen/text_font_15"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <ToggleButton
+                android:id="@+id/sw_inv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_margin="2dp"
+            android:background="@drawable/tex_borad_bg"
+            android:gravity="center"
+            android:padding="@dimen/length_10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.szfp.view.button.SelectButton
+                android:id="@+id/bt_singleScan"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginLeft="@dimen/length_10"
+                android:text="@string/singleScan"
+                app:normalBackgroundColor="@color/login_normal"
+                app:normalTextColor="@color/white"
+                app:pressedBackgroundColor="@color/login_pass"
+                app:pressedTextColor="@color/white"
+                android:layout_marginRight="50dp"/>
+
+            <com.szfp.view.button.SelectButton
+                android:id="@+id/bt_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginLeft="@dimen/length_10"
+                android:text="@string/setting"
+                android:singleLine="true"
+                app:normalBackgroundColor="@color/login_normal"
+                app:normalTextColor="@color/white"
+                app:pressedBackgroundColor="@color/login_pass"
+                app:pressedTextColor="@color/white" />
+        </LinearLayout>
+        <LinearLayout
+            android:padding="@dimen/length_10"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/txtCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/button_horizontal_margin"
+                android:paddingRight="@dimen/button_horizontal_margin"
+                android:text="@string/txt_count"
+                android:textColor="@color/papayawhip"
+                android:textSize="@dimen/tag_count_fornt_size" />
+
+            <TextView
+                android:id="@+id/txtTimes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/button_horizontal_margin"
+                android:paddingRight="@dimen/button_horizontal_margin"
+                android:text="@string/txt_count"
+                android:textColor="@color/papayawhip"
+                android:textSize="@dimen/tag_times_formt_size" />
+
+            <com.szfp.view.button.SelectButton
+                android:id="@+id/bt_setting_params"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginLeft="@dimen/length_10"
+                android:text="@string/setting"
+                android:singleLine="true"
+                app:normalBackgroundColor="@color/login_normal"
+                app:normalTextColor="@color/white"
+                app:pressedBackgroundColor="@color/login_pass"
+                app:pressedTextColor="@color/white"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/_8c"/>
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:background="@color/paleturquoise"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/lv_tagList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -75,7 +75,7 @@ public class SettingAty extends BaseAty implements CompoundButton.OnCheckedChang
         setSupportActionBar(toolbar);
         StatusBarUtil.setTransparent(this);
 
-        swNumberPlate.setChecked(SPUtils.getBoolean(this,KEY.));
+        swNumberPlate.setChecked(SPUtils.getBoolean(this,KEY.NUMBERPLATE));
 
         if (isFullScreen(this))
             AndroidBug5497Workaround.assistActivity(this);
@@ -86,6 +86,7 @@ public class SettingAty extends BaseAty implements CompoundButton.OnCheckedChang
     private void initEvent() {
         swDataSync.setOnCheckedChangeListener(this);
         swManualUpload.setOnCheckedChangeListener(this);
+        swNumberPlate.setOnCheckedChangeListener(this);
         mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
                 Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
                 -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
@@ -143,8 +144,13 @@ public class SettingAty extends BaseAty implements CompoundButton.OnCheckedChang
 
                 break;
 
-            case R.id.sw_manual_upload:
+            case R.id.sw_number_plate:
+                if (isChecked) {
+                    SPUtils.putBoolean(this,KEY.NUMBERPLATE,true);
 
+                } else {
+                    SPUtils.putBoolean(this,KEY.NUMBERPLATE,false);
+                }
                 break;
         }
 

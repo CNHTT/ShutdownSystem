@@ -847,4 +847,12 @@ public class TimeUtils {
         }
         return age;
     }
+
+    public static String getMembershipID(long i) {
+        Calendar cal = Calendar.getInstance();
+        int yearNow = cal.get(Calendar.YEAR);
+        String year = String.valueOf(yearNow);
+        year += String.format("%05d",i);
+        return year;
+    }
 }

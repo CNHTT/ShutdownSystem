@@ -21,16 +21,16 @@ public class DaoMaster extends AbstractDaoMaster {
 
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(Database db, boolean ifNotExists) {
+        ParkingRecordReportBeanDao.createTable(db, ifNotExists);
         RechargeRecordBeanDao.createTable(db, ifNotExists);
         UserInformationDao.createTable(db, ifNotExists);
-        ParkingRecordReportBeanDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
+        ParkingRecordReportBeanDao.dropTable(db, ifExists);
         RechargeRecordBeanDao.dropTable(db, ifExists);
         UserInformationDao.dropTable(db, ifExists);
-        ParkingRecordReportBeanDao.dropTable(db, ifExists);
     }
 
     /**
@@ -49,9 +49,9 @@ public class DaoMaster extends AbstractDaoMaster {
 
     public DaoMaster(Database db) {
         super(db, SCHEMA_VERSION);
+        registerDaoClass(ParkingRecordReportBeanDao.class);
         registerDaoClass(RechargeRecordBeanDao.class);
         registerDaoClass(UserInformationDao.class);
-        registerDaoClass(ParkingRecordReportBeanDao.class);
     }
 
     public DaoSession newSession() {

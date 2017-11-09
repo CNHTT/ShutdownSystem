@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">ShutdownSystem</string>
     <string name="title_activity_login_aty">Sign in</string>
+    <string name="net_load">Log In...</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -79,6 +80,7 @@
         <item>-1</item>
     </string-array>
 
+
     <string-array name="list_preference_entries">
         <item>Entry 1</item>
         <item>Entry 2</item>
@@ -155,4 +157,6 @@
     <string name="t_time">TIME:</string>
     <string name="no_data">No more data</string>
     <string name="el">Enter the license plate</string>
+    <string name="input_license">OUTPUT LICENSE PLATE</string>
+    <string name="error_no">Enter the correct license plate</string>
 </resources>

@@ -1,0 +1,95 @@
+<resources>
+    <string name="app_name">Asoriba</string>
+    <string name="login">SIGN IN</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="reminders">Reminders</string>
+    <string name="membership">Membership</string>
+    <string name="communication">Communication</string>
+    <string name="finance">Finance</string>
+    <string name="attendance">Attendance</string>
+    <string name="reports">Reports</string>
+    <string name="settings">Settings</string>
+    <string name="basic">Basic</string>
+    <string name="contacts">Contacts</string>
+    <string name="church">Church</string>
+    <string name="family">Family</string>
+    <string name="work_edu"><![CDATA[Work&Edu.]]></string>
+    <string name="choose_type">Choose Type</string>
+    <string name="or"> or </string>
+    <string name="create_new"> Create new</string>
+    <string name="title">Title</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="gender">Gender</string>
+    <string name="marital">Marital Status</string>
+    <string name="phome_no">Phone No.</string>
+    <string name="phone_str">131 2345 6789</string>
+    <string name="membership_id">Membership ID</string>
+    <string name="generate">Generate</string>
+    <string name="enter_finger">Enter The Fingerprint</string>
+    <string name="save_basic_data">Save Basic Data and Issuing Cards</string>
+    <string name="unregistered">unregistered</string>
+    <string name="operate">operate</string>
+    <string name="open">Open</string>
+    <string name="inventory"> Scan</string>
+    <string name="write">Write</string>
+    <string name="bind">Binded</string>
+    <string name="nfc">NFC</string>
+    <string name="huf">UHF</string>
+    <string name="card_type">Card Type:</string>
+    <string name="set_weite">Set Write</string>
+    <string name="card_pat_str">PAT CARD PLS</string>
+    <string name="read">Read Member</string>
+    <string name="clear">Clear</string>
+
+
+    <string-array name="membership_list">
+        <item>Church Directory</item>
+        <item>Add a Member</item>
+        <item>Bulk Member Upload</item>
+    </string-array>
+
+
+    <string-array name="card_type">
+        <item>NFC</item>
+        <item>UHF</item>
+    </string-array>
+    <string-array name="choose_type_ls">
+        <item>--Choose One--</item>
+        <item>Member</item>
+        <item>First Timer</item>
+        <item>New Convert</item>
+        <item>Child</item>
+        <item>New members</item>
+        <item>Youth</item>
+        <item>teens</item>
+        <item>Visitors</item>
+    </string-array>
+
+
+    <string-array name="title_ls">
+        <item>--Choose One--</item>
+        <item>Mr</item>
+        <item>Mrs</item>
+        <item>Miss</item>
+        <item>Dr</item>
+        <item>Prof</item>
+        <item>General</item>
+        <item>Mr, Miss, Mrs,</item>
+    </string-array>
+
+    <string-array name="gender_ls">
+        <item>--Choose One--</item>
+        <item>Male</item>
+        <item>Female</item>
+    </string-array>
+
+    <string-array name="marital_ls">
+        <item>--Choose One--</item>
+        <item>Single</item>
+        <item>Married</item>
+        <item>Divorced</item>
+    </string-array>
+
+
+</resources>

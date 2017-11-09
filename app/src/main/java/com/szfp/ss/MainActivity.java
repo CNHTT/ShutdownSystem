@@ -14,6 +14,7 @@ import com.szfp.asynctask.AsyncM1Card;
 import com.szfp.ss.adapter.MainPagerAdapter;
 import com.szfp.ss.domain.KEY;
 import com.szfp.ss.domain.MainImginfo;
+import com.szfp.utils.AppManager;
 import com.szfp.utils.StatusBarUtil;
 import com.szfp.utils.ToastUtils;
 
@@ -79,10 +80,6 @@ public class MainActivity extends BaseNoAty implements AdapterView.OnItemClickLi
         setSupportActionBar(toolbar);
         StatusBarUtil.setTranslucent(this);
 
-        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
-        if (nfcAdapter == null) {
-            ToastUtils.showToast("设备不支持NFC！");
-        }
 
         initData();
     }
@@ -192,7 +189,8 @@ public class MainActivity extends BaseNoAty implements AdapterView.OnItemClickLi
                 break;
             case R.id.b7: i.setClass(this, SettingAty.class);
                 break;
-            case R.id.b8: i.setClass(this, SettingAty.class);
+            case R.id.b8: i.setClass(this, LoginAty.class);
+                AppManager.getAppManager().finishActivity(MainActivity.this);
                 break;
         }
 

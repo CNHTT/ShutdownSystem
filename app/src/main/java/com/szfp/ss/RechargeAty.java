@@ -224,7 +224,7 @@ public class RechargeAty extends BaseAty {
 
     @Override
     protected void showConnectedDeviceName(String mConnectedDeviceName) {
-        btCommPrint.setText("COMM");
+        btCommPrint.setText("Connection");
     }
 
 

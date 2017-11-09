@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context="com.szfp.asoriba.view.DashboardActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/length_10"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:id="@+id/tv_name"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            android:text="Name"
+            android:textSize="@dimen/text_font_8"
+            android:layout_weight="1" />
+        <TextView
+            android:layout_width="0dp"
+            android:id="@+id/tv_fingerprint"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            android:text="@string/choose_type"
+            android:textSize="@dimen/text_font_8"
+            android:layout_weight="1" />
+        <TextView
+
+            android:id="@+id/tc_isCard"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/red"
+            android:text="isBind"
+            android:textSize="@dimen/text_font_8"
+            android:layout_weight="1" />
+
+        <com.szfp.view.button.SelectButton
+            android:id="@+id/bt_show"
+            android:layout_width="wrap_content"
+            android:layout_marginRight="50dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="@dimen/length_10"
+            android:text="@string/operate"
+            android:singleLine="true"
+            app:normalBackgroundColor="@color/login_normal"
+            app:normalTextColor="@color/white"
+            app:pressedBackgroundColor="@color/login_pass"
+            app:pressedTextColor="@color/white" />
+    </LinearLayout>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listView"/>
+</LinearLayout>

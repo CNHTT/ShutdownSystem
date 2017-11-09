@@ -59,7 +59,11 @@
         <item>small fingerprint</item>
         <item>big fingerprint</item>
     </string-array>
-
+    <!-- nfc -->
+    <string name="info">NFC Testing。。。</string>
+    <string name="error">Error</string>
+    <string name="no_nfc">No NFC found on this device</string>
+    <string name="nfc_disabled">NFC is not enabled. Please go to the wireless settings to enable it.</string>
     <!-- RFID -->
     <string name="card_number">Card</string>
     <string name="read_card">Reader</string>
