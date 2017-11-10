@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.szfp.adapter.BasePullListAdapter;
 import com.szfp.ss.R;
-import com.szfp.ss.domain.RechargeRecordBean;
+import com.szfp.ss.domain.result.RechargeRecordBean;
 import com.szfp.ss.inter.OnPrintRechargeClickListener;
 import com.szfp.utils.ContextUtils;
 import com.szfp.utils.DataUtils;

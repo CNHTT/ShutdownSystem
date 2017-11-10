@@ -1,6 +1,6 @@
 package com.szfp.ss.inter;
 
-import com.szfp.ss.domain.RechargeRecordBean;
+import com.szfp.ss.domain.result.RechargeRecordBean;
 
 import java.util.List;
 

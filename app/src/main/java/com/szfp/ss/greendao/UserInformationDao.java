@@ -25,10 +25,10 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
      */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property LastName = new Property(1, String.class, "lastName", false, "LAST_NAME");
-        public final static Property FirstName = new Property(2, String.class, "firstName", false, "FIRST_NAME");
-        public final static Property LicensePlateNumber = new Property(3, String.class, "licensePlateNumber", false, "LICENSE_PLATE_NUMBER");
-        public final static Property TelephoneNumber = new Property(4, String.class, "telephoneNumber", false, "TELEPHONE_NUMBER");
+        public final static Property Name = new Property(1, String.class, "name", false, "NAME");
+        public final static Property LicensePlateNumber = new Property(2, String.class, "licensePlateNumber", false, "LICENSE_PLATE_NUMBER");
+        public final static Property TelephoneNumber = new Property(3, String.class, "telephoneNumber", false, "TELEPHONE_NUMBER");
+        public final static Property Email = new Property(4, String.class, "email", false, "EMAIL");
         public final static Property CardNumber = new Property(5, String.class, "cardNumber", false, "CARD_NUMBER");
         public final static Property CardId = new Property(6, String.class, "cardId", false, "CARD_ID");
         public final static Property CreateTime = new Property(7, long.class, "createTime", false, "CREATE_TIME");
@@ -52,10 +52,10 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"USER_INFORMATION\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"LAST_NAME\" TEXT," + // 1: lastName
-                "\"FIRST_NAME\" TEXT," + // 2: firstName
-                "\"LICENSE_PLATE_NUMBER\" TEXT," + // 3: licensePlateNumber
-                "\"TELEPHONE_NUMBER\" TEXT," + // 4: telephoneNumber
+                "\"NAME\" TEXT," + // 1: name
+                "\"LICENSE_PLATE_NUMBER\" TEXT," + // 2: licensePlateNumber
+                "\"TELEPHONE_NUMBER\" TEXT," + // 3: telephoneNumber
+                "\"EMAIL\" TEXT," + // 4: email
                 "\"CARD_NUMBER\" TEXT," + // 5: cardNumber
                 "\"CARD_ID\" TEXT," + // 6: cardId
                 "\"CREATE_TIME\" INTEGER NOT NULL ," + // 7: createTime
@@ -63,9 +63,6 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
                 "\"UUID\" TEXT," + // 9: UUID
                 "\"BALANCE\" REAL NOT NULL ," + // 10: balance
                 "\"PARKING_TIME_IS_VALID_END\" INTEGER NOT NULL );"); // 11: parkingTimeIsValidEnd
-        // Add Indexes
-        db.execSQL("CREATE UNIQUE INDEX " + constraint + "IDX_USER_INFORMATION_CARD_ID ON USER_INFORMATION" +
-                " (\"CARD_ID\" ASC);");
     }
 
     /** Drops the underlying database table. */
@@ -83,24 +80,24 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
             stmt.bindLong(1, id);
         }
  
-        String lastName = entity.getLastName();
-        if (lastName != null) {
-            stmt.bindString(2, lastName);
-        }
- 
-        String firstName = entity.getFirstName();
-        if (firstName != null) {
-            stmt.bindString(3, firstName);
+        String name = entity.getName();
+        if (name != null) {
+            stmt.bindString(2, name);
         }
  
         String licensePlateNumber = entity.getLicensePlateNumber();
         if (licensePlateNumber != null) {
-            stmt.bindString(4, licensePlateNumber);
+            stmt.bindString(3, licensePlateNumber);
         }
  
         String telephoneNumber = entity.getTelephoneNumber();
         if (telephoneNumber != null) {
-            stmt.bindString(5, telephoneNumber);
+            stmt.bindString(4, telephoneNumber);
+        }
+ 
+        String email = entity.getEmail();
+        if (email != null) {
+            stmt.bindString(5, email);
         }
  
         String cardNumber = entity.getCardNumber();
@@ -132,24 +129,24 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
             stmt.bindLong(1, id);
         }
  
-        String lastName = entity.getLastName();
-        if (lastName != null) {
-            stmt.bindString(2, lastName);
-        }
- 
-        String firstName = entity.getFirstName();
-        if (firstName != null) {
-            stmt.bindString(3, firstName);
+        String name = entity.getName();
+        if (name != null) {
+            stmt.bindString(2, name);
         }
  
         String licensePlateNumber = entity.getLicensePlateNumber();
         if (licensePlateNumber != null) {
-            stmt.bindString(4, licensePlateNumber);
+            stmt.bindString(3, licensePlateNumber);
         }
  
         String telephoneNumber = entity.getTelephoneNumber();
         if (telephoneNumber != null) {
-            stmt.bindString(5, telephoneNumber);
+            stmt.bindString(4, telephoneNumber);
+        }
+ 
+        String email = entity.getEmail();
+        if (email != null) {
+            stmt.bindString(5, email);
         }
  
         String cardNumber = entity.getCardNumber();
@@ -181,10 +178,10 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
     public UserInformation readEntity(Cursor cursor, int offset) {
         UserInformation entity = new UserInformation( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // lastName
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // firstName
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // licensePlateNumber
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // telephoneNumber
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // licensePlateNumber
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // telephoneNumber
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // email
             cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // cardNumber
             cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6), // cardId
             cursor.getLong(offset + 7), // createTime
@@ -199,10 +196,10 @@ public class UserInformationDao extends AbstractDao<UserInformation, Long> {
     @Override
     public void readEntity(Cursor cursor, UserInformation entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setLastName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setFirstName(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setLicensePlateNumber(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setTelephoneNumber(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setLicensePlateNumber(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setTelephoneNumber(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setEmail(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
         entity.setCardNumber(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
         entity.setCardId(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
         entity.setCreateTime(cursor.getLong(offset + 7));

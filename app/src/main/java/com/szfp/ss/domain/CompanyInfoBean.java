@@ -1,13 +1,12 @@
 package com.szfp.ss.domain;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by 戴尔 on 2017/11/9.
+ * Created by 戴尔 on 2017/11/10.
  */
 
-public class CompanyBean implements Serializable{
+public class CompanyInfoBean {
     private Long id;                                                   //公司ＩＤ
     private String name;                                        // 公司名称
     private String contactNumber;                     // 联系电话
@@ -17,7 +16,13 @@ public class CompanyBean implements Serializable{
     private String address;                           //公司地址
     private String managerUUID;              //第一创建人UUID
     private String UUID;                            //公司UUID
+
+
+    private DeviceBean device;
+
+
     private List<ParkingLotBean> lotList;
+
 
     public Long getId() {
         return id;
@@ -89,6 +94,14 @@ public class CompanyBean implements Serializable{
 
     public void setUUID(String UUID) {
         this.UUID = UUID;
+    }
+
+    public DeviceBean getDevice() {
+        return device;
+    }
+
+    public void setDevice(DeviceBean device) {
+        this.device = device;
     }
 
     public List<ParkingLotBean> getLotList() {

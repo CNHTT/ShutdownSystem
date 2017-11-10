@@ -1,6 +1,7 @@
 package com.szfp.ss;
 
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
@@ -11,25 +12,37 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.ScrollView;
 
+import com.szfp.ss.adapter.ParkingLotAdapter;
+import com.szfp.ss.domain.CompanyInfoBean;
+import com.szfp.ss.domain.DeviceBean;
 import com.szfp.ss.domain.ManagerBean;
-import com.szfp.ss.domain.Result;
+import com.szfp.ss.domain.ParkingLotBean;
+import com.szfp.ss.domain.result.Result;
+import com.szfp.ss.domain.result.ResultCompany;
+import com.szfp.ss.domain.result.ResultManagerBean;
 import com.szfp.ss.retrofit.HttpBuilder;
 import com.szfp.ss.retrofit.HttpUtil;
 import com.szfp.ss.utils.CacheData;
 import com.szfp.ss.utils.JsonUtil;
 import com.szfp.utils.AlertAnimateUtil;
 import com.szfp.utils.AndroidBug5497Workaround;
+import com.szfp.utils.ContextUtils;
 import com.szfp.utils.KeyboardUtils;
 import com.szfp.utils.SPUtils;
 import com.szfp.utils.StatusBarUtil;
 import com.szfp.utils.ToastUtils;
+import com.szfp.view.dialog.BaseDialog;
 import com.szfp.view.dialog.DialogSure;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,8 +83,12 @@ public class LoginAty extends BaseAty {
     private int keyHeight = 0; //软件盘弹起后所占高度
     private float scale = 0.6f; //logo缩放比例
     private int height = 0;
-    private DialogSure dialogSure;
     private ManagerBean managerBean;
+
+    private BaseDialog parkLotDialog;
+    private ListView listView;
+    private ParkingLotAdapter lotAdapter;
+    private ParkingLotBean lot ;
 
 
     @Override
@@ -237,11 +254,12 @@ public class LoginAty extends BaseAty {
                         .tag(this).success( s ->{
                             cancleProgressDialog();
                             logger.info("s:"+s.toString());
-                            Result<ManagerBean> result= (Result<ManagerBean>) JsonUtil.stringToObject(s,Result.class);
+                            ResultManagerBean result= (ResultManagerBean) JsonUtil.stringToObject(s,ResultManagerBean.class);
                             if (result.getCode() ==Result.OK){
                                 ManagerBean managerBean = result.getData();
                                 App.companyUUID = managerBean.getCompanyUUID();
                                 App.operator = managerBean.getNumber();
+                                App.managerUUID =managerBean.getUUID();
                                 //保存最后一次登陆的会员信息
                                 SPUtils.putString(getContext(), CacheData.LoginManager,JsonUtil.objectToString(result.getData()));
                                 //获取停车场信息
@@ -249,36 +267,22 @@ public class LoginAty extends BaseAty {
 
 
                             }else {
-                                dialogSure.setTitle("ERROR");
-                                dialogSure.getTvContent().setText(result.getMsg());
-                                dialogSure.getTvSure().setOnClickListener(new View.OnClickListener() {
-                                    @Override public void onClick(View v) {
-                                        dialogSure.cancel();
-                                    }
-                                });
-                                dialogSure.show();
+                                showDialogToast(result.getMsg());
                             }
 
                         }).error( e ->{
                             cancleProgressDialog();
                             logger.info("e"+e.toString());
-                            dialogSure.setTitle("ERROR");
-                            dialogSure.getTvContent().setText(e.toString());
-                            dialogSure.getTvSure().setOnClickListener(new View.OnClickListener() {
-                                @Override public void onClick(View v) {
-                                    dialogSure.cancel();
-                                }
-                            });
-                            dialogSure.show();
+                            showDialogToast("Please check network!!");
                         }).post();
 
 
-//                startActivity(new Intent(this, MainActivity.class));
-//                finish();
+
 
                 break;
         }
     }
+
 
     /**
      * 获取 停车场.公司信息
@@ -287,13 +291,118 @@ public class LoginAty extends BaseAty {
      * @param parkingUuid   管理的停车场
      */
     private void loadParkingLot(String companyUUID, String uuid, String parkingUuid) {
+        try {
+            String sn = "VA3005";
+            showProgressDialog(R.string.net_load_data);
+            new HttpBuilder(AppUrl.COMPANY)
+                    .params("sn",sn)
+                    .params("companyUUID",companyUUID)
+                    .params("uuid",uuid)
+                    .params("parkingUuid",parkingUuid)
+                    .tag(this)
+                    .success(  s ->{
+                        cancleProgressDialog();
+                        logger.info(s);
+                        ResultCompany result = (ResultCompany) JsonUtil.stringToObject(s,ResultCompany.class);
+                        if (result.getCode()==1){
+                            initData(result.getData());
+                        }else {
+                            showDialogToast(result.getMsg());
+                        }
+                    })
+                    .error( e -> {
+                        cancleProgressDialog();
+                        logger.info(e.toString());
+                        showDialogToast(e.toString());
+                    })
+                    .post();
+        }catch (Exception e){
+            showDialogToast("please check data!!!");
+        }
 
+
+
+
+    }
+
+    /**
+     * 初始化加载数据
+     * @param data
+     */
+    private void initData(CompanyInfoBean data) {
+        //加载设备数据
+        DeviceBean deviceBean = data.getDevice();
+
+        SPUtils.putString(this,CacheData.DeviceInfo,JsonUtil.objectToString(deviceBean));
+
+        /**
+         * 加载公司信息
+         */
+        SPUtils.putString(this,CacheData.CompanyInfo,JsonUtil.objectToString(data));
+        App.companyName = data.getName();
+        App.tel =data.getContactNumber();
+        App.website = data.getWebsite();
+        App.address = data.getAddress();
+
+        App.terminalNumber =deviceBean.getNumber();
+        App.terminalUUID = deviceBean.getUuid();
+        //加载停车场信息
+        List<ParkingLotBean> lotList =data.getLotList();
+        if (lotList.size()==1){
+            lot = lotList.get(0);
+            loadMainActivity();
+
+        }else {
+            if (parkLotDialog == null ){
+                View view = ContextUtils.inflate(this,R.layout.dialog_exit_list);
+                parkLotDialog = new BaseDialog(this,R.style.AlertDialogStyle);
+                parkLotDialog.setContentView(view);
+                listView = (ListView) view.findViewById(R.id.lv_no);
+                view.findViewById(R.id.tv_cancel).setOnClickListener( new OnExitClickListener());
+                view.findViewById(R.id.tv_sure).setOnClickListener( new OnExitClickListener());
+                lotAdapter = new ParkingLotAdapter(this,lotList);
+                listView.setAdapter(lotAdapter);
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        lot = lotList.get(0);
+                        loadMainActivity();
+                    }
+                });
+
+                parkLotDialog.setCancelable(false);
+
+            }else lotAdapter.updateItems(lotList);
+
+            parkLotDialog.show();
+
+
+        }
+
+
+
+
+    }
+
+    private void loadMainActivity() {
+        SPUtils.putString(LoginAty.this, CacheData.ParkingLot, JsonUtil.objectToString(lot));
+        App.parkingLotUUID =lot.getUuid();
+        App.parkingNumber =lot.getNumber();
+        startActivity(new Intent(LoginAty.this, MainActivity.class));
+        finish();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         HttpUtil.cancel(this);
+    }
+
+    private class OnExitClickListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            parkLotDialog.cancel();
+        }
     }
 }
 

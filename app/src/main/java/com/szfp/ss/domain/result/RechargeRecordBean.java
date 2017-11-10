@@ -1,4 +1,4 @@
-package com.szfp.ss.domain;
+package com.szfp.ss.domain.result;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;

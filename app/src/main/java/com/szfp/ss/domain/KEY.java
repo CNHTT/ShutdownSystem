@@ -15,4 +15,5 @@ public class KEY {
     public static final String NUMBERPLATE = "NUMBERPLATE";
     public static String START_KEY ="start_trans_key";
     public static String INFO = "info_info";
+    public static String MEMBER = "MEMBER";
 }

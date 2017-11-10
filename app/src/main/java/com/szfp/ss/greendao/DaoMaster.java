@@ -22,15 +22,23 @@ public class DaoMaster extends AbstractDaoMaster {
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(Database db, boolean ifNotExists) {
         ParkingRecordReportBeanDao.createTable(db, ifNotExists);
-        RechargeRecordBeanDao.createTable(db, ifNotExists);
         UserInformationDao.createTable(db, ifNotExists);
+        ConsumptionBeanDao.createTable(db, ifNotExists);
+        MemberBeanDao.createTable(db, ifNotExists);
+        ParkingRecordBeanDao.createTable(db, ifNotExists);
+        RechargeBeanDao.createTable(db, ifNotExists);
+        RechargeRecordBeanDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
         ParkingRecordReportBeanDao.dropTable(db, ifExists);
-        RechargeRecordBeanDao.dropTable(db, ifExists);
         UserInformationDao.dropTable(db, ifExists);
+        ConsumptionBeanDao.dropTable(db, ifExists);
+        MemberBeanDao.dropTable(db, ifExists);
+        ParkingRecordBeanDao.dropTable(db, ifExists);
+        RechargeBeanDao.dropTable(db, ifExists);
+        RechargeRecordBeanDao.dropTable(db, ifExists);
     }
 
     /**
@@ -50,8 +58,12 @@ public class DaoMaster extends AbstractDaoMaster {
     public DaoMaster(Database db) {
         super(db, SCHEMA_VERSION);
         registerDaoClass(ParkingRecordReportBeanDao.class);
-        registerDaoClass(RechargeRecordBeanDao.class);
         registerDaoClass(UserInformationDao.class);
+        registerDaoClass(ConsumptionBeanDao.class);
+        registerDaoClass(MemberBeanDao.class);
+        registerDaoClass(ParkingRecordBeanDao.class);
+        registerDaoClass(RechargeBeanDao.class);
+        registerDaoClass(RechargeRecordBeanDao.class);
     }
 
     public DaoSession newSession() {

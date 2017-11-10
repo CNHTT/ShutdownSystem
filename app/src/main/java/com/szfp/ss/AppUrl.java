@@ -7,4 +7,7 @@ package com.szfp.ss;
 public class AppUrl {
 
     public static final String LOGIN = "login.p";
+    public static String COMPANY="companyInfo.p";
+    public static String CHECKMEMBER="checkMemBer.p";
+    public static String AddMember="addMember.p";
 }

@@ -12,6 +12,7 @@ import android.widget.ScrollView;
 import com.szfp.ss.domain.KEY;
 import com.szfp.ss.domain.PagerItem;
 import com.szfp.ss.domain.UserInformation;
+import com.szfp.ss.domain.model.MemberBean;
 import com.szfp.utils.KeyboardUtils;
 import com.szfp.utils.Slidr;
 import com.szfp.utils.StatusBarUtil;
@@ -28,8 +29,8 @@ public class AddUserAty extends BaseNoAty implements View.OnKeyListener {
     Toolbar toolbar;
     @BindView(R.id.et_first_name)
     AutoCompleteTextView etFirstName;
-    @BindView(R.id.et_last_name)
-    AutoCompleteTextView etLastName;
+    @BindView(R.id.et_email)
+    AutoCompleteTextView edEmail;
     @BindView(R.id.et_license_plate_number)
     AutoCompleteTextView etLicensePlateNumber;
     @BindView(R.id.et_telephone_number)
@@ -39,12 +40,14 @@ public class AddUserAty extends BaseNoAty implements View.OnKeyListener {
     @BindView(R.id.scrollView)
     ScrollView scrollView;
 
-    private String lastName;
-    private String firstName;
+    private String name;
+    private String email;
     private String licensePlateNumber;
     private String telephoneNumber;
 
     private UserInformation userInfo;
+
+    private MemberBean memberBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,26 +67,26 @@ public class AddUserAty extends BaseNoAty implements View.OnKeyListener {
 
     private void initView() {
         etFirstName.setOnKeyListener(this);
-        etLastName.setOnKeyListener(this);
+        edEmail.setOnKeyListener(this);
         etLicensePlateNumber.setOnKeyListener(this);
         etTelephoneNumber.setOnKeyListener(this);
     }
 
     @OnClick(R.id.bt_next)
     public void onClick() {
-        lastName = etLastName.getText().toString();
-        firstName = etFirstName.getText().toString();
+        email = edEmail.getText().toString();
+        name = etFirstName.getText().toString();
         licensePlateNumber =etLicensePlateNumber.getText().toString();
         telephoneNumber = etTelephoneNumber.getText().toString();
 
 
-        if (isNullString(firstName))
+        if (isNullString(email))
         {
-            etFirstName.setError("Please Input First Name");return;
+            edEmail.setError("Please Input  Email");return;
         }
-        if (isNullString(lastName))
+        if (isNullString(name))
         {
-            etLastName.setError("Please Input Last Name");return;
+            etFirstName.setError("Please Input Name");return;
         }
         if (isNullString(licensePlateNumber))
         {
@@ -96,16 +99,26 @@ public class AddUserAty extends BaseNoAty implements View.OnKeyListener {
 
 
         userInfo = new UserInformation();
-        userInfo.setFirstName(firstName);
-        userInfo.setLastName(lastName);
+        userInfo.setName(name);
+        userInfo.setEmail(email);
         userInfo.setLicensePlateNumber(licensePlateNumber);
         userInfo.setTelephoneNumber(telephoneNumber);
 
+        //
+        memberBean = new MemberBean();
+        memberBean.setName(name);
+        memberBean.setEmail(email);
+        memberBean.setLpm(licensePlateNumber);
+        memberBean.setPhone(telephoneNumber);
+
 
         Intent intent = new Intent();
-        intent.setClass(AddUserAty.this,LuRuKaActivity.class);
+        if (App.isHF) intent.setClass(AddUserAty.this,EntryCardHFActivity.class);
+        else intent.setClass(AddUserAty.this,LuRuKaActivity.class);
+
         Bundle bundle = new Bundle();
         bundle.putSerializable(KEY.INFO,userInfo);
+        bundle.putSerializable(KEY.MEMBER,memberBean);
         intent.putExtras(bundle);
         startActivity(intent);
 

@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import com.RT_Printer.BluetoothPrinter.BLUETOOTH.BluetoothPrintDriver;
 import com.szfp.utils.AppManager;
 import com.szfp.utils.BluetoothService;
 import com.szfp.utils.ToastUtils;
+import com.szfp.view.dialog.DialogSure;
 
 import android_serialport_api.SerialPortManager;
 
@@ -189,6 +191,20 @@ public abstract class BaseAty extends AppCompatActivity {
     }
 
 
+
+    protected DialogSure dialogSure;
+    protected void showDialogToast(String toast) {
+        if (dialogSure==null)dialogSure = new DialogSure(this);
+        dialogSure.setTitle("ERROR");
+        dialogSure.getTvContent().setText(toast);
+        dialogSure.getTvSure().setOnClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                dialogSure.cancel();
+            }
+        });
+        dialogSure.show();
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -238,8 +254,10 @@ public abstract class BaseAty extends AppCompatActivity {
         handlerThread = null;
     }
     protected void showProgressDialog(int resId) {
+        if (progressDialog==null)
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage(getResources().getString(resId));
+        if (!progressDialog.isShowing())
         progressDialog.show();
     }
 

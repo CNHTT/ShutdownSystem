@@ -2,7 +2,7 @@ package com.szfp.ss.utils;
 
 import com.szfp.ss.App;
 import com.szfp.ss.domain.ParkingRecordReportBean;
-import com.szfp.ss.domain.RechargeRecordBean;
+import com.szfp.ss.domain.result.RechargeRecordBean;
 import com.szfp.ss.domain.UserInformation;
 import com.szfp.utils.BluetoothService;
 import com.szfp.utils.DataUtils;
@@ -25,7 +25,7 @@ public class PrintUtils {
         BluetoothService.LF();
         BluetoothService.SetAlignMode((byte)0);//左对齐
         BluetoothService.SetFontEnlarge((byte)0x00);//默认宽度、默认高度
-        BluetoothService.BT_Write("USER NAME:"+uInfo.getFirstName()+uInfo.getLastName()+"\r");
+        BluetoothService.BT_Write("USER NAME:"+uInfo.getName()+"\r");
         BluetoothService.BT_Write("RECHARGE AMOUNT:" +recordBean.getRechargeAmount()+"\r");
         BluetoothService.BT_Write("BALANCE: " +DataUtils.getAmountValue(uInfo.getBalance())+"\r");
         BluetoothService.BT_Write("TIME:" + TimeUtils.milliseconds2String(TimeUtils.getCurTimeMills())+"\r");

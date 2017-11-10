@@ -1,14 +1,13 @@
-package com.szfp.ss.domain;
+package com.szfp.ss.domain.result;
 
 /**
  * Created by 戴尔 on 2017/11/9.
  */
 
-public class Result<T> {
+public class Result {
     public final static int OK = 1, FAILED = 0, EMPUTY = -1;
     private  int code ;
     private  String msg;
-    private  T data;
 
     public int getCode() {
         return code;
@@ -24,13 +23,5 @@ public class Result<T> {
 
     public void setMsg(String msg) {
         this.msg = msg;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
     }
 }

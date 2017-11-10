@@ -15,6 +15,8 @@ import com.szfp.ss.retrofit.HttpUtil;
 import com.szfp.ss.utils.GreenDaoManager;
 import com.szfp.utils.Utils;
 
+import android_serialport_api.M1CardAPI;
+
 
 /**
  * author：ct on 2017/8/25 15:32
@@ -23,29 +25,33 @@ import com.szfp.utils.Utils;
 
 public class App extends Application {
 
-    public static String companyUUID="";
-    public static String managerUUID="";
-    //操作员编号
-    public static String operator = "00001";
-
-
+    public static boolean isHF =true;
 
 
     public static String localhost = "http://192.168.1.117:8080";
-
     private  String rootPath;
-    public static String companyName="SZFP TECHNOLOGY LIMITED";
+    public static String companyUUID="";
+    //操作员编号 信息
+    public static String managerUUID="";
+    public static String operator = "00001";
 
+    //终端号信息
+    public static String terminalNumber="00001";
+    public static String terminalUUID="00001";
+
+
+    //公司信息
+    public static String companyName="SZFP TECHNOLOGY LIMITED";
     public static String tel = "0086-0755-86276295";
 
     public static String website ="http://www.szfptech.com";
 
     public static String address="Room 506-507,HuaTong Business Building,XinGao Road,XiLi Town,NanShan District,ShenZhen,China.Post Code 518055";
 
-    //终端号
-    public static String terminalNumber="00001";
+
     //停车场编号
     public static String parkingNumber="000009";
+    public static String parkingLotUUID="";
 
     public static  final Logger logger = LoggerFactory.getLogger();
 
@@ -59,6 +65,16 @@ public class App extends Application {
         return handlerThread;
     }
 
+
+    /**
+     * 采用HF  默认数据
+     */
+
+    public  static  int KeyType= M1CardAPI.KEY_A;  //卡片类型
+    public  static String DefaultKeyA = "ffffffffffff";// 默认密码A
+    public  static String DefaultKeyB = "ffffffffffff";// 默认密码B
+    public  static  int num =1;  //每次执行一次
+    public  static  int block =2;  //获取块号
     @Override
     public void onCreate() {
         super.onCreate();

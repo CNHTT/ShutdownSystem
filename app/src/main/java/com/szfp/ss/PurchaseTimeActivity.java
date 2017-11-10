@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.szfp.asynctask.AsyncM1Card;
 import com.szfp.ss.domain.KEY;
 import com.szfp.ss.domain.PagerItem;
-import com.szfp.ss.domain.RechargeRecordBean;
+import com.szfp.ss.domain.result.RechargeRecordBean;
 import com.szfp.ss.domain.UserInformation;
 import com.szfp.ss.inter.OnRechargeRecordListener;
 import com.szfp.ss.utils.DbHelper;

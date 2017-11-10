@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.szfp.asynctask.AsyncM1Card;
-import com.szfp.ss.domain.RechargeRecordBean;
+import com.szfp.ss.domain.result.RechargeRecordBean;
 import com.szfp.ss.domain.UserInformation;
 import com.szfp.ss.inter.OnRechargeRecordListener;
 import com.szfp.ss.utils.DbHelper;

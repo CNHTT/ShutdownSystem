@@ -102,8 +102,8 @@ public class VehicleEntryActivity extends BaseReadActivity {
         reportBean.setCardId(userInformation.getCardId());
         reportBean.setLicensePlateNumber(userInformation.getLicensePlateNumber());
         reportBean.setCardNumber(isNullString(userInformation.getCardNumber()) ? userInformation.getCardNumber() : "0000000000");
-        reportBean.setLastName(userInformation.getLastName());
-        reportBean.setFirstName(userInformation.getFirstName());
+        reportBean.setLastName(userInformation.getName());
+        reportBean.setFirstName(userInformation.getName());
         reportBean.setPType(1);
         reportBean.setAdminId(1);
         reportBean.setAdminNumber(App.operator);

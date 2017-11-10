@@ -6,6 +6,7 @@
     android:layout_height="300dp"
     android:background="@drawable/shape_round_white"
     android:gravity="center"
+    android:layout_gravity="center"
     android:orientation="vertical"
     android:paddingTop="16.5dp">
 
@@ -19,6 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
+        android:scrollbars="none"
         android:id="@+id/lv_no"/>
 
 

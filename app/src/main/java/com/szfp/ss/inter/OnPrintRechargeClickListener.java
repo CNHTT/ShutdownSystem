@@ -1,6 +1,6 @@
 package com.szfp.ss.inter;
 
-import com.szfp.ss.domain.RechargeRecordBean;
+import com.szfp.ss.domain.result.RechargeRecordBean;
 
 /**
  * author：ct on 2017/9/28 14:28

@@ -6,4 +6,7 @@ package com.szfp.ss.utils;
 
 public class CacheData {
     public static String LoginManager ="LoginManager";
+    public static String DeviceInfo="DeviceInfo";
+    public static String CompanyInfo="CompanyInfo";
+    public static String ParkingLot = "ParkingLot";
 }

@@ -2,6 +2,7 @@
     <string name="app_name">ShutdownSystem</string>
     <string name="title_activity_login_aty">Sign in</string>
     <string name="net_load">Log In...</string>
+    <string name="net_load_data">Loading data...</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -28,7 +29,7 @@
     </string-array>
 
     <string name="last_name">Last Name</string>
-    <string name="first_name">First Name</string>
+    <string name="first_name"> Name</string>
     <string name="L_P_N">License Plate Number</string>
     <string name="T_N">Telephone Number</string>
     <string name="next_step">Next Step</string>

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.szfp.asynctask.AsyncM1Card;
 import com.szfp.ss.domain.KEY;
 import com.szfp.ss.domain.UserInformation;
+import com.szfp.ss.domain.model.MemberBean;
 import com.szfp.ss.utils.DbHelper;
 import com.szfp.utils.AppManager;
 import com.szfp.utils.DataUtils;
@@ -87,6 +88,10 @@ public class LuRuKaActivity extends BaseAty {
     private UserInformation userInformation;
     private DialogSureCancel dialogSureCancel=null;
 
+
+
+    private MemberBean memberBean;
+
     @Override
     protected void showDisconnecting() {
 
@@ -103,6 +108,7 @@ public class LuRuKaActivity extends BaseAty {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         StatusBarUtil.setTranslucent(this, 10);
         userInformation = (UserInformation) getIntent().getExtras().getSerializable(KEY.INFO);
+        memberBean = (MemberBean) getIntent().getExtras().getSerializable(KEY.MEMBER);
         initView();
     }
 
@@ -190,10 +196,11 @@ public class LuRuKaActivity extends BaseAty {
         slResult.setVisibility(View.VISIBLE);
 
         tvCardId.setText(cardId);
-        tvFirstName.setText(userInformation.getFirstName());
-        tvLastName.setText(userInformation.getLastName());
+        tvFirstName.setText(userInformation.getName());
+        tvLastName.setText(userInformation.getName());
         tvLpn.setText(userInformation.getLicensePlateNumber());
         tvTn.setText(userInformation.getTelephoneNumber());
+
         userInformation.setCardId(cardId);
         userInformation.setCreateTime(new Date().getTime());
         userInformation.setCreateDayTime(TimeUtils.getCrateDayTime());

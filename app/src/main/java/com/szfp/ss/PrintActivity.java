@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import com.szfp.ss.adapter.PrintDataAdapter;
 import com.szfp.ss.adapter.PrintDataParkAdapter;
 import com.szfp.ss.domain.ParkingRecordReportBean;
-import com.szfp.ss.domain.RechargeRecordBean;
+import com.szfp.ss.domain.result.RechargeRecordBean;
 import com.szfp.ss.domain.UserInformation;
 import com.szfp.ss.inter.OnPrintParkClickListener;
 import com.szfp.ss.inter.OnPrintParkListener;

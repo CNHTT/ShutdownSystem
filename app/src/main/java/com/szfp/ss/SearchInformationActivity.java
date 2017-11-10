@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.szfp.ss.adapter.PrintDataAdapter;
 import com.szfp.ss.adapter.PrintDataParkAdapter;
 import com.szfp.ss.domain.ParkingRecordReportBean;
-import com.szfp.ss.domain.RechargeRecordBean;
+import com.szfp.ss.domain.result.RechargeRecordBean;
 import com.szfp.ss.domain.UserInformation;
 import com.szfp.ss.inter.OnPrintParkClickListener;
 import com.szfp.ss.inter.OnPrintParkListener;
@@ -143,7 +143,7 @@ public class SearchInformationActivity extends BaseReadActivity implements PullT
     @Override
     protected void showUser(UserInformation userInformation) {
         mTv_serial_number.setText(userInformation.getUUID());
-        mTv_name .setText(userInformation.getFirstName()+" "+userInformation.getLastName());
+        mTv_name .setText(userInformation.getName());
         mTv_card_number.setText(userInformation.getLicensePlateNumber());
         mTv_balance.setText(DataUtils.getAmountValue(userInformation.getBalance()));
         if (userInformation.getParkingTimeIsValidEnd()!=0)

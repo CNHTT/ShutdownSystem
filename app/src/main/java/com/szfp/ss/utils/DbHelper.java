@@ -4,8 +4,10 @@ import android.util.Log;
 
 import com.szfp.ss.R;
 import com.szfp.ss.domain.ParkingRecordReportBean;
-import com.szfp.ss.domain.RechargeRecordBean;
 import com.szfp.ss.domain.UserInformation;
+import com.szfp.ss.domain.model.MemberBean;
+import com.szfp.ss.domain.result.RechargeRecordBean;
+import com.szfp.ss.greendao.MemberBeanDao;
 import com.szfp.ss.greendao.ParkingRecordReportBeanDao;
 import com.szfp.ss.greendao.RechargeRecordBeanDao;
 import com.szfp.ss.greendao.UserInformationDao;
@@ -94,8 +96,8 @@ public class DbHelper {
         recordBean.setSerialNumber(TimeUtils.generateSequenceNo());
         recordBean.setCardNumber(userInformation.getLicensePlateNumber());
         recordBean.setUserId(userInformation.getId());
-        recordBean.setFirstName(userInformation.getFirstName());
-        recordBean.setLastName(userInformation.getLastName());
+        recordBean.setFirstName(userInformation.getName());
+        recordBean.setLastName(userInformation.getName());
         recordBean.setRechargeAmount(DataUtils.getAmountValue(amount));
         recordBean.setTradeType("1");
         recordBean.setCreateTime(TimeUtils.getCurTimeMills());
@@ -132,8 +134,8 @@ public class DbHelper {
             recordBean.setUserId(userInformation.getId());
             recordBean.setCardId(userInformation.getCardId());
             recordBean.setCardNumber(userInformation.getLicensePlateNumber());
-            recordBean.setFirstName(userInformation.getFirstName());
-            recordBean.setLastName(userInformation.getLastName());
+            recordBean.setFirstName(userInformation.getName());
+            recordBean.setLastName(userInformation.getName());
             recordBean.setCreateTime(TimeUtils.getCurTimeMills());
             recordBean.setCreateDayTime(TimeUtils.getCrateDayTime());
             //添加充值记录
@@ -398,5 +400,31 @@ public class DbHelper {
         }catch (Exception e){
             ToastUtils.error(e.toString());
         }
+    }
+
+    public static MemberBean selectCardIdFindUUID(String uuid) {
+
+        MemberBean memberBean;
+
+        try {
+            memberBean = GreenDaoManager.getInstance()
+                    .getSession()
+                    .getMemberBeanDao()
+                    .queryBuilder()
+                    .where(MemberBeanDao.Properties.Uuid.eq(uuid))
+                    .build().unique();
+        }catch (Exception e){
+            return null;
+        }
+        return memberBean;
+    }
+
+    public static boolean  insertMember(MemberBean memberBean) {
+        try {
+            GreenDaoManager.getInstance().getSession().getMemberBeanDao().insert(memberBean);
+        }catch (Exception e){
+            return  false;
+        }
+        return true;
     }
 }
