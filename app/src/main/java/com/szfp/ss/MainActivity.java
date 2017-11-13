@@ -14,7 +14,9 @@ import com.szfp.asynctask.AsyncM1Card;
 import com.szfp.ss.adapter.MainPagerAdapter;
 import com.szfp.ss.domain.KEY;
 import com.szfp.ss.domain.MainImginfo;
+import com.szfp.ss.utils.CacheData;
 import com.szfp.utils.AppManager;
+import com.szfp.utils.SPUtils;
 import com.szfp.utils.StatusBarUtil;
 import com.szfp.utils.ToastUtils;
 
@@ -190,6 +192,7 @@ public class MainActivity extends BaseNoAty implements AdapterView.OnItemClickLi
             case R.id.b7: i.setClass(this, SettingAty.class);
                 break;
             case R.id.b8: i.setClass(this, LoginAty.class);
+                SPUtils.putBoolean(MainActivity.this,CacheData.IsLogin,false);
                 AppManager.getAppManager().finishActivity(MainActivity.this);
                 break;
         }

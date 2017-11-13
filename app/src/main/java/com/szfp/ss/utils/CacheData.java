@@ -9,4 +9,5 @@ public class CacheData {
     public static String DeviceInfo="DeviceInfo";
     public static String CompanyInfo="CompanyInfo";
     public static String ParkingLot = "ParkingLot";
+    public static String IsLogin="isLogin";
 }

@@ -1,47 +1,41 @@
 package com.szfp.ss;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Vibrator;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.szfp.asynctask.AsyncM1Card;
-import com.szfp.ss.domain.result.RechargeRecordBean;
 import com.szfp.ss.domain.UserInformation;
+import com.szfp.ss.domain.model.MemberBean;
+import com.szfp.ss.domain.model.RechargeBean;
+import com.szfp.ss.domain.result.RechargeRecordBean;
+import com.szfp.ss.domain.result.ResultMember;
 import com.szfp.ss.inter.OnRechargeRecordListener;
+import com.szfp.ss.retrofit.HttpBuilder;
 import com.szfp.ss.utils.DbHelper;
+import com.szfp.ss.utils.JsonUtil;
 import com.szfp.ss.utils.PrintUtils;
 import com.szfp.utils.BluetoothService;
 import com.szfp.utils.ContextUtils;
 import com.szfp.utils.DataUtils;
-import com.szfp.utils.SoundUtils;
+import com.szfp.utils.NetworkUtil;
 import com.szfp.utils.StatusBarUtil;
 import com.szfp.utils.ToastUtils;
 import com.szfp.view.button.SelectButton;
 import com.szfp.view.dialog.BaseDialog;
 import com.szfp.view.dialog.DialogSureCancel;
-import com.szfp.view.progress.style.CubeGrid;
 import com.szfp.view.progress.style.Wave;
-
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import io.reactivex.BackpressureStrategy;
-import io.reactivex.Flowable;
-import io.reactivex.FlowableEmitter;
-import io.reactivex.FlowableOnSubscribe;
 
 import static com.szfp.ss.App.logger;
 
-public class RechargeAty extends BaseAty {
+public class RechargeAty extends BaseHFActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -54,23 +48,15 @@ public class RechargeAty extends BaseAty {
     @BindView(R.id.bt_sava)
     Button btSava;
 
-    private boolean isReader=true;
     private boolean isPrint=false;
     private Wave mWave;
-    private boolean vibrate;
-    private AsyncM1Card reader;
     private String amount;
-    private WebView webView;
-    private ImageView imageView;
     private BaseDialog dialog=null;
-    private CubeGrid mCubeGrid;
-    private ImageView ivClear;
-    private Flowable<String> flowable;
-    private Subscriber<String> subscriber;
-    private SoundUtils soundUtils;
     private String cardId;
-    private static final long VIBRATE_DURATION = 200L;
     private UserInformation userInformation;
+
+    private MemberBean memberBean;
+    private RechargeBean rechargeBean;
 
     private View.OnClickListener onClickListener=new View.OnClickListener() {
         @Override
@@ -101,46 +87,115 @@ public class RechargeAty extends BaseAty {
         initView();
     }
 
+    @Override
+    protected void showWriteSuccess(String num) {
+
+    }
+
+
+    private BaseDialog memberDialog;
+    private TextView mTv_title;
+    private TextView mTv_amount;
+    private TextView mTv_name;
+    private TextView mTv_lpm;
+    private TextView mTv_balance;
+    private TextView mTv_email;
+    private TextView mTv_sure;
+    private TextView mTv_cancel;
+    @Override
+    protected void showReadCard(String cardId, String uuid) {
+        if (NetworkUtil.isNetworkAvailable(this)){
+            showProgressDialog(R.string.loading);
+            new HttpBuilder(AppUrl.CHECKMEMBER)
+                    .params("uuid",uuid)
+                    .tag(this)
+                    .success( s -> {
+                        logger.info(s.toString());
+                        cancleProgressDialog();
+                        ResultMember result= (ResultMember) JsonUtil.stringToObject(s,ResultMember.class);
+                        if (result.getCode()==1){
+                            memberBean = result.getData();
+                            if (memberDialog == null)
+                            {
+                                View view = ContextUtils.inflate(RechargeAty.this,R.layout.member_info);
+                                mTv_title = (TextView) view.findViewById(R.id.tv_title);
+                                mTv_amount = (TextView) view.findViewById(R.id.tv_amount);
+                                mTv_name = (TextView) view.findViewById(R.id.tv_name);
+                                mTv_lpm = (TextView)view. findViewById(R.id.tv_lpm);
+                                mTv_balance = (TextView)view. findViewById(R.id.tv_balance);
+                                mTv_email = (TextView)view. findViewById(R.id.tv_email);
+                                mTv_sure = (TextView) view.findViewById(R.id.tv_sure);
+                                mTv_cancel = (TextView) view.findViewById(R.id.tv_cancel);
+                                memberDialog = new BaseDialog(RechargeAty.this,R.style.AlertDialogStyle);
+                                memberDialog.setContentView(view);
+                            }
+
+                            mTv_amount.setText(amount);
+                            mTv_title.setText(memberBean.getName());
+                            mTv_name.setText(memberBean.getName());
+                            mTv_lpm.setText(memberBean.getLpm());
+                            mTv_balance.setText(String.valueOf(memberBean.getBalance()));
+                            mTv_email.setText(memberBean.getEmail());
+
+                            memberDialog.setCancelable(false);
+                            memberDialog.show();
+
+
+                        }else {
+
+                            showDialogToast("This Card is No User");
+
+                        }
+
+                    })
+                    .error(e ->{
+                        logger.info(e.toString());
+                        cancleProgressDialog();
+                        showDialogToast(e.toString());
+                    })
+                    .post();
+
+
+
+
+//            new HttpBuilder(AppUrl.CHECKMEMBER)
+//                    .params("uuid",uuid)
+//                    .params("amount",amount)
+//                    .tag(this)
+//                    .success(  s ->{
+//                        logger.info( "Recharge :" +s);
+//                        cancleProgressDialog();
+//                        ResultRechargeBean resultRechargeBean = (ResultRechargeBean) JsonUtil.stringToObject(s,ResultRechargeBean.class);
+//                        if (resultRechargeBean.getCode()==1){
+//                            rechargeBean = resultRechargeBean.getRechargeBean();
+//                            memberBean   = resultRechargeBean.getMemberBean();
+//
+//
+//
+//                        }
+//
+//
+//
+//
+//                    })
+//                    .error( e  ->{
+//
+//                    })
+//                    .post();
+//
+
+
+        }else {
+
+        }
+    }
+
     private void initView() {
-        reader = new AsyncM1Card(app.getHandlerThread().getLooper());
-        flowable = Flowable.create(new FlowableOnSubscribe<String>() {
-            @Override
-            public void subscribe(FlowableEmitter<String> e) throws Exception {
-                if (!e.isCancelled()) {
-                    e.onNext("READ");
-                    e.onComplete();
-                }
-            }
-        }, BackpressureStrategy.DROP);
-        subscriber = new Subscriber<String>() {
-            Subscription subscription;
-
-            @Override
-            public void onSubscribe(Subscription s) {
-                subscription = s;
-                subscription.request(1);
-            }
-
-            @Override
-            public void onNext(String s) {
-                reader.readCardNum();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-            }
-
-            @Override
-            public void onComplete() {
-                subscription.cancel();
-            }
-        };
 
 
         reader.setOnReadCardNumListener(new AsyncM1Card.OnReadCardNumListener() {
             @Override
             public void onReadCardNumSuccess(String num) {
-                playBeepSoundAndVibrate();
                 cardId = num.replace("0x", "").replace(",", "").replace("\n","");
                 logger.debug("READER CARD ID "+cardId );
 
@@ -197,7 +252,7 @@ public class RechargeAty extends BaseAty {
             dialogSureCancel.getTvSure().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showSlotCard();
+                    showSlotCard(false);
                     dialogSureCancel.cancel();
                 }
             });
@@ -247,64 +302,20 @@ public class RechargeAty extends BaseAty {
                     ToastUtils.error("Please Enter Amount");
                     return;
                 }
-                showSlotCard();
+                showSlotCard(false);
                 break;
         }
     }
 
-    private void showSlotCard() {
-        if (dialog == null){
-            View view = ContextUtils.inflate(this,R.layout.dialog_slot_card);
-            webView = (WebView) view.findViewById(R.id.card_pat_wv);
-            imageView = (ImageView) view.findViewById(R.id.image);
-            mCubeGrid = new CubeGrid();
-            mCubeGrid.setColor(Color.MAGENTA);
-            imageView.setImageDrawable(mCubeGrid);
-            imageView.setBackgroundColor(Color.parseColor("#00000000"));
-            webView.loadDataWithBaseURL(null, "<HTML><body bgcolor='#FFF'><div align=center>" +
-                    "<img width=\"140\" height=\"140\" src='file:///android_asset/gif/dyn_pat.gif'/></div></body></html>", "text/html", "UTF-8", null);
-            ivClear = (ImageView) view.findViewById(R.id.iv_clear);
-            ivClear.setOnClickListener(onClickListener);
-            dialog = new BaseDialog(mContext,R.style.AlertDialogStyle);
-            dialog.setContentView(view);
-            dialog.setCancelable(false);
-
-
-        }
-        mCubeGrid.start();
-        dialog.show();
-        reader.readCardNum();
-        isReader=true;
-    }
 
 
     @Override
     protected void onResume() {
         super.onResume();
-        initBeepSound();
-        vibrate = false;
-
-    }
-    private void initBeepSound() {
-        if (soundUtils == null) {
-            soundUtils = new SoundUtils(this, SoundUtils.RING_SOUND);
-            soundUtils.putSound(0, R.raw.beep);
-        }
-    }
-
-    private void playBeepSoundAndVibrate() {
-        if (soundUtils != null) {
-            soundUtils.playSound(0, SoundUtils.SINGLE_PLAY);
-        }
-        if (vibrate) {
-            Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-            vibrator.vibrate(VIBRATE_DURATION);
-        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        isReader=false;
     }
 }

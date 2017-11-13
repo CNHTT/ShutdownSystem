@@ -386,6 +386,7 @@ public class LoginAty extends BaseAty {
 
     private void loadMainActivity() {
         SPUtils.putString(LoginAty.this, CacheData.ParkingLot, JsonUtil.objectToString(lot));
+        SPUtils.putBoolean(this,CacheData.IsLogin,true);
         App.parkingLotUUID =lot.getUuid();
         App.parkingNumber =lot.getNumber();
         startActivity(new Intent(LoginAty.this, MainActivity.class));

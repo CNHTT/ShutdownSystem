@@ -130,6 +130,7 @@ public class EntryCardHFActivity extends BaseHFActivity {
                                 }
                             });
                             dialogSure.getTvCancel().setOnClickListener(v ->{
+                                showSlotCard(false);
                                 dialogSure.cancel();
                             });
                             dialogSure.show();
