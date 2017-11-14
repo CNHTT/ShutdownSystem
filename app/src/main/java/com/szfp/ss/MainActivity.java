@@ -181,7 +181,7 @@ public class MainActivity extends BaseNoAty implements AdapterView.OnItemClickLi
                 break;
             case R.id.b2: i.setClass(this, ExitVehicleActivity.class);
                 break;
-            case R.id.b3: i.setClass(this, RechargedActivity.class);
+            case R.id.b3: i.setClass(this, RechargeAty.class);
                 break;
             case R.id.b4: i.setClass(this, AddUserAty.class);
                 break;

@@ -2,6 +2,9 @@ package com.szfp.ss.utils;
 
 import com.szfp.ss.App;
 import com.szfp.ss.domain.ParkingRecordReportBean;
+import com.szfp.ss.domain.model.MemberBean;
+import com.szfp.ss.domain.model.ParkingRecordBean;
+import com.szfp.ss.domain.model.RechargeBean;
 import com.szfp.ss.domain.result.RechargeRecordBean;
 import com.szfp.ss.domain.UserInformation;
 import com.szfp.utils.BluetoothService;
@@ -264,8 +267,97 @@ public class PrintUtils {
             BluetoothService.BT_Write("Website:"+App.website+"\r");
             BluetoothService.BT_Write(" "+"\r");
             BluetoothService.BT_Write(" "+"\r");
-
-
         }
+    }
+
+    public static void printRechargeRecord(RechargeBean rechargeBean, MemberBean memberBean) {
+        BluetoothService.Begin();
+        BluetoothService.LF();
+        BluetoothService.SetAlignMode((byte) 1);
+        BluetoothService.SetLineSpacing((byte)40);
+        BluetoothService.BT_Write(BluetoothService.DOUBLE_HEIGHT_WIDTH);
+        BluetoothService.BT_Write("CASH TOP-UP");
+        BluetoothService.BT_Write(App.companyName);
+        BluetoothService.LF();
+
+        BluetoothService.SetAlignMode((byte)0);//左对齐
+        BluetoothService.SetFontEnlarge((byte)0x00);//默认宽度、默认高度
+
+            BluetoothService.BT_Write("USER NAME:"+memberBean.getName()+"\r");
+            BluetoothService.BT_Write("RECHARGE AMOUNT:" +rechargeBean.getAAmount()+"\r");
+            BluetoothService.BT_Write("BALANCE: " +DataUtils.getAmountValue(memberBean.getCacheType())+"\r");
+            BluetoothService.BT_Write("TIME:" + TimeUtils.dateFormatDate(rechargeBean.getCreateTime())+"\r");
+             BluetoothService.BT_Write("Operator Number:"+App.operator+"\r");
+             BluetoothService.BT_Write("Terminal Number:" +App.terminalNumber+"\r");
+             BluetoothService.BT_Write("TEL:"+App.tel+"\r");
+             BluetoothService.BT_Write("Address:" +App.address+"\r");
+             BluetoothService.BT_Write("Website:"+App.website+"\r");
+             BluetoothService.BT_Write(" "+"\r");
+             BluetoothService.BT_Write(" "+"\r");
+
+    }
+
+
+    public static void printEntryVehicle(ParkingRecordBean recordBean, MemberBean memberBean) {   if (recordBean.getType()==1){
+
+        BluetoothService.Begin();
+        BluetoothService.LF();
+        BluetoothService.SetAlignMode((byte) 1);
+        BluetoothService.SetLineSpacing((byte)40);
+        BluetoothService.BT_Write(BluetoothService.DOUBLE_HEIGHT_WIDTH);
+        BluetoothService.BT_Write(App.companyName);
+        BluetoothService.LF();
+        BluetoothService.SetAlignMode((byte)0);//左对齐
+        BluetoothService.SetFontEnlarge((byte)0x00);//默认宽度、默认高度
+        BluetoothService.BT_Write("Serial number:"+ recordBean.getTsn()+"\r");
+        BluetoothService.BT_Write("Parking number:" +App.parkingNumber+"\r");
+
+        BluetoothService.BT_Write("license Plate Number:"+recordBean.getMemberLpm()+"\r");
+        BluetoothService.BT_Write("Member Name:" + recordBean.getMemberName()+"\r");
+        BluetoothService.BT_Write("Member Phone:" +memberBean.getPhone()+"\r");
+        BluetoothService.BT_Write("Member Email:" +memberBean.getEmail()+"\r");
+        BluetoothService.BT_Write("Entry time:"+TimeUtils.dateFormatDate(recordBean.getEnterTime())+"\r");
+        BluetoothService.SetFontEnlarge((byte)0x00);//默认宽度、默认高度
+        BluetoothService.BT_Write("Transaction hour:"+TimeUtils.dateFormatDate(recordBean.getCreateTime())+"\r");
+        BluetoothService.BT_Write("Operator Number:"+App.operator+"\r");
+        BluetoothService.BT_Write("Terminal Number:" +App.terminalNumber+"\r");
+        BluetoothService.BT_Write("TEL:"+App.tel+"\r");
+        BluetoothService.BT_Write("Address:" +App.address+"\r");
+        BluetoothService.BT_Write("Website:"+App.website+"\r");
+        BluetoothService.BT_Write(" "+"\r");
+        BluetoothService.BT_Write(" "+"\r");
+
+
+    }else {
+        BluetoothService.Begin();
+        BluetoothService.LF();
+        BluetoothService.SetAlignMode((byte) 1);
+        BluetoothService.SetLineSpacing((byte)40);
+        BluetoothService.BT_Write(BluetoothService.DOUBLE_HEIGHT_WIDTH);
+        BluetoothService.BT_Write(App.companyName);
+        BluetoothService.LF();
+        BluetoothService.SetAlignMode((byte)0);//左对齐
+        BluetoothService.SetFontEnlarge((byte)0x00);//默认宽度、默认高度
+        BluetoothService.BT_Write("Serial number:"+ recordBean.getDeviceSN()+"\r");
+        BluetoothService.BT_Write("Parking number:" +App.parkingNumber+"\r");
+
+        BluetoothService.BT_Write("license Plate Number:"+recordBean.getMemberLpm()+"\r");
+        BluetoothService.BT_Write("Member Name:" + recordBean.getMemberName()+"\r");
+        BluetoothService.BT_Write("Member Phone:" +memberBean.getPhone()+"\r");
+        BluetoothService.BT_Write("Member Email:" +memberBean.getEmail()+"\r");
+        BluetoothService.BT_Write("Entry time:"+TimeUtils.dateFormatDate(recordBean.getEnterTime())+"\r");
+
+        BluetoothService.SetFontEnlarge((byte) 0x01);
+        BluetoothService.BT_Write("advance:"+"0"+"\r" );
+        BluetoothService.SetFontEnlarge((byte)0x00);//默认宽度、默认高度
+        BluetoothService.BT_Write("Transaction hour:"+TimeUtils.dateFormatDate(recordBean.getCreateTime())+"\r");
+        BluetoothService.BT_Write("Operator Number:"+App.operator+"\r");
+        BluetoothService.BT_Write("Terminal Number:" +App.terminalNumber+"\r");
+        BluetoothService.BT_Write("TEL:"+App.tel+"\r");
+        BluetoothService.BT_Write("Address:" +App.address+"\r");
+        BluetoothService.BT_Write("Website:"+App.website+"\r");
+        BluetoothService.BT_Write(" "+"\r");
+        BluetoothService.BT_Write(" "+"\r");
+    }
     }
 }

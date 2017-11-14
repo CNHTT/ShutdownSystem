@@ -8,13 +8,20 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.szfp.ss.adapter.SerialNumberAdapter;
+import com.szfp.ss.adapter.TsnAdapter;
 import com.szfp.ss.domain.KEY;
 import com.szfp.ss.domain.ParkingRecordReportBean;
 import com.szfp.ss.domain.UserInformation;
+import com.szfp.ss.domain.model.ParkingRecordBean;
+import com.szfp.ss.domain.result.ResultMember;
+import com.szfp.ss.domain.result.ResultParkingRecordBean;
 import com.szfp.ss.inter.OnExitVehicleListener;
+import com.szfp.ss.retrofit.HttpBuilder;
 import com.szfp.ss.utils.DbHelper;
+import com.szfp.ss.utils.JsonUtil;
 import com.szfp.utils.BluetoothService;
 import com.szfp.utils.ContextUtils;
+import com.szfp.utils.NetworkUtil;
 import com.szfp.utils.SPUtils;
 import com.szfp.utils.StatusBarUtil;
 import com.szfp.utils.TimeUtils;
@@ -23,12 +30,14 @@ import com.szfp.view.button.SelectButton;
 import com.szfp.view.dialog.BaseDialog;
 import com.szfp.view.progress.style.Wave;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.szfp.ss.App.logger;
 import static com.szfp.utils.DataUtils.isNullString;
 import static com.szfp.utils.Utils.getContext;
 
@@ -37,7 +46,7 @@ import static com.szfp.utils.Utils.getContext;
  * email：cnhttt@163.com
  */
 
-public class ExitVehicleActivity  extends BaseReadActivity {
+public class ExitVehicleActivity  extends BaseHFActivity {
 
 
     @BindView(R.id.toolbar)
@@ -55,6 +64,7 @@ public class ExitVehicleActivity  extends BaseReadActivity {
 
     private Wave mWave;
 
+    private ParkingRecordBean parkingRecordBean;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +77,102 @@ public class ExitVehicleActivity  extends BaseReadActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initView();
+    }
+
+    @Override
+    protected void showWriteSuccess(String num) {
+
+    }
+
+    @Override
+    protected void showReadCard(String cardId, String uuid) {
+        if (NetworkUtil.isNetworkAvailable(this)){
+            showProgressDialog(R.string.loading);
+            new HttpBuilder(AppUrl.CHECKMEMBER)
+                    .params("uuid",uuid)
+                    .tag(this)
+                    .success( s -> {
+                        logger.info(s.toString());
+
+                        ResultMember result= (ResultMember) JsonUtil.stringToObject(s,ResultMember.class);
+                        if (result.getCode()==1){
+                            memberBean = result.getData();
+                            loadParkingRecordList();
+                        }else {
+                            cancleProgressDialog();
+                            showNoUser();
+                        }
+
+                    })
+                    .error(e ->{
+                        logger.info(e.toString());
+                        cancleProgressDialog();
+                        showDialogToast(e.toString());
+                    })
+                    .post();
+        }else {
+
+        }
+
+
+
+
+    }
+
+    private TsnAdapter tsnAdapter;
+    private void loadParkingRecordList() {
+
+        new HttpBuilder(AppUrl.LOADPARKINGLIST)
+                .params("memberUUid",memberBean.getUuid())
+                .tag(this)
+                .success(  s  ->{
+                    cancleProgressDialog();
+                    logger.info(s);
+                    ResultParkingRecordBean result  = (ResultParkingRecordBean) JsonUtil.stringToObject(s,ResultParkingRecordBean.class);
+                    if (result.checkCode()){
+                        ArrayList<ParkingRecordBean> list = result.getData();
+                        //查询到的数据
+                        if(list.size() ==1)
+                        {//只有一条数据的时候
+                            parkingRecordBean = list.get(0);
+//                            addReportLicenseBean();
+                        }else
+                        {//
+                            View view = ContextUtils.inflate(ExitVehicleActivity.this,R.layout.dialog_exit_list);
+                            dialog = new BaseDialog(ExitVehicleActivity.this,R.style.AlertDialogStyle);
+                            dialog.setContentView(view);
+                            listView = (ListView) view.findViewById(R.id.lv_no);
+                            view.findViewById(R.id.tv_cancel).setOnClickListener( new OnExitClickListener());
+                            view.findViewById(R.id.tv_sure).setOnClickListener( new OnExitClickListener());
+                            tsnAdapter = new TsnAdapter(ExitVehicleActivity.this,list);
+                            listView.setAdapter(tsnAdapter);
+                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    parkingRecordBean = list.get(position);
+                                    dialog.cancel();
+                                }
+                            });
+
+                            dialog.setCancelable(false);
+
+
+                            dialog.show();
+
+
+                        }
+
+
+
+
+
+                    }
+                })
+                .error(   e ->{
+                    cancleProgressDialog();
+                    logger.info(e.toString());
+                })
+                .post();
     }
 
 
@@ -109,7 +215,6 @@ public class ExitVehicleActivity  extends BaseReadActivity {
     private BaseDialog dialog;
     private ListView listView;
     private SerialNumberAdapter adapter;
-    @Override
     protected void showUser(final UserInformation userInformation) {
 
 
@@ -140,7 +245,6 @@ public class ExitVehicleActivity  extends BaseReadActivity {
                                 dialog.cancel();
                             }
                         });
-
                         dialog.setCancelable(false);
 
                     }else adapter.updateItems(list);
@@ -236,7 +340,7 @@ public class ExitVehicleActivity  extends BaseReadActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_ve_read:
-                showSlotCard();
+                showSlotCard(false);
                 break;
             case R.id.bt_comm_print:
                 showDeviceList();

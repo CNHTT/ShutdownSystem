@@ -28,6 +28,8 @@ public class ParkingRecordBean  implements Serializable {
     private String parkingLotName;
     private String parkingUuid;
 
+    private String companyUuid;
+
     private double amount;
     //驶入时间
     private long enterLongTime;
@@ -40,13 +42,14 @@ public class ParkingRecordBean  implements Serializable {
     private int intTime;
     private int cacheType=0;
 
-    @Generated(hash = 1219315746)
+    @Generated(hash = 1280753894)
     public ParkingRecordBean(Long id, String tsn, int type, String memberUuid,
             String memberName, String memberLpm, String operateNumber,
             String operateUuid, String deviceSN, String deviceNumber,
-            String parkingLotName, String parkingUuid, double amount,
-            long enterLongTime, long exitLongTime, Date enterTime, Date exitTime,
-            Date createTime, long parkingTime, int intTime, int cacheType) {
+            String parkingLotName, String parkingUuid, String companyUuid,
+            double amount, long enterLongTime, long exitLongTime, Date enterTime,
+            Date exitTime, Date createTime, long parkingTime, int intTime,
+            int cacheType) {
         this.id = id;
         this.tsn = tsn;
         this.type = type;
@@ -59,6 +62,7 @@ public class ParkingRecordBean  implements Serializable {
         this.deviceNumber = deviceNumber;
         this.parkingLotName = parkingLotName;
         this.parkingUuid = parkingUuid;
+        this.companyUuid = companyUuid;
         this.amount = amount;
         this.enterLongTime = enterLongTime;
         this.exitLongTime = exitLongTime;
@@ -240,5 +244,13 @@ public class ParkingRecordBean  implements Serializable {
 
     public void setCacheType(int cacheType) {
         this.cacheType = cacheType;
+    }
+
+    public String getCompanyUuid() {
+        return this.companyUuid;
+    }
+
+    public void setCompanyUuid(String companyUuid) {
+        this.companyUuid = companyUuid;
     }
 }

@@ -8,11 +8,17 @@ import android.widget.EditText;
 import com.szfp.ss.domain.KEY;
 import com.szfp.ss.domain.ParkingRecordReportBean;
 import com.szfp.ss.domain.UserInformation;
+import com.szfp.ss.domain.model.ParkingRecordBean;
+import com.szfp.ss.domain.result.Result;
+import com.szfp.ss.domain.result.ResultMember;
 import com.szfp.ss.inter.OnEntryVehicleListener;
+import com.szfp.ss.retrofit.HttpBuilder;
 import com.szfp.ss.utils.DbHelper;
+import com.szfp.ss.utils.JsonUtil;
 import com.szfp.ss.utils.PrintUtils;
 import com.szfp.utils.BluetoothService;
 import com.szfp.utils.ContextUtils;
+import com.szfp.utils.NetworkUtil;
 import com.szfp.utils.SPUtils;
 import com.szfp.utils.StatusBarUtil;
 import com.szfp.utils.TimeUtils;
@@ -21,13 +27,16 @@ import com.szfp.view.button.SelectButton;
 import com.szfp.view.dialog.BaseDialog;
 import com.szfp.view.progress.style.Wave;
 
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.szfp.ss.App.logger;
 import static com.szfp.utils.DataUtils.isNullString;
 
-public class VehicleEntryActivity extends BaseReadActivity {
+public class VehicleEntryActivity extends BaseHFActivity {
 
 
     @BindView(R.id.toolbar)
@@ -44,6 +53,7 @@ public class VehicleEntryActivity extends BaseReadActivity {
     SelectButton btInputNumber;
 
     private Wave mWave;
+    private ParkingRecordBean recordBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +67,94 @@ public class VehicleEntryActivity extends BaseReadActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initView();
+    }
+
+    @Override
+    protected void showWriteSuccess(String num) {
+
+    }
+
+    @Override
+    protected void showReadCard(String cardId, String uuid) {
+        if (NetworkUtil.isNetworkAvailable(this)){
+            showProgressDialog(R.string.loading);
+            new HttpBuilder(AppUrl.CHECKMEMBER)
+                    .params("uuid",uuid)
+                    .tag(this)
+                    .success( s -> {
+                        logger.info(s.toString());
+                        cancleProgressDialog();
+                        ResultMember result= (ResultMember) JsonUtil.stringToObject(s,ResultMember.class);
+                        if (result.getCode()==1){
+                            memberBean = result.getData();
+                            initEntry();
+
+
+
+                        }else {
+
+                            showNoUser();
+
+                        }
+
+                    })
+                    .error(e ->{
+                        logger.info(e.toString());
+                        cancleProgressDialog();
+                        showDialogToast(e.toString());
+                    })
+                    .post();
+        }else {
+
+        }
+    }
+
+    private void initEntry() {
+
+        showProgressDialog(R.string.loading);
+        recordBean = new ParkingRecordBean();
+
+        recordBean.setTsn(TimeUtils.generateSequenceNo());
+        recordBean.setType(1);
+        recordBean.setMemberUuid(memberBean.getUuid());
+        recordBean .setMemberLpm(memberBean.getLpm());
+        recordBean .setMemberName(memberBean.getName());
+        recordBean.setOperateNumber(App.operator);
+        recordBean.setOperateUuid(App.managerUUID);
+        recordBean.setDeviceSN(App.terminalUUID);
+        recordBean.setDeviceNumber(App.terminalNumber);
+        recordBean.setCompanyUuid(App.companyUUID);
+        recordBean.setParkingLotName(App.parkingNumber);
+        recordBean.setParkingUuid(App.parkingLotUUID);
+        recordBean.setEnterLongTime(new Date().getTime());
+        recordBean.setEnterTime(new Date());
+        recordBean.setCreateTime(new Date());
+
+
+        new HttpBuilder(AppUrl.PARKINGRECORDENTRY)
+                .params("data",JsonUtil.objectToString(recordBean))
+                .tag(this)
+                .success(  s  -> {
+                    cancleProgressDialog();
+                    Result result = (Result) JsonUtil.stringToObject(s,Result.class);
+                    logger.info(s);
+                    if (result.checkCode()){
+                        PrintUtils.printEntryVehicle(recordBean,memberBean);
+                        DbHelper.insertParkingRecordEntry(recordBean);
+                    }else showDialogToast(s);
+
+
+                })
+                .error(e ->{
+                   cancleProgressDialog();
+                    logger.info(e.toString());
+
+                })
+                .post();
+
+
+
+
     }
 
 
@@ -94,7 +192,6 @@ public class VehicleEntryActivity extends BaseReadActivity {
     /**
      * @param userInformation
      */
-    @Override
     protected void showUser(UserInformation userInformation) {
         ParkingRecordReportBean reportBean = new ParkingRecordReportBean();
         reportBean.setSerialNumber(TimeUtils.generateSequenceNo());
@@ -144,7 +241,7 @@ public class VehicleEntryActivity extends BaseReadActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bt_ve_read:
-                showSlotCard();
+                showSlotCard(false);
                 break;
             case R.id.bt_comm_print:
                 showDeviceList();

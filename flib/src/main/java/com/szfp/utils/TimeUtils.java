@@ -240,6 +240,9 @@ public class TimeUtils {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
         return sdf.format(date);
     }
+    public static String dateFormatDate(Date date) {
+        return DEFAULT_SDF.format(date);
+    }
 
     /****
      * 传入具体日期 ，返回具体日期减一个月。

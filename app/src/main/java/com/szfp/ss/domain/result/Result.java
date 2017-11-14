@@ -1,5 +1,7 @@
 package com.szfp.ss.domain.result;
 
+import com.szfp.utils.ToastUtils;
+
 /**
  * Created by 戴尔 on 2017/11/9.
  */
@@ -23,5 +25,18 @@ public class Result {
 
     public void setMsg(String msg) {
         this.msg = msg;
+    }
+
+
+    public boolean checkCode(){
+
+        if (code == 1)
+        {
+            ToastUtils.success(msg);
+            return true;
+        }else {
+            ToastUtils.error(msg);
+            return false;
+        }
     }
 }

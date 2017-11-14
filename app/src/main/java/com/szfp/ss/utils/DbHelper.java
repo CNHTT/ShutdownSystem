@@ -6,6 +6,8 @@ import com.szfp.ss.R;
 import com.szfp.ss.domain.ParkingRecordReportBean;
 import com.szfp.ss.domain.UserInformation;
 import com.szfp.ss.domain.model.MemberBean;
+import com.szfp.ss.domain.model.ParkingRecordBean;
+import com.szfp.ss.domain.model.RechargeBean;
 import com.szfp.ss.domain.result.RechargeRecordBean;
 import com.szfp.ss.greendao.MemberBeanDao;
 import com.szfp.ss.greendao.ParkingRecordReportBeanDao;
@@ -16,6 +18,7 @@ import com.szfp.ss.inter.OnExitVehicleListener;
 import com.szfp.ss.inter.OnPrintParkListener;
 import com.szfp.ss.inter.OnPrintRechargeListener;
 import com.szfp.ss.inter.OnRechargeRecordListener;
+import com.szfp.ss.inter.OperationSuccess;
 import com.szfp.utils.BluetoothService;
 import com.szfp.utils.DataUtils;
 import com.szfp.utils.TimeUtils;
@@ -426,5 +429,24 @@ public class DbHelper {
             return  false;
         }
         return true;
+    }
+
+    public static void insertRechargeBean(RechargeBean rechargeBean, MemberBean memberBean, OperationSuccess operationSuccess) {
+        try {
+
+            GreenDaoManager.getInstance().getSession().getMemberBeanDao().update(memberBean);
+            GreenDaoManager.getInstance().getSession().getRechargeBeanDao().insert(rechargeBean);
+            operationSuccess.success();
+        }catch (Exception e){
+            logger.info(e.toString());
+        }
+    }
+
+    public static void insertParkingRecordEntry(ParkingRecordBean recordBean) {
+        try {
+            GreenDaoManager.getInstance().getSession().getParkingRecordBeanDao().insert(recordBean);
+        }catch (Exception e){
+            logger.info(e.toString());
+        }
     }
 }

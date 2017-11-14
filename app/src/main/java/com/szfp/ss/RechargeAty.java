@@ -7,13 +7,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.szfp.asynctask.AsyncM1Card;
 import com.szfp.ss.domain.UserInformation;
 import com.szfp.ss.domain.model.MemberBean;
 import com.szfp.ss.domain.model.RechargeBean;
-import com.szfp.ss.domain.result.RechargeRecordBean;
+import com.szfp.ss.domain.result.Result;
 import com.szfp.ss.domain.result.ResultMember;
-import com.szfp.ss.inter.OnRechargeRecordListener;
+import com.szfp.ss.inter.OperationSuccess;
 import com.szfp.ss.retrofit.HttpBuilder;
 import com.szfp.ss.utils.DbHelper;
 import com.szfp.ss.utils.JsonUtil;
@@ -23,11 +22,13 @@ import com.szfp.utils.ContextUtils;
 import com.szfp.utils.DataUtils;
 import com.szfp.utils.NetworkUtil;
 import com.szfp.utils.StatusBarUtil;
+import com.szfp.utils.TimeUtils;
 import com.szfp.utils.ToastUtils;
 import com.szfp.view.button.SelectButton;
 import com.szfp.view.dialog.BaseDialog;
-import com.szfp.view.dialog.DialogSureCancel;
 import com.szfp.view.progress.style.Wave;
+
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,6 +59,8 @@ public class RechargeAty extends BaseHFActivity {
     private MemberBean memberBean;
     private RechargeBean rechargeBean;
 
+    private String tsn;
+
     private View.OnClickListener onClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -84,7 +87,6 @@ public class RechargeAty extends BaseHFActivity {
         StatusBarUtil.setTranslucent(this, 10);
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        initView();
     }
 
     @Override
@@ -140,6 +142,15 @@ public class RechargeAty extends BaseHFActivity {
                             memberDialog.setCancelable(false);
                             memberDialog.show();
 
+                            mTv_sure.setOnClickListener( v ->{
+                                memberDialog.cancel();
+                                recharge();
+                            });
+
+                            mTv_cancel.setOnClickListener(  v ->{
+                                memberDialog.cancel();
+                            });
+
 
                         }else {
 
@@ -154,117 +165,64 @@ public class RechargeAty extends BaseHFActivity {
                         showDialogToast(e.toString());
                     })
                     .post();
-
-
-
-
-//            new HttpBuilder(AppUrl.CHECKMEMBER)
-//                    .params("uuid",uuid)
-//                    .params("amount",amount)
-//                    .tag(this)
-//                    .success(  s ->{
-//                        logger.info( "Recharge :" +s);
-//                        cancleProgressDialog();
-//                        ResultRechargeBean resultRechargeBean = (ResultRechargeBean) JsonUtil.stringToObject(s,ResultRechargeBean.class);
-//                        if (resultRechargeBean.getCode()==1){
-//                            rechargeBean = resultRechargeBean.getRechargeBean();
-//                            memberBean   = resultRechargeBean.getMemberBean();
-//
-//
-//
-//                        }
-//
-//
-//
-//
-//                    })
-//                    .error( e  ->{
-//
-//                    })
-//                    .post();
-//
-
-
         }else {
 
         }
     }
 
-    private void initView() {
+    private void recharge() {
+        rechargeBean = new RechargeBean();
+        showProgressDialog(R.string.loading);
+        tsn = TimeUtils.generateSequenceNo();
+        rechargeBean.setMemberUuid(memberBean.getUuid());
+        rechargeBean .setMemberLPM(memberBean.getLpm());
+        rechargeBean .setMemberName(memberBean.getName());
+        rechargeBean.setTsn(tsn);
+        rechargeBean.setRAmount(Double.parseDouble(amount));
+        rechargeBean.setAAmount(memberBean.getBalance());
+        memberBean.setBalance(memberBean.getBalance()+Double.parseDouble(amount));
+        rechargeBean.setBAmount(memberBean.getBalance());
+        rechargeBean.setOperateNumber(App.operator);
+        rechargeBean.setOperateUuid(App.managerUUID);
+        rechargeBean.setDeviceSN(App.terminalUUID);
+        rechargeBean.setDeviceNumber(App.terminalNumber);
+        rechargeBean.setCompanyUuid(App.companyUUID);
+        rechargeBean.setCreateTime(new Date());
+        new HttpBuilder(AppUrl.RECHARGE)
+                    .params("data",JsonUtil.objectToString(rechargeBean))
+                    .params("amount",amount)
+                    .tag(this)
+                    .success(  s ->{
+                        logger.info( "Recharge :" +s);
+                        cancleProgressDialog();
+                        Result result = (Result) JsonUtil.stringToObject(s,Result.class);
+                        if (result.checkCode()){
+                            /**
+                             * 保存数据库并打印
+                             */
 
-
-        reader.setOnReadCardNumListener(new AsyncM1Card.OnReadCardNumListener() {
-            @Override
-            public void onReadCardNumSuccess(String num) {
-                cardId = num.replace("0x", "").replace(",", "").replace("\n","");
-                logger.debug("READER CARD ID "+cardId );
-
-                if (dialog!=null) dialog.cancel();
-                isReader=false;
-                mCubeGrid.stop();
-                userInformation = DbHelper.selectCardIdForUserList(cardId);
-
-                if(DataUtils.isEmpty(userInformation)){
-                    //用户信息为空 重新刷卡
-                    showNoUser();
-
-                }else {
-                    //查询成功进行充值
-
-                    DbHelper.insertRechargeRecordBean(userInformation,amount, new OnRechargeRecordListener() {
-                        @Override
-                        public void success(UserInformation uInfo, RechargeRecordBean recordBean) {
-                            PrintUtils.printRechargeRecord(uInfo,recordBean);
+                            DbHelper.insertRechargeBean(rechargeBean,memberBean, new OperationSuccess() {
+                                @Override
+                                public void success() {
+                                    PrintUtils.printRechargeRecord(rechargeBean,memberBean);
+                                    etRechargeAmount.setText("");
+                                }
+                            });
                         }
+                    })
+                    .error( e  ->{
+                        cancleProgressDialog();
+                        logger.info(e.toString());
+                        showDialogToast(e.toString());
 
-                        @Override
-                        public void error(String str) {
-                            ToastUtils.error(str);
-                        }
-                    });
+                    })
+                    .post();
+//
 
-
-                }
-
-            }
-
-            @Override
-            public void onReadCardNumFail(int comfirmationCode) {
-                logger.debug("Read the card failure");
-//                reader.readCardNum();
-               if (isReader)flowable.subscribe(subscriber);
-
-            }
-        });
 
 
     }
 
-    /**
-     *
-     */
-    private DialogSureCancel dialogSureCancel;
-    private void showNoUser() {
-        if (dialogSureCancel==null){
-            dialogSureCancel = new DialogSureCancel(this);
-            dialogSureCancel.getTvContent().setText("No user found\nplease try again");
-            dialogSureCancel.setCancelable(false);
-            dialogSureCancel.getTvSure().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showSlotCard(false);
-                    dialogSureCancel.cancel();
-                }
-            });
-            dialogSureCancel.getTvCancel().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    dialogSureCancel.cancel();
-                }
-            });
-        }
-        dialogSureCancel.show();
-    }
 
     @Override
     protected void showConnecting() {

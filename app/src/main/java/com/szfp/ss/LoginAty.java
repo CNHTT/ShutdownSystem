@@ -345,7 +345,7 @@ public class LoginAty extends BaseAty {
         App.address = data.getAddress();
 
         App.terminalNumber =deviceBean.getNumber();
-        App.terminalUUID = deviceBean.getUuid();
+        App.terminalUUID = deviceBean.getSn();
         //加载停车场信息
         List<ParkingLotBean> lotList =data.getLotList();
         if (lotList.size()==1){

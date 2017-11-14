@@ -7,28 +7,27 @@ import android.widget.TextView;
 
 import com.szfp.adapter.BaseListAdapter;
 import com.szfp.ss.R;
-import com.szfp.ss.domain.ParkingRecordReportBean;
+import com.szfp.ss.domain.model.ParkingRecordBean;
 import com.szfp.utils.ContextUtils;
 
 import java.util.List;
 
 /**
- * author：ct on 2017/9/26 12:03
- * email：cnhttt@163.com
+ * Created by 戴尔 on 2017/11/14.
  */
 
-public class SerialNumberAdapter  extends BaseListAdapter<ParkingRecordReportBean>{
-    public SerialNumberAdapter(Context context) {
+public class TsnAdapter extends BaseListAdapter<ParkingRecordBean> {
+    public TsnAdapter(Context context) {
         super(context);
     }
 
-    public SerialNumberAdapter(Context mContext, List<ParkingRecordReportBean> mDatas) {
+    public TsnAdapter(Context mContext, List<ParkingRecordBean> mDatas) {
         super(mContext, mDatas);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-       ViewHolder viewHolder;
+        ViewHolder viewHolder;
         if (convertView == null){
             convertView = ContextUtils.inflate(mContext, R.layout.simple_list_item_1);
             viewHolder = new ViewHolder(convertView);
@@ -36,7 +35,7 @@ public class SerialNumberAdapter  extends BaseListAdapter<ParkingRecordReportBea
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.tvContent.setText(position+1+":"+getItem(position).getSerialNumber());
+        viewHolder.tvContent.setText(position+1+":"+getItem(position).getTsn());
 
 
         return convertView;

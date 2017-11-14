@@ -36,15 +36,16 @@ public class ParkingRecordBeanDao extends AbstractDao<ParkingRecordBean, Long> {
         public final static Property DeviceNumber = new Property(9, String.class, "deviceNumber", false, "DEVICE_NUMBER");
         public final static Property ParkingLotName = new Property(10, String.class, "parkingLotName", false, "PARKING_LOT_NAME");
         public final static Property ParkingUuid = new Property(11, String.class, "parkingUuid", false, "PARKING_UUID");
-        public final static Property Amount = new Property(12, double.class, "amount", false, "AMOUNT");
-        public final static Property EnterLongTime = new Property(13, long.class, "enterLongTime", false, "ENTER_LONG_TIME");
-        public final static Property ExitLongTime = new Property(14, long.class, "exitLongTime", false, "EXIT_LONG_TIME");
-        public final static Property EnterTime = new Property(15, java.util.Date.class, "enterTime", false, "ENTER_TIME");
-        public final static Property ExitTime = new Property(16, java.util.Date.class, "exitTime", false, "EXIT_TIME");
-        public final static Property CreateTime = new Property(17, java.util.Date.class, "createTime", false, "CREATE_TIME");
-        public final static Property ParkingTime = new Property(18, long.class, "parkingTime", false, "PARKING_TIME");
-        public final static Property IntTime = new Property(19, int.class, "intTime", false, "INT_TIME");
-        public final static Property CacheType = new Property(20, int.class, "cacheType", false, "CACHE_TYPE");
+        public final static Property CompanyUuid = new Property(12, String.class, "companyUuid", false, "COMPANY_UUID");
+        public final static Property Amount = new Property(13, double.class, "amount", false, "AMOUNT");
+        public final static Property EnterLongTime = new Property(14, long.class, "enterLongTime", false, "ENTER_LONG_TIME");
+        public final static Property ExitLongTime = new Property(15, long.class, "exitLongTime", false, "EXIT_LONG_TIME");
+        public final static Property EnterTime = new Property(16, java.util.Date.class, "enterTime", false, "ENTER_TIME");
+        public final static Property ExitTime = new Property(17, java.util.Date.class, "exitTime", false, "EXIT_TIME");
+        public final static Property CreateTime = new Property(18, java.util.Date.class, "createTime", false, "CREATE_TIME");
+        public final static Property ParkingTime = new Property(19, long.class, "parkingTime", false, "PARKING_TIME");
+        public final static Property IntTime = new Property(20, int.class, "intTime", false, "INT_TIME");
+        public final static Property CacheType = new Property(21, int.class, "cacheType", false, "CACHE_TYPE");
     }
 
 
@@ -72,15 +73,16 @@ public class ParkingRecordBeanDao extends AbstractDao<ParkingRecordBean, Long> {
                 "\"DEVICE_NUMBER\" TEXT," + // 9: deviceNumber
                 "\"PARKING_LOT_NAME\" TEXT," + // 10: parkingLotName
                 "\"PARKING_UUID\" TEXT," + // 11: parkingUuid
-                "\"AMOUNT\" REAL NOT NULL ," + // 12: amount
-                "\"ENTER_LONG_TIME\" INTEGER NOT NULL ," + // 13: enterLongTime
-                "\"EXIT_LONG_TIME\" INTEGER NOT NULL ," + // 14: exitLongTime
-                "\"ENTER_TIME\" INTEGER," + // 15: enterTime
-                "\"EXIT_TIME\" INTEGER," + // 16: exitTime
-                "\"CREATE_TIME\" INTEGER," + // 17: createTime
-                "\"PARKING_TIME\" INTEGER NOT NULL ," + // 18: parkingTime
-                "\"INT_TIME\" INTEGER NOT NULL ," + // 19: intTime
-                "\"CACHE_TYPE\" INTEGER NOT NULL );"); // 20: cacheType
+                "\"COMPANY_UUID\" TEXT," + // 12: companyUuid
+                "\"AMOUNT\" REAL NOT NULL ," + // 13: amount
+                "\"ENTER_LONG_TIME\" INTEGER NOT NULL ," + // 14: enterLongTime
+                "\"EXIT_LONG_TIME\" INTEGER NOT NULL ," + // 15: exitLongTime
+                "\"ENTER_TIME\" INTEGER," + // 16: enterTime
+                "\"EXIT_TIME\" INTEGER," + // 17: exitTime
+                "\"CREATE_TIME\" INTEGER," + // 18: createTime
+                "\"PARKING_TIME\" INTEGER NOT NULL ," + // 19: parkingTime
+                "\"INT_TIME\" INTEGER NOT NULL ," + // 20: intTime
+                "\"CACHE_TYPE\" INTEGER NOT NULL );"); // 21: cacheType
     }
 
     /** Drops the underlying database table. */
@@ -148,27 +150,32 @@ public class ParkingRecordBeanDao extends AbstractDao<ParkingRecordBean, Long> {
         if (parkingUuid != null) {
             stmt.bindString(12, parkingUuid);
         }
-        stmt.bindDouble(13, entity.getAmount());
-        stmt.bindLong(14, entity.getEnterLongTime());
-        stmt.bindLong(15, entity.getExitLongTime());
+ 
+        String companyUuid = entity.getCompanyUuid();
+        if (companyUuid != null) {
+            stmt.bindString(13, companyUuid);
+        }
+        stmt.bindDouble(14, entity.getAmount());
+        stmt.bindLong(15, entity.getEnterLongTime());
+        stmt.bindLong(16, entity.getExitLongTime());
  
         java.util.Date enterTime = entity.getEnterTime();
         if (enterTime != null) {
-            stmt.bindLong(16, enterTime.getTime());
+            stmt.bindLong(17, enterTime.getTime());
         }
  
         java.util.Date exitTime = entity.getExitTime();
         if (exitTime != null) {
-            stmt.bindLong(17, exitTime.getTime());
+            stmt.bindLong(18, exitTime.getTime());
         }
  
         java.util.Date createTime = entity.getCreateTime();
         if (createTime != null) {
-            stmt.bindLong(18, createTime.getTime());
+            stmt.bindLong(19, createTime.getTime());
         }
-        stmt.bindLong(19, entity.getParkingTime());
-        stmt.bindLong(20, entity.getIntTime());
-        stmt.bindLong(21, entity.getCacheType());
+        stmt.bindLong(20, entity.getParkingTime());
+        stmt.bindLong(21, entity.getIntTime());
+        stmt.bindLong(22, entity.getCacheType());
     }
 
     @Override
@@ -230,27 +237,32 @@ public class ParkingRecordBeanDao extends AbstractDao<ParkingRecordBean, Long> {
         if (parkingUuid != null) {
             stmt.bindString(12, parkingUuid);
         }
-        stmt.bindDouble(13, entity.getAmount());
-        stmt.bindLong(14, entity.getEnterLongTime());
-        stmt.bindLong(15, entity.getExitLongTime());
+ 
+        String companyUuid = entity.getCompanyUuid();
+        if (companyUuid != null) {
+            stmt.bindString(13, companyUuid);
+        }
+        stmt.bindDouble(14, entity.getAmount());
+        stmt.bindLong(15, entity.getEnterLongTime());
+        stmt.bindLong(16, entity.getExitLongTime());
  
         java.util.Date enterTime = entity.getEnterTime();
         if (enterTime != null) {
-            stmt.bindLong(16, enterTime.getTime());
+            stmt.bindLong(17, enterTime.getTime());
         }
  
         java.util.Date exitTime = entity.getExitTime();
         if (exitTime != null) {
-            stmt.bindLong(17, exitTime.getTime());
+            stmt.bindLong(18, exitTime.getTime());
         }
  
         java.util.Date createTime = entity.getCreateTime();
         if (createTime != null) {
-            stmt.bindLong(18, createTime.getTime());
+            stmt.bindLong(19, createTime.getTime());
         }
-        stmt.bindLong(19, entity.getParkingTime());
-        stmt.bindLong(20, entity.getIntTime());
-        stmt.bindLong(21, entity.getCacheType());
+        stmt.bindLong(20, entity.getParkingTime());
+        stmt.bindLong(21, entity.getIntTime());
+        stmt.bindLong(22, entity.getCacheType());
     }
 
     @Override
@@ -273,15 +285,16 @@ public class ParkingRecordBeanDao extends AbstractDao<ParkingRecordBean, Long> {
             cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // deviceNumber
             cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // parkingLotName
             cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // parkingUuid
-            cursor.getDouble(offset + 12), // amount
-            cursor.getLong(offset + 13), // enterLongTime
-            cursor.getLong(offset + 14), // exitLongTime
-            cursor.isNull(offset + 15) ? null : new java.util.Date(cursor.getLong(offset + 15)), // enterTime
-            cursor.isNull(offset + 16) ? null : new java.util.Date(cursor.getLong(offset + 16)), // exitTime
-            cursor.isNull(offset + 17) ? null : new java.util.Date(cursor.getLong(offset + 17)), // createTime
-            cursor.getLong(offset + 18), // parkingTime
-            cursor.getInt(offset + 19), // intTime
-            cursor.getInt(offset + 20) // cacheType
+            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // companyUuid
+            cursor.getDouble(offset + 13), // amount
+            cursor.getLong(offset + 14), // enterLongTime
+            cursor.getLong(offset + 15), // exitLongTime
+            cursor.isNull(offset + 16) ? null : new java.util.Date(cursor.getLong(offset + 16)), // enterTime
+            cursor.isNull(offset + 17) ? null : new java.util.Date(cursor.getLong(offset + 17)), // exitTime
+            cursor.isNull(offset + 18) ? null : new java.util.Date(cursor.getLong(offset + 18)), // createTime
+            cursor.getLong(offset + 19), // parkingTime
+            cursor.getInt(offset + 20), // intTime
+            cursor.getInt(offset + 21) // cacheType
         );
         return entity;
     }
@@ -300,15 +313,16 @@ public class ParkingRecordBeanDao extends AbstractDao<ParkingRecordBean, Long> {
         entity.setDeviceNumber(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
         entity.setParkingLotName(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
         entity.setParkingUuid(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
-        entity.setAmount(cursor.getDouble(offset + 12));
-        entity.setEnterLongTime(cursor.getLong(offset + 13));
-        entity.setExitLongTime(cursor.getLong(offset + 14));
-        entity.setEnterTime(cursor.isNull(offset + 15) ? null : new java.util.Date(cursor.getLong(offset + 15)));
-        entity.setExitTime(cursor.isNull(offset + 16) ? null : new java.util.Date(cursor.getLong(offset + 16)));
-        entity.setCreateTime(cursor.isNull(offset + 17) ? null : new java.util.Date(cursor.getLong(offset + 17)));
-        entity.setParkingTime(cursor.getLong(offset + 18));
-        entity.setIntTime(cursor.getInt(offset + 19));
-        entity.setCacheType(cursor.getInt(offset + 20));
+        entity.setCompanyUuid(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setAmount(cursor.getDouble(offset + 13));
+        entity.setEnterLongTime(cursor.getLong(offset + 14));
+        entity.setExitLongTime(cursor.getLong(offset + 15));
+        entity.setEnterTime(cursor.isNull(offset + 16) ? null : new java.util.Date(cursor.getLong(offset + 16)));
+        entity.setExitTime(cursor.isNull(offset + 17) ? null : new java.util.Date(cursor.getLong(offset + 17)));
+        entity.setCreateTime(cursor.isNull(offset + 18) ? null : new java.util.Date(cursor.getLong(offset + 18)));
+        entity.setParkingTime(cursor.getLong(offset + 19));
+        entity.setIntTime(cursor.getInt(offset + 20));
+        entity.setCacheType(cursor.getInt(offset + 21));
      }
     
     @Override

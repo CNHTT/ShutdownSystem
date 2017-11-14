@@ -99,7 +99,7 @@ public class WelcomeAty extends BaseAty {
             App.address = companyInfoBean.getAddress();
 
             App.terminalNumber =deviceBean.getNumber();
-            App.terminalUUID = deviceBean.getUuid();
+            App.terminalUUID = deviceBean.getSn();
 
             App.parkingLotUUID =lot.getUuid();
             App.parkingNumber =lot.getNumber();

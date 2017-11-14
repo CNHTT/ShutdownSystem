@@ -20,6 +20,7 @@ import com.szfp.utils.ContextUtils;
 import com.szfp.utils.DataUtils;
 import com.szfp.utils.SoundUtils;
 import com.szfp.view.dialog.BaseDialog;
+import com.szfp.view.dialog.DialogSureCancel;
 import com.szfp.view.progress.style.CubeGrid;
 import com.szfp.view.progress.style.Wave;
 
@@ -217,6 +218,30 @@ public abstract class BaseHFActivity extends BaseAty{
             mCubeGrid.stop();
         }
     };
+
+    private DialogSureCancel dialogSureCancel;
+    protected void showNoUser() {
+        if (dialogSureCancel==null){
+            dialogSureCancel = new DialogSureCancel(this);
+            dialogSureCancel.getTvContent().setText("No user found\nplease try again");
+            dialogSureCancel.setCancelable(false);
+            dialogSureCancel.getTvSure().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    showSlotCard(false);
+                    dialogSureCancel.cancel();
+                }
+            });
+            dialogSureCancel.getTvCancel().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialogSureCancel.cancel();
+                }
+            });
+        }
+        dialogSureCancel.show();
+    }
+
 
     @Override
     protected void onResume() {
